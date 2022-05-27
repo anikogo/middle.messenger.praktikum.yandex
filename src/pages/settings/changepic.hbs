@@ -1,0 +1,24 @@
+---
+stylesheets:
+- ../../scss/index.scss
+---
+{{!< base}}
+
+<main>
+    <div class="data-entry-field">
+        <h1>Change picture</h1>
+        <div class="settings__user-pic_center rounding"></div>
+        {{> button className="button__secondary-picchange-button rounding" btnText="Add new" }}
+        <div class="button__row-container">
+            {{> linkbutton 
+                className="button__secondary-setting-button rounding"
+                btnText="Back to settings"
+                linkName="./index.hbs"
+            }}
+            {{> linkbutton className="button__primary-button rounding"
+                btnText="Save"
+                linkName="./index.hbs"
+            }}
+        </div>
+    </div>
+</main>
