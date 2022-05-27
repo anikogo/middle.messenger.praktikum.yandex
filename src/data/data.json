@@ -1,0 +1,17 @@
+{
+    "buttonstext": {
+        "buttonregtext": "Register",
+        "buttonlogtext": "Sign in"
+    },
+    "reg_pholders": {
+        "fname": "First name",
+        "sname": "Second name",
+        "login": "Login",
+        "email": "Email",
+        "phone": "Phone number"
+    },
+    "sec_pholders": {
+        "password": "Password",
+        "rpassword": "Repeat password"
+    }
+}

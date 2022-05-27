@@ -1,0 +1,57 @@
+---
+stylesheets:
+  - ../../scss/index.scss
+userList:
+  - "Anton Antonov"
+  - "Sergey Sergeev"
+  - "Pavel Pavlov"
+  - "Petr"
+  - "Oleg Olegov"
+  - "Nikolay Nikolayev "
+  - "Semen Semenov"
+  - "Evgeniy Evgenjev"
+  - "Georgiy"
+  - "Meme Memememe"
+  - "Fillip Fillipov"
+  - "Fillip Pavlov"
+---
+{{!< base}}
+
+<main>
+    <div class="chat-form">
+        <div class="chat-menu">
+            <div class="chat-menu__owner">
+                <div><a class="chat-menu__owner-settings" href="../settings/index.hbs">{{> cogicon}}</a></div>
+                <div>
+                    <div class="medium-font-18">Artyom Niko</div>
+                    <div class="thin-font">Status</div>
+                </div>
+            </div>
+            <div class="chat-menu__list">
+                {{#each userList}}
+                    <div class="chat-item">
+                        <div class="chat-item__picture rounding"></div>
+                        {{> chatitem
+                            className="chat-item__text"
+                            className_user="chat-item__text_ellipsis medium-font"
+                            className_preview="chat-item__text_ellipsis thin-font"
+                            text_user=this
+                        }}
+                        <div class="chat-item__msgcounter rounding">1</div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="chat-area">
+            <div class="chat-area__header">
+                <div class="medium-font-18">Sergey Sergeev</div>
+                <div class="thin-font">last seen recently</div>
+            </div>
+            <div class="chat-area__content"></div>
+            <div class="chat-area__footer">
+                <textarea class="input__message-input left-rounding" placeholder="Message" autofocus></textarea>
+                {{> button className="button__send-message right-rounding" btnText="^"}}
+            </div>
+        </div>
+    </div>
+</main>
