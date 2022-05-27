@@ -6,7 +6,6 @@
 
 .chat-menu {
     @include styleBorder;
-    //@include flexColumn;
     height: 100%;
     min-height: 100%;
     width: 23%;
@@ -18,7 +17,7 @@
 
     &__owner {
         @include flexRow;
-        @include bottomBorder;
+        // @include bottomBorder;
         box-sizing: border-box;
         height: 50px;
         color: $dark-color;
@@ -36,7 +35,7 @@
 
     &__list {
         width: 100%;
-        height: calc(100% - 50px);
+        height: calc(100% - 95px);
         overflow-y: scroll;
     }
 }
