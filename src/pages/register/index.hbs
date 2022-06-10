@@ -1,33 +1,16 @@
----
-stylesheets:
-- ../../scss/index.scss
----
-{{!< base}}
 <main>
     <div class="data-entry-field">
         <h1>Registration</h1>
-        <div>
-            {{#each data.reg_pholders}}
-                <div>
-                    {{> input className="input__main-input" pholderText=this }}
-                </div>
-            {{/each}}
-            {{#each data.sec_pholders}}
-                <div>
-                    {{> input className="input__main-input" pholderText=this inType="password"}}
-                </div>
-            {{/each}}
-        </div>
+        {{{ Input className="input__main-input" pholderText="first name" event=ddd}}}
+        {{{ Input className="input__main-input" pholderText="second name" }}}
+        {{{ Input className="input__main-input" pholderText="login" }}}
+        {{{ Input className="input__main-input" pholderText="email" }}}
+        {{{ Input className="input__main-input" pholderText="phone" }}}
+        {{{ Input className="input__main-input" pholderText="password" inType="password"}}}
+        {{{ Input className="input__main-input" pholderText="repeat password" inType="password" }}}
         <div class="button__row-container">
-            {{> linkbutton 
-                className="button__secondary-button rounding"
-                btnText=data.buttonstext.buttonlogtext
-                linkName="../login/index.hbs"
-            }}
-            {{> linkbutton className="button__primary-button rounding"
-                btnText=data.buttonstext.buttonregtext
-                linkName="../login/index.hbs"
-            }}
+            {{{ Button label="Sign in" className="button__secondary-button rounding"}}}
+            {{{ Button label="Register" className="button__primary-button rounding" }}}
         </div>
     </div>
 </main>
