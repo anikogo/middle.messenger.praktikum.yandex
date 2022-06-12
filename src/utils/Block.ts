@@ -1,5 +1,5 @@
 import EventBus from "./EventBus";
-import { customAlphabet } from "nanoid";
+import { customAlphabet } from "../../node_modules/nanoid/index";
 import Handlebars from "handlebars";
 
 interface BlockMeta<P = any> {
@@ -186,11 +186,6 @@ export default class Block<P = any> {
     const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
 
     const template = Handlebars.compile(templateString)
-
-    // Нужно закомментить этот Object.entries, если собираемся использовать registerComponent
-    // Object.entries(this.children).forEach(([key, child]) => {
-    //   context[key] = `<div data-id="${child.id}"></div>`
-    // })
 
     const htmlString = template({...context, children: this.children});
     
