@@ -1,6 +1,6 @@
 import EventBus from "./EventBus";
 import { customAlphabet } from "../../node_modules/nanoid/index";
-import Handlebars from "handlebars";
+import Handlebars from "handlebars/runtime";
 
 interface BlockMeta<P = any> {
   props: P;
