@@ -1,52 +1,41 @@
 import Block from "../../utils/Block";
-import template from "./index.hbs";
-import { Button } from "../../components/button/button";
-import { Input } from "../../components/input/input";
+import { checkLogin, checkPassword, submitLoginPage } from "../../utils/validate";
 
-export class LoginPage extends Block {
-  constructor() {
-    super();
-  }
+export default class LoginPage extends Block {
+  constructor(props?: any) {
     
-  initChildren() {
-
-    this.children.loginInput = new Input({
-      pholderText: "login",
-      events: {
-        input: () => console.log(this.children.loginInput._element.value),
+    super({...props,
+      checkNameEvent: () => {
+        let inputValue = (this.element?.querySelector(`#login`) as HTMLInputElement).value;
+        checkLogin(inputValue)
       },
-      className: "input__main-input",
-    });
-    
-    this.children.pwdInput = new Input({
-      pholderText: "password",
-      events: {
-        input: () => console.log(this.children.pwdInput._element.value),
+      checkPwdEvent: () => {
+        let inputValue = (this.element?.querySelector(`#password`) as HTMLInputElement).value;
+        checkPassword(inputValue);
       },
-      className: "input__main-input",
-      inType: "password"
+      checkSubmitEvent: () => {
+        const allFields: any ={};
+        allFields["login"] = (this.element?.querySelector(`#login`) as HTMLInputElement).value;
+        allFields["password"] = (this.element?.querySelector(`#password`) as HTMLInputElement).value;
+        console.log(allFields);
+        submitLoginPage(allFields.login, allFields.password);
+      },
     });
 
-      this.children.authButton = new Button({
-        label: "Sign in",
-        events: {
-          click: () => console.log("clicked"),
-        },
-        className: "button__primary-button rounding",
-        linkName: ""
-      });
-  
-      this.children.regButton = new Button({
-        label: "Register",
-        events: {
-          click: () => console.log("clicked2"),
-        },
-        className: "button__secondary-button rounding",
-        linkName: "../register/register.ts"
-      })
-    };
+  };
 
   render() {
-    return this.compile(template, {});
+    return `<main>
+                <div class="data-entry-field">
+                    <h1>Authorization</h1>
+                    {{{ Input idName="login" className="input__main-input" pholderText="login" onBlur=checkNameEvent onFocus=checkNameEvent }}}
+                    {{{ Input idName="password" className="input__main-input" pholderText="password" onBlur=checkPwdEvent onFocus=checkPwdEvent inType="password"}}}
+                    <div class="button__row-container">
+                        {{{ Button label="Sign in" className="button__primary-button rounding" onClick=checkSubmitEvent }}}
+                        {{{ LinkButton label="Register" className="button__secondary-button rounding" linkName="#register"}}}
+                    </div>
+                    {{{ Error idName="error" className="error_hide"}}}
+                </div>
+            </main>`;
   };
 };

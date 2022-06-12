@@ -3,13 +3,13 @@ import Block from "../../utils/Block";
 interface InputProps {
   pholderText?: string;
   className?: string;
-  inType?: string;
+  autofocus?: string;
   idName?: string;
   onBlur?: () => void;
   onFocus?: () => void;
 }
 
-export default class Input extends Block {
+export default class TextArea extends Block {
   constructor({...props}) {
     if (!props.events) {
       props.events = {};
@@ -20,6 +20,6 @@ export default class Input extends Block {
   }
 
   render() {
-    return `<input id="{{ idName }}" class="{{ className }}" placeholder="{{ pholderText }}" type="{{ inType }}" />`;
+    return `<textarea id="{{ idName }}" class="{{ className }}" placeholder="{{ pholderText }}" {{ focus }}></textarea>`;
   }
 };

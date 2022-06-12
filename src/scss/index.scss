@@ -107,6 +107,18 @@ h1, h2 {
     text-align: center;
 }
 
+.error_hide {
+  display: none;
+}
+
+.error_visible {
+  display: block;
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 10px;
+}
+
 @import "_forms.scss";
 @import "_chat.scss";
 @import "_settings.scss";

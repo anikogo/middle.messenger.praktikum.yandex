@@ -1,5 +1,6 @@
 import EventBus from "./EventBus";
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
+import Handlebars from "handlebars";
 
 interface BlockMeta {
   props: any;
@@ -15,7 +16,8 @@ export default class Block {
     FLOW_RENDER: "flow:render"
   } as const;
 
-  public id = nanoid(6);
+  public nanoid = customAlphabet('qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM', 10);
+  public id = this.nanoid();
 
   private _element: Nullable<HTMLElement> | null = null;
   protected props: any;
@@ -27,17 +29,12 @@ export default class Block {
     const eventBus = new EventBus<Events>();
 
     const { props, children } = this.getChildren(propsAndChildren);
-    // this.children = new Proxy(children, {
-    //   set(target: any, key: string, value: any) {
-    //     target[key] = value;
-    //     eventBus.emit(Block.EVENTS.FLOW_RENDER);
-    //     return true;
-    //   }
-    // });
+
     this.children = children;
+
     this.props = this._makePropsProxy(props);
 
-    
+  
     this._meta = {
       props
     };    
@@ -102,7 +99,10 @@ export default class Block {
   }
 
   _render() {
-    const block = this.render();
+    const templateString = this.render();
+
+    const block = this.compile(templateString, {...this.props, handlers: this.handlers()})
+
     const newElement = block.firstElementChild as HTMLElement;
 
     if (this._element) {
@@ -115,8 +115,8 @@ export default class Block {
   }
 
     // Может переопределять пользователь, необязательно трогать
-  protected render(): DocumentFragment {
-    return new DocumentFragment;
+  protected render(): string {
+    return "";
   }
 
   getContent(): HTMLElement {
@@ -185,12 +185,14 @@ export default class Block {
     });
   }
 
-  compile(template: (context: any) => string, context: any) {
+  compile(templateString: string, context: any) {
     const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
-    
 
+    const template = Handlebars.compile(templateString)
+
+    // Нужно закомментить этот Object.entries, если собираемся использовать registerComponent
     // Object.entries(this.children).forEach(([key, child]) => {
-    //   context[key] = `<div data-id="id-${child.id}"></div>`
+    //   context[key] = `<div data-id="${child.id}"></div>`
     // })
 
     const htmlString = template({...context, children: this.children});
@@ -198,7 +200,7 @@ export default class Block {
     fragment.innerHTML = htmlString;
 
     Object.entries(this.children).forEach(([key, child]) => {
-      const stub = fragment.content.querySelector(`[data-id="id-${child.id}"]`);
+      const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
 
       if (!stub) {
         return
@@ -223,5 +225,9 @@ export default class Block {
     });
 
     return { props, children }
+  }
+
+  handlers() {
+    return {};
   }
 }

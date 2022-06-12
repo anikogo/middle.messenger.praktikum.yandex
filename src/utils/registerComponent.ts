@@ -1,17 +1,17 @@
 import Block from "./Block";
 import { HelperOptions } from "handlebars";
-//ts-ignore  
-import Handlebars from "handlebars/dist/handlebars.runtime"
+import Handlebars from "handlebars";
 
-export function registerComponent (Component:typeof Block) {
+export function registerComponent (Component: typeof Block) {
   Handlebars.registerHelper(Component.name, function({ hash , data }: HelperOptions) {
+
     if (!data.root.children) {
       data.root.children = {};
     };
 
-    const { children } = data.root;
+    const children = data.root.children;
     const component = new Component(hash);
     children[component.id] = component;
-    return `<div data-id="id-${component.id}"></div>`
-  })
-} 
+    return `<div data-id="${component.id}"></div>`;
+  });
+};

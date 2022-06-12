@@ -7,7 +7,7 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-export default class Button extends Block {
+export default class LinkButton extends Block {
   constructor({...props}) {
     if (!props.events) {
       props.events = {};
@@ -17,6 +17,6 @@ export default class Button extends Block {
   }
 
   render() {
-    return `<button class="{{ className }}">{{ label }}</button>`;
+    return `<a href="{{ linkName }}" class="{{ className }}">{{ label }}</a>`;
   }
 };
