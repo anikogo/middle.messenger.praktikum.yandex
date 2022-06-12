@@ -1,5 +1,5 @@
 import EventBus from "./EventBus";
-import { customAlphabet } from "nanoid";
+import { customAlphabet } from "../../node_modules/nanoid/index";
 import Handlebars from "handlebars";
 
 interface BlockMeta {
