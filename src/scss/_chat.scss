@@ -17,7 +17,6 @@
 
     &__owner {
         @include flexRow;
-        // @include bottomBorder;
         box-sizing: border-box;
         height: 50px;
         color: $dark-color;
