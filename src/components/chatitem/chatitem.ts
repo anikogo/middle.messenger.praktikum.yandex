@@ -1,23 +1,23 @@
-import Block from "../../utils/Block";
+import Block, { BlockProps } from "../../utils/Block";
 
-
-interface InputProps {
-  className?: string;
-  className_user?: string;
-  className_preview?: string;
-  text_user?: string;
+interface ChatItemProps extends BlockProps {
+  userName?: string;
 }
 
 export default class ChatItem extends Block {
-  constructor({...props}) {
+  constructor(props: ChatItemProps) {
     super(props);
   }
 
   render() {
     return `
-    <div class="{{ className }}">
-        <div class="{{ className_user }}">{{ text_user }}</div>
-        <div class="{{ className_preview }}">Hello my friend, I,m {{ text_user }}</div>
+    <div class="chat-item">
+      <div class="chat-item__picture rounding"></div>
+      <div class="chat-item__text">
+        <div class="chat-item__text_ellipsis medium-font">{{ userName }}</div>
+        <div class="chat-item__text_ellipsis thin-font">Hello my friend, I'm {{ userName }}</div>
+      </div>
+      <div class="chat-item__msgcounter rounding">1</div>
     </div>
     `;
   }

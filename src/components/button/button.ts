@@ -1,22 +1,20 @@
-import Block from "../../utils/Block";
+import Block, {BlockProps} from "../../utils/Block";
 
-interface ButtonProps {
+interface ButtonProps extends BlockProps {
   label: string;
   className?: string;
   linkName?: string;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 export default class Button extends Block {
-  constructor({...props}) {
-    if (!props.events) {
-      props.events = {};
-    }
+  constructor(props: ButtonProps) {
+    props.events = props.events || {};
     props.events.click = props.onClick;
     super(props);
-  }
+  };
 
   render() {
     return `<button class="{{ className }}">{{ label }}</button>`;
-  }
+  };
 };

@@ -1,17 +1,16 @@
-import Block from "../../utils/Block";
+import Block, {BlockProps} from "../../utils/Block";
 
-
-interface InputProps {
+interface ErrorProps extends BlockProps {
   className?: string;
   idName?: string;
 }
 
 export default class Error extends Block {
-  constructor({...props}) {
+  constructor(props: ErrorProps) {
     super(props);
   }
 
   render() {
-    return `<div id="{{ idName }}"name="error" class="{{ className }}" ></div>`;
+    return `<div id="{{ idName }}" class="{{ className }}" ></div>`;
   }
 };

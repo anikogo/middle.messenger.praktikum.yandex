@@ -1,5 +1,3 @@
-import { ChatsPage } from "../pages";
-
 export function checkName(name: string): string {
   const reg: RegExp = /^[A-ZА-Я]{1}[a-zа-я-]*$/;
   const err: HTMLElement = document.querySelector(`#error`) as HTMLElement;
@@ -70,81 +68,59 @@ export function checkPhone (phone: string): string {
   return err.textContent;
 };
 
-export function submitLoginPage (login: string, password: string): void {
-  const loginReturn: string = checkLogin(login);
-  if (loginReturn !== "") {
-    return;
+export function submitLoginPage (fields: Record<string, string>): void {
+  const validators: Record<string, any>= {
+    login: checkLogin,
+    password: checkPassword,
   };
 
-  const pwdReturn: string = checkPassword(password);
-  if (pwdReturn !== "") {
-    return;
+  for(const field in fields) {
+    const result = validators[field](fields[field]);
+    if (result !== "") {
+      return;
+    };
   };
 
   location.href = "#chat"; 
 };
 
-export function submitRegPage (fname: string, sname: string, login: string, email: string, phone:string, password: string, rpassword: string): void {
+export function submitRegPage (fields: Record<string, string>): void {
+  const validators: Record<string, any>= {
+    firstName: checkName,
+    secondName: checkName,
+    login: checkLogin,
+    email: checkEmail,
+    phone: checkPhone,
+    password: checkPassword,
+    rPassword: checkPassword,
+  }
 
-  const fnameReturn: string = checkName(fname);
-  if (fnameReturn !== "") {
-    return;
-  };
-
-  const snameReturn: string = checkName(sname);
-  if (snameReturn !== "") {
-    return;
-  };
-
-  const loginReturn: string = checkLogin(login);
-  if (loginReturn !== "") {
-    return;
-  };
-
-  const emailReturn: string = checkEmail(email);
-  if (emailReturn !== "") {
-    return;
-  };
-
-  const phonereturn: string = checkPhone(phone);
-  if (phonereturn !== "") {
-    return;
-  };
-
-  const pwdReturn: string = checkPassword(password);
-  if (pwdReturn !== "") {
-    return;
-  };
-
-  const rpwdReturn: string = checkPassword(rpassword);
-  if (rpwdReturn !== "") {
-    return;
-  };
+  for(const field in fields) {
+    const result = validators[field](fields[field]);
+    if (result !== "") {
+      return;
+    };
+  }
 
   location.href = "#app"; 
 };
 
-export function submitSettingsPage (fname: string, sname: string, email: string, phone:string): void {
-
-  const fnameReturn: string = checkName(fname);
-  if (fnameReturn !== "") {
-    return;
+export function submitSettingsPage (fields: Record<string, string>): void {
+  const validators: Record<string, any>= {
+    firstName: checkName,
+    secondName: checkName,
+    email: checkEmail,
+    phone: checkPhone,
   };
 
-  const snameReturn: string = checkName(sname);
-  if (snameReturn !== "") {
-    return;
+  for(const field in fields) {
+    if (field in validators) {
+      const result = validators[field](fields[field]);
+      if (result !== "") {
+        return;
+      };
+    };
   };
 
-  const emailReturn: string = checkEmail(email);
-  if (emailReturn !== "") {
-    return;
-  };
-
-  const phonereturn: string = checkPhone(phone);
-  if (phonereturn !== "") {
-    return;
-  };
-
-  location.href = "#app"; 
+  location.href = "#chat"; 
 };
