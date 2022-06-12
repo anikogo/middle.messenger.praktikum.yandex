@@ -1,6 +1,7 @@
-import Block from "../../utils/Block";
+import Block, {BlockProps} from "../../utils/Block";
 
-interface InputProps {
+interface InputProps extends BlockProps {
+  name: string;
   pholderText?: string;
   className?: string;
   inType?: string;
@@ -10,16 +11,15 @@ interface InputProps {
 }
 
 export default class Input extends Block {
-  constructor({...props}) {
-    if (!props.events) {
-      props.events = {};
-    };
+  constructor(props: InputProps) {
+    props.inType = props.inType || "text";
+    props.events = props.events || {};
     props.events.blur = props.onBlur;
     props.events.focus = props.onFocus;
     super(props);
   }
 
   render() {
-    return `<input id="{{ idName }}" class="{{ className }}" placeholder="{{ pholderText }}" type="{{ inType }}" />`;
+    return `<input id="{{ idName }}" name="{{ name }}" class="{{ className }}" placeholder="{{ pholderText }}" type="{{ inType }}" />`;
   }
 };

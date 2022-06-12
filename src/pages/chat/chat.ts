@@ -23,26 +23,8 @@ export default class ChatsPage extends Block {
                     </div>
                     {{{ Input idName="searchChat" className="input__search-input" pholderText="search chat..." }}}
                     <div class="chat-menu__list">
-                            <div class="chat-item">
-                                <div class="chat-item__picture rounding"></div>
-                                {{{ ChatItem
-                                    className="chat-item__text"
-                                    className_user="chat-item__text_ellipsis medium-font"
-                                    className_preview="chat-item__text_ellipsis thin-font"
-                                    text_user="Sergey Sergeev"
-                                }}}
-                                <div class="chat-item__msgcounter rounding">1</div>
-                            </div>
-                            <div class="chat-item">
-                            <div class="chat-item__picture rounding"></div>
-                            {{{ ChatItem
-                                className="chat-item__text"
-                                className_user="chat-item__text_ellipsis medium-font"
-                                className_preview="chat-item__text_ellipsis thin-font"
-                                text_user="Anton Antonov"
-                            }}}
-                            <div class="chat-item__msgcounter rounding">1</div>
-                        </div>
+                      {{{ ChatItem userName="Sergey Sergeev" }}}
+                      {{{ ChatItem userName="Anton Anton" }}}
                     </div>
                 </div>
                 <div class="chat-area">

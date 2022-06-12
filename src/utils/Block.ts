@@ -1,14 +1,18 @@
 import EventBus from "./EventBus";
-import { customAlphabet } from "../../node_modules/nanoid/index";
+import { customAlphabet } from "nanoid";
 import Handlebars from "handlebars";
 
-interface BlockMeta {
-  props: any;
+interface BlockMeta<P = any> {
+  props: P;
+};
+
+export interface BlockProps {
+  events?: Record<string, (() => void) | undefined>
 };
 
 type Events = Values<typeof Block.EVENTS>;
 
-export default class Block {
+export default class Block<P = any> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -20,7 +24,7 @@ export default class Block {
   public id = this.nanoid();
 
   private _element: Nullable<HTMLElement> | null = null;
-  protected props: any;
+  protected props: P;
   protected children: Record<string, any>;
   private _meta: BlockMeta;
   private eventBus: () => EventBus<Events>;
@@ -34,10 +38,7 @@ export default class Block {
 
     this.props = this._makePropsProxy(props);
 
-  
-    this._meta = {
-      props
-    };    
+    this._meta = { props };    
 
     this.eventBus = () => eventBus;
     this.initChildren();
@@ -59,12 +60,12 @@ export default class Block {
   initChildren() {
   }
 
-  _componentDidMount(oldProps: any) {
+  _componentDidMount(oldProps: P) {
     this.componentDidMount(oldProps);
   }
 
     // Может переопределять пользователь, необязательно трогать
-  componentDidMount(oldProps: any) {
+  componentDidMount(oldProps: P) {
   
   }
 
@@ -72,7 +73,7 @@ export default class Block {
       this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
-  _componentDidUpdate(oldProps: any, newProps: any) {
+  _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -82,11 +83,11 @@ export default class Block {
   }
 
     // Может переопределять пользователь, необязательно трогать
-  componentDidUpdate(oldProps: any, newProps: any) {
+  componentDidUpdate(oldProps: P, newProps: P) {
     return true;
   }
 
-  setProps = (nextProps: any) => {
+  setProps = (nextProps: P) => {
     if (!nextProps) {
       return;
     }
@@ -123,18 +124,14 @@ export default class Block {
     return this.element!;
   }
 
-  _makePropsProxy(props: any) {
+  _makePropsProxy(props: P) {
     // Можно и так передать this
     // Такой способ больше не применяется с приходом ES6+
     const self = this;
     
-    return new Proxy(props as any, {
+    return new Proxy(props as unknown as object, {
       get(target: any, propName: string){
-        // if (propName in target) {
-          return target[propName];
-        // } else {
-        //   throw new Error("Property not found"); 
-        // };
+        return target[propName];
       },
       set(target: any, propName: string, value: any) {
         const currentValue = target[propName];
@@ -185,7 +182,7 @@ export default class Block {
     });
   }
 
-  compile(templateString: string, context: any) {
+  compile(templateString: string, context: P) {
     const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
 
     const template = Handlebars.compile(templateString)
@@ -212,7 +209,7 @@ export default class Block {
     return fragment.content;
   }
 
-  getChildren(propsAndChildren: any): any {
+  getChildren(propsAndChildren: P): any {
     const props: any = {};
     const children: any = {};
 
