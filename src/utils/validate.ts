@@ -70,16 +70,6 @@ export function checkPhone (phone: string): string {
   return err.textContent;
 };
 
-export function checkMessahe (mesage: string): void {
-  const sendButton: HTMLElement = document.querySelector(`#sendButton`) as HTMLElement;
-
-  if (mesage !== "") {
-    sendButton.disabled = disabled;
-  } else {
-    sendButton.disabled = null;
-  };
-};
-
 export function submitLoginPage (login: string, password: string): void {
   const loginReturn: string = checkLogin(login);
   if (loginReturn !== "") {
