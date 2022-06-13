@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "rm -rf dist .parcel-cache && parcel ./src/index.html --no-cache",
-    "start": "rm -rf dist .parcel-cache && parcel build ./src/pages/login/index.hbs ./src/pages/errors/*.hbs --no-cache --no-source-maps && node ./src/server/server.js"
+    "start": "rm -rf dist .parcel-cache && parcel build ./src/index.html --no-cache --no-source-maps && node ./src/server/server.js"
   },
   "keywords": [],
   "author": "",
@@ -27,5 +27,8 @@
   "engines": {
     "node": "^18",
     "npm": "^8"
+  },
+  "alias": {
+    "nanoid": "./node_modules/nanoid/index.browser"
   }
 }

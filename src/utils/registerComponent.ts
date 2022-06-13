@@ -1,5 +1,5 @@
 import Block from "./Block";
-import Handlebars, { HelperOptions } from "handlebars/runtime";
+import Handlebars, { HelperOptions } from "../../node_modules/handlebars/dist/handlebars.js";
 
 export function registerComponent (Component: typeof Block) {
   Handlebars.registerHelper(Component.name, function({ hash , data }: HelperOptions) {
