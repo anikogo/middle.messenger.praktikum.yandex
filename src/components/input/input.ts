@@ -11,6 +11,9 @@ interface InputProps extends BlockProps {
 }
 
 export default class Input extends Block {
+
+  static get getCompName(){return "Input"};
+
   constructor(props: InputProps) {
     props.inType = props.inType || "text";
     props.events = props.events || {};
