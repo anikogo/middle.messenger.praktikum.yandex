@@ -23,7 +23,7 @@ export default class LoginPage extends Block {
             <main>
                 <div class="data-entry-field">
                     <h1>Authorization</h1>
-                    {{{ Input name="login" idName="login" className="input__main-input js-input-validation" pholderText="login" onBlur=checkNameEvent onFocus=checkNameEvent }}}
+                    {{{ Input name="login" idName="login" className="input__main-input js-input-validation" pholderText="login" onBlur=checkLoginEvent onFocus=checkLoginEvent }}}
                     {{{ Input name="password" idName="password" className="input__main-input js-input-validation" pholderText="password" onBlur=checkPwdEvent onFocus=checkPwdEvent inType="password"}}}
                     <div class="button__row-container">
                         {{{ Button label="Sign in" className="button__primary-button rounding" onClick=checkSubmitEvent }}}
