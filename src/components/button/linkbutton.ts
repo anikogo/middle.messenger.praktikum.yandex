@@ -10,6 +10,9 @@ interface LinkButtonProps extends BlockProps {
 };
 
 export default class LinkButton extends Block {
+
+  static get getCompName(){return "LinkButton"};
+
   constructor(props: LinkButtonProps) {
     props.events = props.events || {};
     props.events.click = props.onClick;

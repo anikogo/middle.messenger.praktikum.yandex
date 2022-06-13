@@ -10,6 +10,9 @@ interface InputProps {
 }
 
 export default class TextArea extends Block {
+
+  static get getCompName(){return "TextArea"};
+
   constructor({...props}) {
     if (!props.events) {
       props.events = {};

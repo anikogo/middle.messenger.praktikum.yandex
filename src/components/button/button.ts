@@ -8,6 +8,9 @@ interface ButtonProps extends BlockProps {
 }
 
 export default class Button extends Block {
+
+  static get getCompName(){return "Button"};
+  
   constructor(props: ButtonProps) {
     props.events = props.events || {};
     props.events.click = props.onClick;

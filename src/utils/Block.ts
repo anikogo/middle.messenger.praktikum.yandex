@@ -1,6 +1,7 @@
 import EventBus from "./EventBus";
 import { customAlphabet } from "nanoid";
-import Handlebars from "../../node_modules/handlebars/dist/handlebars.js";
+//@ts-ignore
+import Handlebars from "../../node_modules/handlebars/dist/handlebars";
 
 interface BlockMeta<P = any> {
   props: P;
@@ -19,6 +20,8 @@ export default class Block<P = any> {
     FLOW_CDU: "flow:component-did-update",
     FLOW_RENDER: "flow:render"
   } as const;
+
+  static get getCompName(){return ""};
 
   public nanoid = customAlphabet('qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM', 10);
   public id = this.nanoid();

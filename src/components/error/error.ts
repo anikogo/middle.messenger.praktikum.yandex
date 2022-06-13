@@ -6,6 +6,9 @@ interface ErrorProps extends BlockProps {
 }
 
 export default class Error extends Block {
+
+  static get getCompName(){return "Error"};
+
   constructor(props: ErrorProps) {
     super(props);
   }

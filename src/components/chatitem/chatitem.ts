@@ -5,6 +5,9 @@ interface ChatItemProps extends BlockProps {
 }
 
 export default class ChatItem extends Block {
+
+  static get getCompName(){return "ChatItem"};
+
   constructor(props: ChatItemProps) {
     super(props);
   }
