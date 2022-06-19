@@ -35,7 +35,11 @@ body {
     width: 100%;
     height: 100%;
     padding: 0px;
-    margin: 0px;
+    margin: 0px; 
+}
+
+#app {
+  height: 100%;
 }
 
 main{
@@ -101,6 +105,18 @@ h1, h2 {
     font-size: 400;
     font-weight: bold;
     text-align: center;
+}
+
+.error_hide {
+  display: none;
+}
+
+.error_visible {
+  display: block;
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 10px;
 }
 
 @import "_forms.scss";
