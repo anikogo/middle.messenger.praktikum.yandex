@@ -3,6 +3,7 @@ $light-color: rgba(0,0,0,0.35);
 $ultralight-color: rgba(0,0,0,0.15);
 
 @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;700&display=swap');
 
 @mixin flexColumn {
     display: flex;
@@ -35,7 +36,7 @@ body {
     width: 100%;
     height: 100%;
     padding: 0px;
-    margin: 0px; 
+    margin: 0px;
 }
 
 #app {
@@ -53,7 +54,7 @@ h1, h2 {
 }
 
 * {
-    font-family: 'Cabin', sans-serif;
+    font-family: 'Nunito', sans-serif;
 }
 
 .data-entry-field {
