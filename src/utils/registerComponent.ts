@@ -1,11 +1,9 @@
 import Block from "./Block";
-//@ts-ignore
-import Handlebars, { HelperOptions } from "../../node_modules/handlebars/dist/handlebars";
+import Handlebars, { HelperOptions } from "handlebars";
 
 export function registerComponent (Component: typeof Block) {
   Handlebars.registerHelper(Component.getCompName, function({ hash , data }: HelperOptions) {
 
-    console.log(Component.name)
     if (!data.root.children) {
       data.root.children = {};
     };

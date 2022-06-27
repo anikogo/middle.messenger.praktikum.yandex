@@ -1,6 +1,6 @@
 import { renderDOM } from "./utils/renderDOM";
 import { LoginPage, RegisterPage, ChatsPage, SettingsPage, ChangepwdPage, ChangepicPage, ErrorPage404, ErrorPage500 } from "./pages";
-import { LinkButton, Button, Input, TextArea, Error, ChatItem } from "./components";
+import { Button, Input, TextArea, Error, ChatItem } from "./components";
 import { registerComponent } from "./utils/registerComponent";
 
 function router() {
@@ -13,6 +13,7 @@ function router() {
   const errorPage404 = new ErrorPage404();
   const errorPage500 = new ErrorPage500();
 
+  //TODO: убрать, когда будет нормальный роутер
   switch (window.location.hash) {
     case '#register':
       renderDOM("#app", registerPage);
@@ -42,7 +43,6 @@ function router() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  registerComponent(LinkButton);
   registerComponent(Button);
   registerComponent(Input);
   registerComponent(Error);

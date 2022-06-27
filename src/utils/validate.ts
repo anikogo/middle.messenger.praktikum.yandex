@@ -1,126 +1,28 @@
-export function checkName(name: string): string {
-  const reg: RegExp = /^[A-ZА-Я]{1}[a-zа-я-]*$/;
-  const err: HTMLElement = document.querySelector(`#error`) as HTMLElement;
-  if (reg.test(name)) {
-    err.className === "error_visible" ? err.className = "error_hide"  : null;
-    err.textContent = "";
-  } else {
-    err.className === "error_hide" ? err.className = "error_visible"  : null;
-    err.textContent = "Wrong name format"  
-  };
-  return err.textContent;
+const regExps: Record<string, RegExp> = {
+  "name": /^[A-ZА-Я]{1}[a-zа-я-]*$/,
+  "login": /^(?!\d+$)[[\w-]{3,20}$/,
+  "password": /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d-_]{8,40}$/,
+  "email": /^[\w-]+@{1}[a-z]+\.{1}[a-z]+$/,
+  "phone": /^\+?[0-9]{10,15}$/,
+}
+
+function _checkField (value: string, validationType: string, errorElement: HTMLElement): void {
+  const isMatch = regExps[validationType].test(value);
+  errorElement.className = isMatch ? "error_hidden" : "error_visible";
+  errorElement.textContent = isMatch ? "" : `Wrong ${validationType} format`;
 };
 
-export function checkLogin(login: string): string {
-  const reg: RegExp = /^(?!\d+$)[[\w-]{3,20}$/;
-  const err: HTMLElement = document.querySelector(`#error`) as HTMLElement;
+export function submitAllFields (fields: NodeListOf<Element> | undefined): void {
+  if (!fields) return;
 
-  if (reg.test(login)) {
-    err.className === "error_visible" ? err.className = "error_hide"  : null;
-    err.textContent = "";
-  } else {
-    err.className === "error_hide" ? err.className = "error_visible"  : null;
-    err.textContent = "Wrong login format";
+  for(const field of fields) {
+    field.dispatchEvent(new FocusEvent("blur"));
   };
-  return err.textContent;
+
 };
 
-
-export function checkPassword (password: string): string {
-  const reg: RegExp = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d-_]{8,40}$/;
-  const err: HTMLElement = document.querySelector(`#error`) as HTMLElement;
-
-  if (reg.test(password)) {
-    err.className === "error_visible" ? err.className = "error_hide"  : null;
-    err.textContent = "";
-  } else {
-    err.className === "error_hide" ? err.className = "error_visible"  : null;
-    err.textContent = "Wrong password format";
+export function validate(type: string) {
+  return function (e: any) {
+    return _checkField(e.target?.value, type, (document.getElementById(`${e.target.id}Error`)) as HTMLElement);
   };
-  return err.textContent;
-};
-
-export function checkEmail (email: string): string {
-  const reg: RegExp = /^[\w-]+@{1}[a-z]+\.{1}[a-z]+$/;
-  const err: HTMLElement = document.querySelector(`#error`) as HTMLElement;
-
-  if (reg.test(email)) {
-    err.className === "error_visible" ? err.className = "error_hide"  : null;
-    err.textContent = "";
-  } else {
-    err.className === "error_hide" ? err.className = "error_visible"  : null;
-    err.textContent = "Wrong email format";
-  };
-  return err.textContent;
-};
-
-export function checkPhone (phone: string): string {
-  const reg: RegExp = /^\+?[0-9]{10,15}$/;
-  const err: HTMLElement = document.querySelector(`#error`) as HTMLElement;
-
-  if (reg.test(phone)) {
-    err.className === "error_visible" ? err.className = "error_hide"  : null;
-    err.textContent = "";
-  } else {
-    err.className === "error_hide" ? err.className = "error_visible"  : null;
-    err.textContent = "Wrong phone number format";
-  };
-  return err.textContent;
-};
-
-export function submitLoginPage (fields: Record<string, string>): void {
-  const validators: Record<string, any>= {
-    login: checkLogin,
-    password: checkPassword,
-  };
-
-  for(const field in fields) {
-    const result = validators[field](fields[field]);
-    if (result !== "") {
-      return;
-    };
-  };
-
-  location.href = "#chat"; 
-};
-
-export function submitRegPage (fields: Record<string, string>): void {
-  const validators: Record<string, any>= {
-    firstName: checkName,
-    secondName: checkName,
-    login: checkLogin,
-    email: checkEmail,
-    phone: checkPhone,
-    password: checkPassword,
-    rPassword: checkPassword,
-  }
-
-  for(const field in fields) {
-    const result = validators[field](fields[field]);
-    if (result !== "") {
-      return;
-    };
-  }
-
-  location.href = "#app"; 
-};
-
-export function submitSettingsPage (fields: Record<string, string>): void {
-  const validators: Record<string, any>= {
-    firstName: checkName,
-    secondName: checkName,
-    email: checkEmail,
-    phone: checkPhone,
-  };
-
-  for(const field in fields) {
-    if (field in validators) {
-      const result = validators[field](fields[field]);
-      if (result !== "") {
-        return;
-      };
-    };
-  };
-
-  location.href = "#chat"; 
 };

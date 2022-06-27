@@ -8,7 +8,7 @@ interface InputProps extends BlockProps {
   idName?: string;
   onBlur?: () => void;
   onFocus?: () => void;
-}
+};
 
 export default class Input extends Block {
 
@@ -20,9 +20,11 @@ export default class Input extends Block {
     props.events.blur = props.onBlur;
     props.events.focus = props.onFocus;
     super(props);
-  }
+  };
 
   render() {
-    return `<input id="{{ idName }}" name="{{ name }}" class="{{ className }}" placeholder="{{ pholderText }}" type="{{ inType }}" />`;
-  }
+    return /*html*/`
+			<input id="{{ idName }}" name="{{ name }}" class="{{ className }}" placeholder="{{ pholderText }}" type="{{ inType }}" />
+		`;
+  };
 };

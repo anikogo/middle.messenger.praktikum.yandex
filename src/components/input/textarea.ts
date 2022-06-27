@@ -1,13 +1,14 @@
 import Block from "../../utils/Block";
 
-interface InputProps {
-  pholderText?: string;
-  className?: string;
-  autofocus?: string;
-  idName?: string;
-  onBlur?: () => void;
-  onFocus?: () => void;
-}
+// TODO: заюзать интерфейс
+// interface InputProps {
+//   pholderText?: string;
+//   className?: string;
+//   autofocus?: string;
+//   idName?: string;
+//   onBlur?: () => void;
+//   onFocus?: () => void;
+// };
 
 export default class TextArea extends Block {
 
@@ -20,9 +21,11 @@ export default class TextArea extends Block {
     props.events.blur = props.onBlur;
     props.events.focus = props.onFocus;
     super(props);
-  }
+  };
 
   render() {
-    return `<textarea id="{{ idName }}" class="{{ className }}" placeholder="{{ pholderText }}" {{ focus }}></textarea>`;
-  }
+    return /*template*/`
+			<textarea id="{{ idName }}" class="{{ className }}" placeholder="{{ pholderText }}" {{ focus }}></textarea>
+		`;
+  };
 };

@@ -35,19 +35,19 @@ export class HTTPTransport  {
   delete = (url: string, options: any = {}) => {
       return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
   };
-  
+
   request = (url:string = 'localhost', options: any = { method: METHODS.GET }, timeout: number = 5000) => {
       const {method, data} = options;
 
       return new Promise((resolve, rejects) => {
           const xhr: XMLHttpRequest = new XMLHttpRequest();
-          
+
           if (method === METHODS.GET) {
               xhr.open(method, url + queryStringify(data));
           } else {
               xhr.open(method, url);
-          }
-          
+          };
+
           xhr.timeout = timeout;
 
           xhr.onload = function() {
@@ -63,7 +63,7 @@ export class HTTPTransport  {
             xhr.send();
           } else {
             xhr.send(data);
-          }
+          };
       });
   };
 };
@@ -77,7 +77,7 @@ async function fetchWithRetry(url: string, options: any) {
       response = await (new HTTPTransport()).get(url);
       return response;
     } catch(e) {
-      console.error(`retry number ${options.retries - retries + 1} failed`)
+      console.error(`retry number ${options.retries - retries + 1} failed`);
     };
     retries--;
     if (retries <= 0) {

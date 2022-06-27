@@ -2,7 +2,7 @@ $dark-color: rgba(0,0,0,0.75);
 $light-color: rgba(0,0,0,0.35);
 $ultralight-color: rgba(0,0,0,0.15);
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;700&display=swap');
 
 @mixin flexColumn {
     display: flex;
@@ -53,7 +53,7 @@ h1, h2 {
 }
 
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Cabin', sans-serif;
 }
 
 .data-entry-field {
@@ -62,6 +62,7 @@ h1, h2 {
     height: 100%;
     margin: auto;
     justify-content: center;
+    animation: ani_opacity 500ms;
 }
 
 ::placeholder {
@@ -107,18 +108,23 @@ h1, h2 {
     text-align: center;
 }
 
-.error_hide {
-  display: none;
+.error_hidden {
+  visibility: hidden;
+  height: 13px;
+  margin-top: 2px;
 }
 
 .error_visible {
-  display: block;
+  height: 13px;
+  visibility: visible;
   color: red;
-  text-align: center;
-  margin-top: 10px;
+  text-align: right;
+  margin-top: 2px;
   font-size: 10px;
+  animation: ani_opacity 700ms;
 }
 
 @import "_forms.scss";
 @import "_chat.scss";
 @import "_settings.scss";
+@import "_animations.scss";
