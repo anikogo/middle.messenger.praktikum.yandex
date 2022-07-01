@@ -13,8 +13,8 @@ export default class ChatItem extends Block {
   };
 
   render() {
-    return /*html*/`
-			<div class="chat-item">
+    return /*template*/`
+			<div class="chat-item rounding">
 				<div class="chat-item__picture rounding"></div>
 				<div class="chat-item__text">
 					<div class="chat-item__text_ellipsis medium-font">{{ userName }}</div>

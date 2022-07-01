@@ -1,55 +1,33 @@
-import { renderDOM } from "./utils/renderDOM";
-import { LoginPage, RegisterPage, ChatsPage, SettingsPage, ChangepwdPage, ChangepicPage, ErrorPage404, ErrorPage500 } from "./pages";
-import { Button, Input, TextArea, Error, ChatItem } from "./components";
+import { LoginPage,
+  RegisterPage,
+  ChatsPage,
+  SettingsPage,
+  ChangepwdPage,
+  ChangepicPage,
+} from "./pages";
+import { Button, Input, TextArea, Error, ChatItem, Message, CogButton, DivButton } from "./components";
 import { registerComponent } from "./utils/registerComponent";
-
-function router() {
-  const loginPage = new LoginPage();
-  const registerPage = new RegisterPage();
-  const chatsPage = new ChatsPage();
-  const settingsPage = new SettingsPage();
-  const changepwdPage = new ChangepwdPage();
-  const changepicPage = new ChangepicPage();
-  const errorPage404 = new ErrorPage404();
-  const errorPage500 = new ErrorPage500();
-
-  //TODO: убрать, когда будет нормальный роутер
-  switch (window.location.hash) {
-    case '#register':
-      renderDOM("#app", registerPage);
-      break;
-    case '#chat':
-      renderDOM("#app", chatsPage);
-      break;
-    case '#settings':
-      renderDOM("#app", settingsPage);
-      break;
-    case '#changepwd':
-      renderDOM("#app", changepwdPage);
-      break;
-    case '#changepic':
-      renderDOM("#app", changepicPage);
-      break;
-    case '#404':
-      renderDOM("#app", errorPage404);
-      break;
-    case '#500':
-      renderDOM("#app", errorPage500);
-      break;
-    default:
-      renderDOM("#app", loginPage);
-      break;
-  }
-}
+import Router from "./utils/Router";
 
 document.addEventListener("DOMContentLoaded", () => {
   registerComponent(Button);
+  registerComponent(CogButton);
+  registerComponent(DivButton);
   registerComponent(Input);
   registerComponent(Error);
   registerComponent(ChatItem);
   registerComponent(TextArea);
+  registerComponent(Message);
 
-  router();
+  const router = new Router();
+
+  router
+    .use("/", LoginPage)
+    .use("/register", RegisterPage)
+    .use("/settings", SettingsPage)
+    .use("/chat", ChatsPage)
+    .use("/changepwd", ChangepwdPage)
+    .use("/changepic", ChangepicPage)
+    .use("/login", LoginPage)
+    .start();
 });
-
-window.addEventListener("hashchange", router);

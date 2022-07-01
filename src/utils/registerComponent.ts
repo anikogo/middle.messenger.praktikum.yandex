@@ -13,4 +13,5 @@ export function registerComponent (Component: typeof Block) {
     children[component.id] = component;
     return `<div data-id="${component.id}"></div>`;
   });
+
 };

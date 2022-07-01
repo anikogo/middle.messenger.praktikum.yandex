@@ -1,14 +1,14 @@
 import Block, {BlockProps} from "../../utils/Block";
 
 interface ButtonProps extends BlockProps {
-  label: string;
+  onClick?: () => void;
   className?: string;
-  onClick: () => void;
+  divContent?: () => void;
 };
 
-export default class Button extends Block {
+export default class DivButton extends Block {
 
-  static get getCompName(){return "Button"};
+  static get getCompName(){return "DivButton"};
 
   constructor(props: ButtonProps) {
     const {onClick, ...rest} = props;
@@ -16,6 +16,6 @@ export default class Button extends Block {
   };
 
   render() {
-    return /*template*/`<button class="{{ className }}">{{ label }}</button>`;
+    return /*template*/`<div class="{{ className }}">{{ divContent }}</div>`;
   };
 };

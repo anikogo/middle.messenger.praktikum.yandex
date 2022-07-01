@@ -1,10 +1,10 @@
 @mixin userPic {
     display: block;
     @include styleBorder;
-    height: 100px;
-    min-height: 100px;
-    width: 100px;
-    min-width: 100px;
+    height: 83px;
+    min-height: 83px;
+    width: 83px;
+    min-width: 83px;
     background-color: $ultralight-color;
     margin-right: 25px;
 }

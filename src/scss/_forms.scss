@@ -70,10 +70,19 @@
 
 .button__primary-button:hover, .button__send-message:hover {
     background-color: black;
+    transition: 700ms;
 }
 
 .button__secondary-button:hover, .button__secondary-setting-button:hover, .button__secondary-picchange-button:hover {
     color: $dark-color;
+    transition: 700ms;
+}
+
+.button__cog-button {
+    display: block;
+    border: none;
+    margin-top: 9px;
+    margin-right: 10px;
 }
 
 .input__main-input {
@@ -85,6 +94,7 @@
     height: 35;
     font-size: 20;
     padding: 0 0 0 5;
+    box-sizing: border-box;
 }
 
 .input__main-input:focus {

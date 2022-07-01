@@ -16,15 +16,13 @@ export default class Input extends Block {
 
   constructor(props: InputProps) {
     props.inType = props.inType || "text";
-    props.events = props.events || {};
-    props.events.blur = props.onBlur;
-    props.events.focus = props.onFocus;
-    super(props);
+    const {onBlur, onFocus, ...rest} = props;
+    super({...rest, events: {blur: onBlur, focus: onFocus}});
   };
 
   render() {
-    return /*html*/`
-			<input id="{{ idName }}" name="{{ name }}" class="{{ className }}" placeholder="{{ pholderText }}" type="{{ inType }}" />
-		`;
+    return /*template*/`
+      <input id="{{ idName }}" name="{{ name }}" class="{{ className }}" placeholder="{{ pholderText }}" type="{{ inType }}" />
+    `;
   };
 };

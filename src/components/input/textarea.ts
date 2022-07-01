@@ -15,11 +15,6 @@ export default class TextArea extends Block {
   static get getCompName(){return "TextArea"};
 
   constructor({...props}) {
-    if (!props.events) {
-      props.events = {};
-    };
-    props.events.blur = props.onBlur;
-    props.events.focus = props.onFocus;
     super(props);
   };
 

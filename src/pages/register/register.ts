@@ -1,5 +1,6 @@
 import Block from "../../utils/Block";
-import { validate, submitAllFields } from "../../utils/validate";
+import Router from "../../utils/Router";
+import { validate, submitAllFields } from "../../utils/Validate";
 
 export default class RegisterPage extends Block {
   constructor(props?: any) {
@@ -10,6 +11,10 @@ export default class RegisterPage extends Block {
       checkEmailEvent: validate("email"),
       checkPhoneEvent: validate("phone"),
       checkSubmitEvent: () => submitAllFields(this.element?.querySelectorAll(".js-input-validation")),
+      goToLogin: () => {
+        const router = new Router();
+        router.go("/login");
+      },
     });
   };
 
@@ -84,7 +89,7 @@ export default class RegisterPage extends Block {
           }}}
           {{{ Error idName="rPasswordError" className="error_hidden"}}}
           <div class="button__row-container">
-            {{{ Button label="Sign in" className="button__secondary-button rounding" }}}
+            {{{ Button label="Sign in" className="button__secondary-button rounding" onClick=goToLogin }}}
             {{{ Button label="Register" className="button__primary-button rounding" onClick=checkSubmitEvent }}}
           </div>
         </div>

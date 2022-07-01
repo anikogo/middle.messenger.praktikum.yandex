@@ -1,5 +1,6 @@
 import Block from "../../utils/Block";
-import { validate, submitAllFields } from "../../utils/validate";
+import { validate, submitAllFields } from "../../utils/Validate";
+import Router from "../../utils/Router";
 
 export default class SettingsPage extends Block {
   constructor(props?: any) {
@@ -9,6 +10,10 @@ export default class SettingsPage extends Block {
       checkEmailEvent: validate("email"),
       checkPhoneEvent: validate("phone"),
       checkSubmitEvent: () => submitAllFields(this.element?.querySelectorAll(".js-input-validation")),
+      goToPwdChange: () => {
+        const router = new Router();
+        router.go("/changepic");
+      },
     });
   };
 
@@ -18,7 +23,10 @@ export default class SettingsPage extends Block {
         <div class="data-entry-field">
           <h1>Settings</h1>
           <div class="settings__user-container">
-            <div><a class="settings__user-pic rounding" href="#changepic"></a></div>
+            {{{ DivButton
+              className="settings__user-pic rounding"
+              onClick=goToPwdChange
+            }}}
             <div class="input__settings-name-container">
               {{{ Input
                 name="firstName"
@@ -66,8 +74,16 @@ export default class SettingsPage extends Block {
           }}}
           {{{ Error idName="phoneError" className="error_hidden"}}}
           <div class="button__row-container">
-            {{{ Button className="button__secondary-setting-button rounding" label="Change password" }}}
-            {{{ Button label="Save" className="button__primary-button rounding" onClick=checkSubmitEvent }}}
+            {{{ Button
+              className="button__secondary-setting-button rounding"
+              label="Change password"
+              onClick=goToPwdChange
+            }}}
+            {{{ Button
+              label="Save"
+              className="button__primary-button rounding"
+              onClick=checkSubmitEvent
+            }}}
           </div>
         </div>
       </main>

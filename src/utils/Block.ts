@@ -2,8 +2,13 @@ import EventBus from "./EventBus";
 import { customAlphabet } from "nanoid";
 import Handlebars from "handlebars";
 
-interface BlockMeta<P = any> {
-  props: P;
+// export interface BlockMeta<P = any> {
+//   props: P;
+// };
+
+export interface BlockMeta<P> extends Function {
+  new (props: P): Block<P>;
+  componentName?: string;
 };
 
 export interface BlockProps {

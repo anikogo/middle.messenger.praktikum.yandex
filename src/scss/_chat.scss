@@ -30,6 +30,13 @@
         width: 25px;
         margin-top: 9px;
         margin-right: 10px;
+
+        & svg:hover {
+            fill: $light-color;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            border-radius: 50%;
+            animation: ani_rotation 60s;
+        }
     }
 
     &__list {
@@ -41,7 +48,7 @@
 
 .chat-menu__list::-webkit-scrollbar {
     width: 2px;
-    background-color: #f5f5f5;    
+    background-color: #f5f5f5;
 }
 
 .chat-menu__list::-webkit-scrollbar-thumb {
@@ -60,7 +67,7 @@
     &__text {
         width: 70%;
         margin-right: 10px;
-        
+
         &_ellipsis {
             overflow: hidden;
             white-space: nowrap;
@@ -69,13 +76,14 @@
     }
 
     &__msgcounter {
-        width: 18px; 
+        width: 18px;
         height: 18px;
         background-color: $dark-color;
         color: white;
         text-align: center;
         line-height: 18px;
         font-size: 15;
+        box-shadow: 0 0 4px rgba(0,0,0,0.5);
     }
 
     &__picture {
@@ -86,6 +94,7 @@
         min-height: 40px;
         margin-right: 10px;
         background-color: white;
+        box-shadow: 0 0 4px rgba(0,0,0,0.5);
     }
 }
 
@@ -97,6 +106,7 @@
     @include flexColumn;
     height: 100%;
     width: 77%;
+    box-sizing: border-box;
 
     &__header {
         @include bottomBorder;
@@ -113,6 +123,7 @@
     &__footer {
         @include styleBorder;
         @include flexRow;
+        box-sizing: border-box;
         height: 100px;
         width: 100%;
         background-color: #f5f5f5;;
@@ -128,6 +139,52 @@
     &__content {
         flex-grow: 1;
         flex-shrink: 0;
+        box-sizing: border-box;
         flex-basis: auto;
+        overflow-y: scroll;
+        max-height: calc(100% - 150px);
+
+        &::-webkit-scrollbar {
+            width: 2px;
+            background-color: #f5f5f5;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $ultralight-color;
+        }
+
     }
+}
+
+.message {
+    width: 51%;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    margin-top: 20px;
+    font-size: 14px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    word-wrap: break-word;
+
+    &__incoming-message {
+        background-color: $ultralight-color;
+        color: $dark-color;
+        float: left;
+        margin-left: 20px;
+    }
+
+    &__outgoing-message {
+        background-color: $dark-color;
+        color: white;
+        float: right;
+        margin-right: 20px;
+    }
+
+    &__footer {
+        width: 100%;
+        height: 15px;
+        text-align: right;
+        font-size: 10px;
+        color: grey;
+    }
+
 }

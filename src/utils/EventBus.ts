@@ -30,5 +30,5 @@ export default class EventBus<E extends string = string, M extends { [K in E]: u
     this.listeners[event]!.forEach(function (listener) {
       listener(...args);
     });
-  }
+  };
 };
