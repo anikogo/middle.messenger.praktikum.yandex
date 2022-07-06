@@ -1,6 +1,6 @@
 import Block from "../../utils/Block";
 import Router from "../../utils/Router";
-import { validate, submitAllFields } from "../../utils/Validate";
+import { validate, submitAllFields } from "../../utils/validate";
 
 export default class ChangepwdPage extends Block {
   constructor(props?: any) {

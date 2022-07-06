@@ -30,7 +30,7 @@ export class HTTPTransport  {
     return new Promise((resolve, rejects) => {
       const xhr: XMLHttpRequest = new XMLHttpRequest();
 
-      if (method === METHODS.GET) {
+      if (method === METHODS.GET && data) {
           xhr.open(method, url + queryStringify(data));
       } else {
           xhr.open(method, url);
@@ -46,30 +46,32 @@ export class HTTPTransport  {
       xhr.onabort = rejects;
       xhr.onerror = rejects;
 
+      xhr.setRequestHeader("content-type", "application/json");
+      xhr.withCredentials = true;
+
       if (method === METHODS.GET) {
-        console.log (queryStringify(data));
         xhr.send();
       } else {
-        xhr.send(data);
+        xhr.send(JSON.stringify(data));
       };
     });
   };
 };
 
-async function fetchWithRetry(url: string, options: any) {
-  let retries = options.retries;
-  let response;
+// async function fetchWithRetry(url: string, options: any) {
+//   let retries = options.retries;
+//   let response;
 
-  while(retries > 0) {
-    try {
-      response = await (new HTTPTransport()).get(url);
-      return response;
-    } catch(e) {
-      console.error(`retry number ${options.retries - retries + 1} failed`);
-    };
-    retries--;
-    if (retries <= 0) {
-      throw new Error("error");
-    };
-  };
-};
+//   while(retries > 0) {
+//     try {
+//       response = await (new HTTPTransport()).get(url);
+//       return response;
+//     } catch(e) {
+//       console.error(`retry number ${options.retries - retries + 1} failed`);
+//     };
+//     retries--;
+//     if (retries <= 0) {
+//       throw new Error("error");
+//     };
+//   };
+// };

@@ -1,5 +1,5 @@
 import Block from "../../utils/Block";
-import { validate, submitAllFields } from "../../utils/Validate";
+import { validate, submitAllFields } from "../../utils/validate";
 import Router from "../../utils/Router";
 
 export default class SettingsPage extends Block {

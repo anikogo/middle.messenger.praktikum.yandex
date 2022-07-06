@@ -12,12 +12,12 @@ export default function isEqual(a: any, b: any): boolean {
     if (!b[key]) return false;
     if (typeof a[key] === "object" && a[key] !== null) {
       if (typeof b[key] !== "object" || b[key] === null) return false;
-      isEqual(a[key] , b[key]);
+      return isEqual(a[key] , b[key]);
     }
     else {
       if (a[key] !== b[key]) {
         return false;
-      }
+      };
     };
   };
   return true;

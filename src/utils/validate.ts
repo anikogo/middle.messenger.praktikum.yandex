@@ -6,23 +6,27 @@ const regExps: Record<string, RegExp> = {
   "phone": /^\+?[0-9]{10,15}$/,
 }
 
-function _checkField (value: string, validationType: string, errorElement: HTMLElement): void {
+function _checkField (value: string, validationType: string, errorElement: HTMLElement) {
   const isMatch = regExps[validationType].test(value);
-  errorElement.className = isMatch ? "error_hidden" : "error_visible";
-  errorElement.textContent = isMatch ? "" : `Wrong ${validationType} format`;
+  if (!isMatch) {
+    errorElement.className = "error_visible";
+    errorElement.textContent = `Wrong ${validationType} format`;
+  } else {
+    errorElement.className = "error_hidden";
+    errorElement.textContent = ``;
+  }
+
+  return isMatch;
 };
 
-export function submitAllFields (fields: NodeListOf<Element> | undefined): void {
+export function submitAllFields (fields: any) {
   if (!fields) return;
 
   for(const field of fields) {
     field.dispatchEvent(new FocusEvent("blur"));
   };
-
 };
 
-export function validate(type: string) {
-  return function (e: any) {
-    return _checkField(e.target?.value, type, (document.getElementById(`${e.target.id}Error`)) as HTMLElement);
-  };
+export function validate(type: string, value: string, id: string) {
+  return _checkField(value, type, (document.getElementById(`${id}Error`)) as HTMLElement);
 };

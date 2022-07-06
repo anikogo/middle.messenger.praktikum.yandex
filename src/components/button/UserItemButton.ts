@@ -1,0 +1,21 @@
+import Block, {BlockProps} from "../../utils/Block";
+
+interface ButtonProps extends BlockProps {
+  label: string;
+  className?: string;
+  onClick: () => void;
+};
+
+export default class UserItemButton extends Block {
+
+  static get getCompName(){return "UserItemButton"};
+
+  constructor(props: ButtonProps) {
+    const {onClick, ...rest} = props;
+    super({...rest, events: {click: onClick}});
+  };
+
+  render() {
+    return /*template*/`<button class="{{ className }}">{{ label }}</button>`;
+  };
+};

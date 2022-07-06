@@ -1,15 +1,42 @@
 import Block from "../../utils/Block";
 import Router from "../../utils/Router";
+import { HTTPTransport } from "../../utils/requestAPI";
+import { withStore } from "../../utils/withStore";
+import { State, Store } from "../../utils/Store";
 
-export default class ChatsPage extends Block {
+export class ChatsPage extends Block {
   constructor(props?: any) {
-    super({props,
+    super({
+      ...props,
       goToSettings: () => {
         const router = new Router();
         router.go("/settings")
       },
+      addNewChat: () => {
+        this.dispatch({isAddChatShown: true});
+      }
     });
   };
+
+  componentDidMount(): void {
+    const httptransport = new HTTPTransport();
+    httptransport.get("https://ya-praktikum.tech/api/v2/auth/user")
+      .then(result => {
+        if (result.status !== 200) {
+          const router = new Router();
+          router.go("/login");
+        } else {
+          this.dispatch({user: JSON.parse(result.response) })
+        };
+      });
+  };
+
+  public static mapStateToProps(state: State) {
+    return {
+      first_name: state.user.first_name,
+      second_name: state.user.second_name,
+    }
+  }
 
   render() {
     return /*template*/`
@@ -19,18 +46,20 @@ export default class ChatsPage extends Block {
             <div class="chat-menu__owner">
               {{{ CogButton onClick=goToSettings }}}
               <div>
-                <div class="medium-font-18">Artyom Niko</div>
+                <div class="medium-font-18">{{ first_name }} {{ second_name}}</div>
                 <div class="thin-font">Status</div>
               </div>
+              {{{ AddButton onClick=addNewChat }}}
+              {{{ ChatModal }}}
             </div>
-            {{{ Input
-              idName="searchChat"
-              className="input__search-input rounding"
-              pholderText="search chat..."
-            }}}
+            <div class="chat-menu__search-box">
+              {{{ Input
+                idName="searchChat"
+                className="input__search-input rounding"
+                pholderText="search chat..."
+              }}}
+            </div>
             <div class="chat-menu__list">
-              {{{ ChatItem userName="Sergey Sergeev" }}}
-              {{{ ChatItem userName="Anton Antonov" }}}
             </div>
           </div>
           <div class="chat-area">
@@ -58,3 +87,5 @@ export default class ChatsPage extends Block {
     `;
   };
 };
+
+export default withStore(ChatsPage);

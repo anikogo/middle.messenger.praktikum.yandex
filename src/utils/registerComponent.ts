@@ -1,7 +1,7 @@
-import Block from "./Block";
+import Block, { BlockMeta } from "./Block";
 import Handlebars, { HelperOptions } from "handlebars";
 
-export function registerComponent (Component: typeof Block) {
+export function registerComponent (Component: typeof Block | BlockMeta<any>) {
   Handlebars.registerHelper(Component.getCompName, function({ hash , data }: HelperOptions) {
 
     if (!data.root.children) {

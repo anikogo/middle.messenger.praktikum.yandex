@@ -5,9 +5,9 @@ interface ButtonProps extends BlockProps {
   onClick: () => void;
 };
 
-export default class CogButton extends Block {
+export default class AddButton extends Block {
 
-  static get getCompName(){return "CogButton"};
+  static get getCompName(){return "AddButton"};
 
   constructor(props: ButtonProps) {
     const {onClick} = props;
@@ -16,8 +16,8 @@ export default class CogButton extends Block {
 
   render() {
     return /*template*/`
-      <div class="chat-menu__owner-settings">
-        ${octicons["gear"].toSVG()}
+      <div class="chat-menu__add-chat">
+        ${octicons["plus"].toSVG()}
       </div>`;
   };
 };

@@ -1,6 +1,8 @@
 import EventBus from "./EventBus";
 import { customAlphabet } from "nanoid";
 import Handlebars from "handlebars";
+import { Store, State } from "./Store";
+import isEqual from "./isEqual";
 
 // export interface BlockMeta<P = any> {
 //   props: P;
@@ -13,6 +15,7 @@ export interface BlockMeta<P> extends Function {
 
 export interface BlockProps {
   events?: Record<string, (() => void) | undefined>;
+  store: Store<State>;
 };
 
 type Events = Values<typeof Block.EVENTS>;
@@ -61,24 +64,25 @@ export default class Block<P = any> {
   };
 
   init() {
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this.dispatchComponentDidMount()
   };
 
   initChildren() {
   };
 
-  private _componentDidMount(oldProps: P) {
-    this.componentDidMount(oldProps);
+  private _componentDidMount() {
+    this.componentDidMount();
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
   }
 
     // Может переопределять пользователь, необязательно трогать
-  componentDidMount(oldProps: P) {
+  componentDidMount() {
 
   };
 
-    dispatchComponentDidMoun() {
-      this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-    };
+  dispatchComponentDidMount() {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  };
 
   private _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);
@@ -91,10 +95,10 @@ export default class Block<P = any> {
 
     // Может переопределять пользователь, необязательно трогать
   componentDidUpdate(oldProps: P, newProps: P) {
-    return true;
+    return !isEqual(oldProps, newProps);
   };
 
-  setProps = (nextProps: P) => {
+  setProps = (nextProps: P): void => {
     if (!nextProps) {
       return;
     };
@@ -193,7 +197,6 @@ export default class Block<P = any> {
     const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
 
     const template = Handlebars.compile(templateString);
-
     const htmlString = template({...context, children: this.children});
 
     fragment.innerHTML = htmlString;

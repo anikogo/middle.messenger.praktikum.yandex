@@ -2,7 +2,6 @@ $dark-color: rgba(0,0,0,0.75);
 $light-color: rgba(0,0,0,0.35);
 $ultralight-color: rgba(0,0,0,0.15);
 
-@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;700&display=swap');
 
 @mixin flexColumn {
@@ -123,6 +122,14 @@ h1, h2 {
   margin-top: 2px;
   font-size: 10px;
   animation: ani_opacity 700ms;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block
 }
 
 @import "_forms.scss";

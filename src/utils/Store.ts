@@ -1,5 +1,7 @@
 import EventBus from './EventBus';
 
+export interface State extends Record<string, any> {}
+
 export type Dispatch<State> = (
   nextStateOrAction: Partial<State> | Action<State>,
   payload?: any,
@@ -11,7 +13,7 @@ export type Action<State> = (
   payload: any,
 ) => void;
 
-export class Store<State extends Record<string, any>> extends EventBus {
+export class Store<State> extends EventBus {
   private state: State = {} as State;
 
   constructor(defaultState: State) {

@@ -1,8 +1,11 @@
 export {default as Button} from "./button/button";
 export {default as CogButton} from "./button/cogbutton";
 export {default as DivButton} from "./button/divbutton";
+export {default as AddButton} from "./button/addbutton";
 export {default as ChatItem} from "./chatitem/chatitem";
+export {default as UserItemButton} from "./button/UserItemButton";
 export {default as Error} from "./error/error";
 export {default as Input} from "./input/input";
 export {default as TextArea} from "./input/textarea";
 export {default as Message} from "./chatmessage/chatmessage";
+export {default as CloseButton} from "./button/closebutton";
