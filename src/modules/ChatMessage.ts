@@ -1,5 +1,5 @@
-import Block, {BlockProps} from "../../utils/Block";
-import getMessageDate from "../../utils/getDate";
+import Block, {BlockProps} from "../utils/Block";
+import getMessageDate from "../utils/getDate";
 
 interface MessageProps extends BlockProps {
   className?: string;
@@ -7,9 +7,9 @@ interface MessageProps extends BlockProps {
   date: string;
 };
 
-export default class Message extends Block {
+export default class ChatMessage extends Block {
 
-  static get getCompName(){return "Message"};
+  static get getCompName(){return "ChatMessage"};
 
   constructor(props: MessageProps) {
     let {date, ...rest} = props;

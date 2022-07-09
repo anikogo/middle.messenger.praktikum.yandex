@@ -1,13 +1,14 @@
-import Block, {BlockProps} from "../../utils/Block";
+import Block, {BlockProps} from "../utils/Block";
+//@ts-ignore
 import octicons from "@primer/octicons";
 
 interface ButtonProps extends BlockProps {
   onClick: () => void;
 };
 
-export default class AddButton extends Block {
+export default class CogButton extends Block {
 
-  static get getCompName(){return "AddButton"};
+  static get getCompName(){return "CogButton"};
 
   constructor(props: ButtonProps) {
     const {onClick} = props;
@@ -16,8 +17,8 @@ export default class AddButton extends Block {
 
   render() {
     return /*template*/`
-      <div class="chat-menu__add-chat">
-        ${octicons["plus"].toSVG()}
+      <div class="chat-menu__owner-settings">
+        ${octicons["gear"].toSVG()}
       </div>`;
   };
 };

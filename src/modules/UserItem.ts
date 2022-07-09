@@ -1,6 +1,6 @@
 import Block, {BlockProps} from "../utils/Block";
-import octicons from "@primer/octicons";
 import { withStore } from "../utils/withStore";
+import { Store } from "../utils/Store";
 
 interface UserItemProps extends BlockProps {
   user: any;
@@ -15,14 +15,16 @@ export class UserItem extends Block {
     super({
       ...rest,
       events: {},
-      addUser: (e: Event) => {
-        props.store.dispatch({ searchUserSelected: [...props.store.state.searchUserSelected, this.props.user]})
-      },
+      handleButtonAddUser: (e: Event) => this.addUser(),
       removeUser: () => {
 
       },
     });
   };
+
+  addUser() {
+    this.dispatch({ searchUserSelected: [...props.store.state.searchUserSelected, this.props.user]})
+  }
 
   render() {
     return /*template*/`
@@ -31,8 +33,11 @@ export class UserItem extends Block {
         {{ user.first_name}}
         </div>
         <div class="user-item__buttons" style="display: flex; flex-direction: row;">
-          {{{ UserItemButton onClick=addUser label="add" }}}
-          {{{ UserItemButton onClick=removeUser label="remove" }}}
+        {{#if }}
+          {{{ Button onClick=addUser label="+" }}}
+        {{else}}
+          {{{ Button onClick=removeUser label="-" }}}
+        {{/if}}
         </div>
       </li>
     `;

@@ -1,4 +1,4 @@
-import Block, {BlockProps} from "../../utils/Block";
+import Block, {BlockProps} from "../utils/Block";
 
 interface InputProps extends BlockProps {
   name?: string;

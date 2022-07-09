@@ -1,4 +1,5 @@
-import Block, {BlockProps} from "../../utils/Block";
+import Block, {BlockProps} from "../utils/Block";
+//@ts-ignore
 import octicons from "@primer/octicons";
 
 interface ButtonProps extends BlockProps {

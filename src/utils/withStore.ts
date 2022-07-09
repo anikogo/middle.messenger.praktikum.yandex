@@ -51,13 +51,13 @@ export function withStore<P extends WithStateProps>(WrappedBlock: BlockMeta<P>) 
     //   }
     // }
 
-    dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any) {
+    dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any): void {
       window.store.dispatch(nextStateOrAction, payload)
     }
 
-    set(nextState: Partial<State>) {
-      window.store.set(nextState);
-    };
+    // set(nextState: Partial<State>) {
+    //   window.store.set(nextState);
+    // };
 
   } as BlockMeta<Omit<P, 'store'>>;
 }

@@ -1,4 +1,4 @@
-import Block, {BlockProps} from "../../utils/Block";
+import Block, {BlockProps} from "../utils/Block";
 
 interface ButtonProps extends BlockProps {
   label: string;
@@ -6,9 +6,9 @@ interface ButtonProps extends BlockProps {
   onClick: () => void;
 };
 
-export default class UserItemButton extends Block {
+export default class Button extends Block {
 
-  static get getCompName(){return "UserItemButton"};
+  static get getCompName(){return "Button"};
 
   constructor(props: ButtonProps) {
     const {onClick, ...rest} = props;
