@@ -76,8 +76,8 @@ export function registerTemplate(): string {
         }}}
         {{{ Error idName="rPasswordError" className="error_hidden"}}}
         <div class="button__row-container">
-          {{{ Button label="Sign in" className="button__secondary-button rounding" onClick=goToLogin }}}
-          {{{ Button label="Register" className="button__primary-button rounding" onClick=handleSubmit }}}
+          {{{ Button label="Sign in" className="button__secondary-button rounding" onClick=handleButtonLogin }}}
+          {{{ Button label="Register" className="button__primary-button rounding" onClick=handleButtonSubmit }}}
         </div>
       </div>
     </main>

@@ -226,8 +226,7 @@
 
 .add-chat-modal {
     position: absolute;
-    height: 400px;
-    width: 400px;
+    width: 300px;
     background-color: white;
     margin-top: 50px;
     margin-left: 100px;
@@ -261,7 +260,6 @@
     transition: 200ms;
 
     &:hover {
-        // padding: 10px;
         background-color: #fdfdfd;
     }
 }

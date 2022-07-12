@@ -1,8 +1,8 @@
 import Block from "../../utils/Block";
-import Router from "../../utils/Router";
 import { submitAllFields, validate }  from "../../utils/validate";
 import { HTTPTransport } from "../../utils/requestAPI";
 import { loginTemplate } from "./Login.tmpl";
+import goToPage from "../../utils/goToPage";
 
 export default class LoginPage extends Block {
 
@@ -18,7 +18,7 @@ export default class LoginPage extends Block {
       handleLoginInput: (e: InputEvent) => { this.loginInput = e.target?.value },
       handlePasswordInput: (e: InputEvent) => { this.passwordInput = e.target?.value },
       handleButtonSubmit: () => this.submitLogin(),
-      handleButtonRegister: () => this.goToRegister(),
+      handleButtonRegister: () => goToPage("/sign-up")
     });
   };
 
@@ -27,9 +27,7 @@ export default class LoginPage extends Block {
     httptransport.get("https://ya-praktikum.tech/api/v2/auth/user")
       .then(result => {
         if (result.status === 200) {
-          window.store.currentUser = JSON.parse(result.response);
-          const router = new Router();
-          router.go("/messenger");
+          goToPage("/messenger");
         };
       });
   };
@@ -71,16 +69,9 @@ export default class LoginPage extends Block {
 
   };
 
-  userIsConnected(response: XMLHttpRequest) {
-    window.store.currentUser = JSON.parse(response.response);
-      const router = new Router();
-      router.go("/messenger");
+  userIsConnected(response: XMLHttpRequest): void {
+    goToPage("/messenger");
   };
-
-  goToRegister() {
-    const router = new Router();
-    router.go("/sign-up");
-  }
 
   render() {
     return loginTemplate();

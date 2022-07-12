@@ -4,6 +4,7 @@ import { HTTPTransport } from "../../utils/requestAPI";
 import { withStore } from "../../utils/withStore";
 import { State } from "../../utils/Store";
 import { chatTemplate } from "./Chat.tmpl";
+import goToPage from "../../utils/goToPage";
 
 export class ChatsPage extends Block {
   constructor(props?: any) {
@@ -23,10 +24,9 @@ export class ChatsPage extends Block {
     httptransport.get("https://ya-praktikum.tech/api/v2/auth/user")
       .then(result => {
         if ((<XMLHttpRequest>result).status !== 200) {
-          const router: Router = new Router();
-          router.go("/login");
+          goToPage("/login");
         } else {
-          this.dispatch({user: JSON.parse((<XMLHttpRequest>result).response) });
+          this.dispatch({user: JSON.parse((<XMLHttpRequest>result).response)});
           this.getChats();
         };
       });
@@ -36,8 +36,7 @@ export class ChatsPage extends Block {
     const httptransport = new HTTPTransport();
     httptransport.post("https://ya-praktikum.tech/api/v2/auth/logout")
       .then(() => {
-        const router: Router = new Router();
-          router.go("/login");
+        goToPage("/login");
       })
   }
 
@@ -64,9 +63,12 @@ export class ChatsPage extends Block {
     const data = {
       chatId: this.props.currentChat.id
     }
-    console.log(data);
     const httptransport = new HTTPTransport();
     httptransport.delete("https://ya-praktikum.tech/api/v2/chats", {data});
+
+    this.dispatch({currentChat: {}});
+    this.getChats();
+
   }
 
   routeToSettings(): void {
@@ -79,7 +81,7 @@ export class ChatsPage extends Block {
       first_name: ():string => state.user.first_name,
       second_name: (): string => state.user.second_name,
       isAddChatShown: (): boolean => state.isAddChatShown,
-      userChats: state.userChats,
+      userChats: (): any => state.userChats,
       currentChat: state.currentChat,
       message: state.message,
     };

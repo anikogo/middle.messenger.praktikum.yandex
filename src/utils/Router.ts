@@ -65,7 +65,6 @@ export default class Router {
 
   start() {
     window.addEventListener('popstate', (event: PopStateEvent) => {
-      console.log(event);
       this._onRoute(event.currentTarget?.location.pathname);
     });
 

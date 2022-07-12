@@ -1,92 +1,67 @@
 import Block from "../../utils/Block";
 import { validate, submitAllFields } from "../../utils/validate";
-import Router from "../../utils/Router";
+import { settingsTemplate } from "./Settings.tmpl";
+import goToPage from "../../utils/goToPage";
+import { HTTPTransport } from "../../utils/requestAPI";
 
 export default class SettingsPage extends Block {
+  private loginInput: string = "";
+  private firstNameInput: string = "";
+  private secondNameInput: string = "";
+  private displayNameInput: string = "";
+  private phoneInput: string = "";
+  private emailInput: string = "";
+  private isConfirmed: boolean = true;
+
   constructor(props?: any) {
     super({...props,
-      checkLoginEvent: validate("login"),
-      checkNameEvent: validate("name"),
-      checkEmailEvent: validate("email"),
-      checkPhoneEvent: validate("phone"),
-      checkSubmitEvent: () => submitAllFields(this.element?.querySelectorAll(".js-input-validation")),
-      goToPwdChange: () => {
-        const router = new Router();
-        router.go("/changepic");
-      },
+      checkLoginEvent: (e: Event): void => this.checkFileld("login", this.loginInput, e.target?.id),
+      checkFirstNameInput: (e: Event): void => this.checkFileld("name", this.firstNameInput, e.target?.id),
+      checkSecondNameInput: (e: Event): void => this.checkFileld("name", this.secondNameInput, e.target?.id),
+      checkPhoneEvent: (e: Event): void => this.checkFileld("phone", this.phoneInput, e.target?.id),
+      checkEmailEvent: (e: Event): void => this.checkFileld("email", this.emailInput, e.target?.id),
+      handleLoginInput: (e: InputEvent): void => { this.loginInput = e.target?.value },
+      handleFirstNameInput: (e: InputEvent): void => { this.firstNameInput = e.target?.value },
+      handlePhoneInput: (e: InputEvent): void => { this.phoneInput = e.target?.value },
+      handleSecondNameInput: (e: InputEvent): void => { this.secondNameInput = e.target?.value },
+      handleDisplayNameInput: (e: InputEvent): void => { this.displayNameInput = e.target?.value },
+      handleEmailInput: (e: InputEvent): void => { this.emailInput = e.target?.value },
+      handleButtonSubmit: (): void => this.changeSettings(),
+      handleButtonChangePassword: (): void => goToPage("/changepwd"),
     });
   };
 
-  render() {
-    return /*template*/`
-      <main>
-        <div class="data-entry-field">
-          <h1>Settings</h1>
-          <div class="settings__user-container">
-            {{{ DivButton
-              className="settings__user-pic rounding"
-              onClick=goToPwdChange
-            }}}
-            <div class="input__settings-name-container">
-              {{{ Input
-                name="firstName"
-                idName="firstName"
-                className="input__main-input js-input-validation"
-                pholderText="first name"
-                onBlur=checkNameEvent
-                onFocus=checkNameEvent
-              }}}
-              {{{ Error idName="firstNameError" className="error_hidden"}}}
-              {{{ Input
-                name="secondName"
-                idName="secondName"
-                className="input__main-input js-input-validation"
-                pholderText="second name"
-                onBlur=checkNameEvent
-                onFocus=checkNameEvent
-              }}}
-              {{{ Error idName="secondNameError" className="error_hidden"}}}
-            </div>
-          </div>
-          {{{ Input
-            name="displayName"
-            idName="displayName"
-            className="input__main-input js-input-validation"
-            pholderText="display name"
-          }}}
-          {{{ Error idName="displayNameError" className="error_hidden"}}}
-          {{{ Input
-            name="email"
-            idName="email"
-            className="input__main-input js-input-validation"
-            pholderText="email"
-            onBlur=checkEmailEvent
-            onFocus=checkEmailEvent
-          }}}
-          {{{ Error idName="emailError" className="error_hidden"}}}
-          {{{ Input
-            name="phone"
-            idName="phone"
-            className="input__main-input js-input-validation"
-            pholderText="phone"
-            onBlur=checkPhoneEvent
-            onFocus=checkPhoneEvent
-          }}}
-          {{{ Error idName="phoneError" className="error_hidden"}}}
-          <div class="button__row-container">
-            {{{ Button
-              className="button__secondary-setting-button rounding"
-              label="Change password"
-              onClick=goToPwdChange
-            }}}
-            {{{ Button
-              label="Save"
-              className="button__primary-button rounding"
-              onClick=checkSubmitEvent
-            }}}
-          </div>
-        </div>
-      </main>
-    `;
+  checkFileld(type: string, value: string, id: string ): void {
+    if (!validate(type, value, id)) {
+      this.isConfirmed = false;
+    };
+  };
+
+  changeSettings() {
+    this.isConfirmed = true;
+    submitAllFields(this.element?.querySelectorAll(".js-input-validation"));
+
+    if (!this.isConfirmed) return;
+
+    const httptransport = new HTTPTransport();
+    const data = {
+      first_name: this.firstNameInput,
+      second_name: this.secondNameInput,
+      login: this.loginInput,
+      email: this.emailInput,
+      display_name: this.displayNameInput,
+      phone: this.phoneInput,
+    };
+
+    httptransport.put("https://ya-praktikum.tech/api/v2/user/profile", {data})
+      .then(result => {
+        if ((<XMLHttpRequest>result).status === 200) {
+          goToPage("/messenger")
+        };
+      });
+  };
+
+  render(): string {
+    return settingsTemplate();
   };
 };

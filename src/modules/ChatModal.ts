@@ -48,18 +48,20 @@ export class ChatModal extends Block {
     .then((result: any) => {
       const chat = JSON.parse(result.response);
       this.addUsersToChat(chat.id)
-      this.getChatList();
+      this.getChats();
       this.closeModalWindow()
     })
   }
 
-  getChatList() {
+  getChats() {
     const httptransport = new HTTPTransport();
-    httptransport.get("https://ya-praktikum.tech/api/v2/chats")
-      .then((result: any) => {
-        this.dispatch({chatList: JSON.parse(result.response)});
-      })
-  }
+    httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30")
+      .then(result => {
+        if ((<XMLHttpRequest>result).status === 200) {
+          this.dispatch({userChats: JSON.parse((<XMLHttpRequest>result).response) });
+        };
+      });
+  };
 
   searchUsers() {
     const httptransport = new HTTPTransport();
@@ -97,7 +99,7 @@ export class ChatModal extends Block {
       searchUserName: state.searchUserName,
       searchUserList: state.searchUserList,
       searchUserSelected: state.searchUserSelected,
-      chatList: state.chatList,
+      userChats: state.userChats,
       inputChatName: state.inputChatName,
     }
   }

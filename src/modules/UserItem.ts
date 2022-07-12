@@ -20,7 +20,6 @@ export class UserItem extends Block {
   };
 
   addUser() {
-    console.log(this.props);
     if (this.props.searchUserSelected.includes(this.props.user.id)) return;
 
     this.dispatch({ searchUserSelected: [...this.props.searchUserSelected, this.props.user.id]});
