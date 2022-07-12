@@ -1,4 +1,6 @@
 import Block, {BlockProps} from "../utils/Block";
+import { State } from "../utils/Store";
+import { withStore } from "../utils/withStore";
 
 interface UserListProps extends BlockProps {
   users: any[]
@@ -16,9 +18,15 @@ export class UserList extends Block {
     });
   };
 
+  public static mapStateToProps(state: State): Record<string, unknown> {
+    return {
+      users: state.searchUserList,
+    }
+  }
+
   render() {
     return /*template*/`
-      <ul class="user-list" style="padding: 0;">
+      <ul class="user-list">
         {{#each users}}
           {{{ UserItem user=this }}}
         {{/each}}
@@ -27,4 +35,4 @@ export class UserList extends Block {
   };
 };
 
-export default UserList;
+export default withStore(UserList);

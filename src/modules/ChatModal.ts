@@ -37,8 +37,10 @@ export class ChatModal extends Block {
   }
 
   createNewChat() {
-    const httptransport = new HTTPTransport();
     const inputElvalue: string = document.getElementById("inputChatName")?.value;
+    if (!inputElvalue) return;
+
+    const httptransport = new HTTPTransport();
     this.dispatch({ inputChatName: () => {return inputElvalue}})
     const data: Record<string, any> = {title: inputElvalue};
 
@@ -47,6 +49,7 @@ export class ChatModal extends Block {
       const chat = JSON.parse(result.response);
       this.addUsersToChat(chat.id)
       this.getChatList();
+      this.closeModalWindow()
     })
   }
 
@@ -85,7 +88,6 @@ export class ChatModal extends Block {
       users: window.store.state.searchUserSelected,
       chatId: chatId,
     }
-    console.log(data)
     httptransport.put("https://ya-praktikum.tech/api/v2/chats/users", {data})
   }
 
@@ -105,7 +107,12 @@ export class ChatModal extends Block {
       <div class="add-chat-modal rounding {{#unless isAddChatShown}} hidden {{/unless}}" id="add-chat-modal">
         <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
           <div >Add new chat</div>
-          {{{ CloseButton onClick = handleButtonCloseModal }}}
+          {{{ IconButton
+            onClick = handleButtonCloseModal
+            className="close-button"
+            Icon="x"
+            Title="Close"
+          }}}
         </div>
         <div>
           {{{ Input
@@ -122,13 +129,21 @@ export class ChatModal extends Block {
             value=searchUserName
             pholderText="Search users by login"
           }}}
-          {{{ Button label="search" onClick=handleButtonSearchUsers className="right-rounding"}}}
+          {{{ Button
+            label="search"
+            onClick=handleButtonSearchUsers
+            className="button__search-users right-rounding"
+          }}}
         </div>
         {{#each searchUserSelected }}
-          {{ this.first_name}}
+          {{ this.first_name }}
         {{/each}}
         {{{ UserList }}}
-        {{{ Button label="Create chat" onClick=handleButtonNewChat}}}
+        {{{ Button
+          label="Create chat"
+          onClick=handleButtonNewChat
+          className="button__create-chat rounding"
+        }}}
       </div>
     `;
   };

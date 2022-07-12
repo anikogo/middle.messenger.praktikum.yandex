@@ -1,6 +1,6 @@
 import Block, {BlockProps} from "../utils/Block";
 import { withStore } from "../utils/withStore";
-import { Store } from "../utils/Store";
+import { State } from "../utils/Store";
 
 interface UserItemProps extends BlockProps {
   user: any;
@@ -11,33 +11,45 @@ export class UserItem extends Block {
   static get getCompName(){return "UserItem"};
 
   constructor(props: UserItemProps) {
-    const { ...rest} = props;
     super({
-      ...rest,
-      events: {},
-      handleButtonAddUser: (e: Event) => this.addUser(),
-      removeUser: () => {
-
-      },
+      ...props,
+      handleButtonAddUser: () => this.addUser(),
+      handleButtonRemoveUser: () => this.removeUser(),
+      isUserAdded: (): boolean => {return window.store.state.searchUserSelected.includes(props.user.id)},
     });
   };
 
   addUser() {
-    this.dispatch({ searchUserSelected: [...props.store.state.searchUserSelected, this.props.user]})
+    console.log(this.props);
+    if (this.props.searchUserSelected.includes(this.props.user.id)) return;
+
+    this.dispatch({ searchUserSelected: [...this.props.searchUserSelected, this.props.user.id]});
+  };
+
+  removeUser() {
+    const newArray = this.props.searchUserSelected.filter(userId => userId !== this.props.user.id);
+    this.dispatch({ searchUserSelected: newArray});
   }
+
+  public static mapStateToProps(state: State): Record<string, unknown> {
+    return {
+      searchUserSelected: state.searchUserSelected,
+    };
+  };
 
   render() {
     return /*template*/`
-      <li class="user-item" style="display: flex; flex-direction: row; justify-content: space-between; list-style: none;">
+      <li class="user-item rounding">
         <div class="user-item__name">
-        {{ user.first_name}}
+          <div>{{ user.first_name }} {{ user.first_name }}</div>
+          <div>Login: {{user.login}}</div>
         </div>
-        <div class="user-item__buttons" style="display: flex; flex-direction: row;">
-        {{#if }}
-          {{{ Button onClick=addUser label="+" }}}
-        {{else}}
-          {{{ Button onClick=removeUser label="-" }}}
-        {{/if}}
+        <div>
+          {{#if isUserAdded}}
+            {{{ Button onClick=handleButtonRemoveUser label="remove" className="button__add-remove-button rounding" }}}
+          {{else}}
+            {{{ Button onClick=handleButtonAddUser label="add" className="button__add-remove-button rounding" }}}
+          {{/if}}
         </div>
       </li>
     `;

@@ -29,7 +29,7 @@ export default class LoginPage extends Block {
         if (result.status === 200) {
           window.store.currentUser = JSON.parse(result.response);
           const router = new Router();
-          router.go("/chat");
+          router.go("/messenger");
         };
       });
   };
@@ -53,7 +53,7 @@ export default class LoginPage extends Block {
     };
 
     httptransport.post("https://ya-praktikum.tech/api/v2/auth/signin", {data})
-      .then(result => this.loginRequest(result));
+      .then(result => this.loginRequest(<XMLHttpRequest>result));
   };
 
   loginRequest(response: XMLHttpRequest):void {
@@ -74,12 +74,12 @@ export default class LoginPage extends Block {
   userIsConnected(response: XMLHttpRequest) {
     window.store.currentUser = JSON.parse(response.response);
       const router = new Router();
-      router.go("/chat");
+      router.go("/messenger");
   };
 
   goToRegister() {
     const router = new Router();
-    router.go("/register");
+    router.go("/sign-up");
   }
 
   render() {

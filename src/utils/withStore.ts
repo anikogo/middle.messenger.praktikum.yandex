@@ -30,10 +30,9 @@ export function withStore<P extends WithStateProps>(WrappedBlock: BlockMeta<P>) 
     }
 
     componentDidMount() {
-      // console.log("fsdfsdf", props)
       // if (props) {
         super.componentDidMount();
-        console.log(this, this.__onChangeStoreCallback)
+        // console.log(this, this.__onChangeStoreCallback)
         window.store.on('changed', this.__onChangeStoreCallback);
       // }
     }
@@ -43,13 +42,13 @@ export function withStore<P extends WithStateProps>(WrappedBlock: BlockMeta<P>) 
     //   window.store.off('changed', this.__onChangeStoreCallback);
     // }
 
-    // mapStateToProps(state: State) {
-    //   if (typeof super.mapStateToProps === 'function') {
-    //     return super.mapStateToProps(state);
-    //   } else {
-    //     return {};
-    //   }
-    // }
+    mapStateToProps(state: State) {
+      if (typeof super.mapStateToProps === 'function') {
+        return super.mapStateToProps(state);
+      } else {
+        return {};
+      };
+    };
 
     dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any): void {
       window.store.dispatch(nextStateOrAction, payload)

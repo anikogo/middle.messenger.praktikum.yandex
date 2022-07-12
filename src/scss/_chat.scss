@@ -53,6 +53,19 @@
         }
     }
 
+    &__logout {
+        height: 25px;
+        width: 25px;
+        margin-left: auto;
+        margin-right: 10px;
+
+        & svg:hover {
+            background-color: rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            border-radius: 50px;
+        }
+    }
+
     &__list {
         width: 100%;
         height: calc(100% - 95px);
@@ -82,6 +95,8 @@
     height: 80px;
     min-height: 80px;
     padding-left: 10px;
+    border: none;
+    background-color: #f5f5f5;
 
     &__text {
         width: 70%;
@@ -128,7 +143,9 @@
     box-sizing: border-box;
 
     &__header {
+        @include flexRow;
         @include bottomBorder;
+        justify-content: space-between;
         box-sizing: border-box;
         height: 50px;
         background-color: #f5f5f5;
@@ -228,5 +245,38 @@
         line-height: 35px;
         @include bottomBorder;
         justify-content: space-between;
+    }
+}
+
+.user-item {
+    display: flex;
+    color: $dark-color;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+    height: 40px;
+    font-size: 14px;
+    transition: 200ms;
+
+    &:hover {
+        // padding: 10px;
+        background-color: #fdfdfd;
+    }
+}
+
+.user-list {
+    padding: 0px;
+    height: 220px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        width: 2px;
+        background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $ultralight-color;
     }
 }

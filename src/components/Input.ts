@@ -20,7 +20,10 @@ export default class Input extends Block {
     props.inType = props.inType || "text";
     props.value = props.value || "";
     const {onBlur, onFocus, onInput, ...rest} = props;
-    super({...rest, events: {blur: onBlur, focus: onFocus, input: onInput}});
+    super({
+      ...rest,
+      events: {blur: onBlur, focus: onFocus, input: onInput}
+    });
   };
 
   render() {

@@ -25,15 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const defaultState = {
     screen: null,
-    isLoading: true,
     loginFormError: null,
-    user: {
-      first_name: "",
-      second_name: "",
-    },
+    user: {},
     isAddChatShown: false,
     searchUserList: [],
     searchUserSelected: [],
+    users: [],
+    userChats: [],
+    currentChat: {},
   };
 
   const store = new Store(defaultState);
@@ -41,9 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   router
     .use("/", pages.LoginPage)
-    .use("/register", pages.RegisterPage)
+    .use("/sign-up", pages.RegisterPage)
     .use("/settings", pages.SettingsPage)
-    .use("/chat", pages.ChatsPage)
+    .use("/messenger", pages.ChatsPage)
     .use("/changepwd", pages.ChangepwdPage)
     .use("/changepic", pages.ChangepicPage)
     .use("/login", pages.LoginPage)

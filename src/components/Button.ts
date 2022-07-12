@@ -12,7 +12,10 @@ export default class Button extends Block {
 
   constructor(props: ButtonProps) {
     const {onClick, ...rest} = props;
-    super({...rest, events: {click: onClick}});
+    super({
+      ...rest,
+      events: {click: onClick}
+    });
   };
 
   render() {

@@ -31,4 +31,4 @@ export function loginTemplate(): string {
       </div>
     </main>
   `;
-}
+};

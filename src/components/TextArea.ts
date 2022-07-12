@@ -1,26 +1,31 @@
 import Block from "../utils/Block";
 
-// TODO: заюзать интерфейс
-// interface InputProps {
-//   pholderText?: string;
-//   className?: string;
-//   autofocus?: string;
-//   idName?: string;
-//   onBlur?: () => void;
-//   onFocus?: () => void;
-// };
+interface InputProps {
+  pholderText?: string;
+  className?: string;
+  autofocus?: string;
+  idName?: string;
+  value?: string;
+  onInput?: () => void;
+};
 
 export default class TextArea extends Block {
 
   static get getCompName(){return "TextArea"};
 
-  constructor({...props}) {
-    super(props);
+  constructor(props: InputProps) {
+    const {onInput, ...rest} = props;
+    super({
+      ...rest,
+      events: {input: onInput}
+    });
   };
 
   render() {
     return /*template*/`
-			<textarea id="{{ idName }}" class="{{ className }}" placeholder="{{ pholderText }}" {{ focus }}></textarea>
+			<textarea id="{{ idName }}" class="{{ className }}" placeholder="{{ pholderText }}" {{ focus }}>
+        {{ value }}
+      </textarea>
 		`;
   };
 };

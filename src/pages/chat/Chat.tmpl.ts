@@ -4,12 +4,30 @@ export function chatTemplate(): string {
       <div class="chat-form">
         <div class="chat-menu">
           <div class="chat-menu__owner">
-            {{{ CogButton onClick=handleButtonSettings }}}
+            <div>
+              {{{ IconButton
+                onClick=handleButtonSettings
+                Title="Settings"
+                Icon="gear"
+                className="chat-menu__owner-settings"
+              }}}
+              {{{ IconButton
+                onClick=handleButtonExit
+                Title="Exit"
+                Icon="arrow-left"
+                className="chat-menu__logout"
+              }}}
+            </div>
             <div>
               <div class="medium-font-18">{{ first_name }} {{ second_name }}</div>
-              <div class="thin-font">Status</div>
+              <div class="thin-font"> Status </div>
             </div>
-            {{{ AddButton onClick=handleButtonAddChat }}}
+            {{{ IconButton
+              onClick=handleButtonAddChat
+              Title="Add new chat"
+              Icon="plus"
+              className="chat-menu__add-chat"
+            }}}
             {{{ ChatModal }}}
           </div>
           <div class="chat-menu__search-box">
@@ -20,28 +38,44 @@ export function chatTemplate(): string {
             }}}
           </div>
           <div class="chat-menu__list">
+            {{#each userChats}}
+              {{{ ChatItem chatInfo=this onClick=../handleChatSelection }}}
+            {{/each}}
           </div>
         </div>
-        <div class="chat-area">
-          <div class="chat-area__header">
-            <div class="medium-font-18">Sergey Sergeev</div>
-            <div class="thin-font">last seen recently</div>
+        {{#if currentChat.title }}
+          <div class="chat-area">
+            <div class="chat-area__header">
+              <div class="chat-area__header_status">
+                <div class="medium-font-18">{{ currentChat.title }}</div>
+              </div>
+              <div>
+                {{{ IconButton
+                  onClick=handleButtonDropChat
+                  Title="Delete chat"
+                  Icon="trash"
+                  className="chat-menu__add-chat"
+                }}}
+              </div>
+            </div>
+            <div class="chat-area__content">
+            </div>
+            <div class="chat-area__footer">
+              {{{ TextArea
+                idName="sendMessageArea"
+                className="input__message-input left-rounding"
+                pholderText="Message"
+                focus="autofocus"
+              }}}
+              {{{ Button
+                idName="sendButton"
+                className="button__send-message right-rounding"
+                label="^"
+                onClick=handleButtonSendMessage
+              }}}
+            </div>
           </div>
-          <div class="chat-area__content">
-          {{{ ChatMessage
-            className="message message__incoming-message"
-            textContent="Hello bro!"
-          }}}
-          {{{ ChatMessage
-            className="message message__outgoing-message"
-            textContent="Heeeeeeeeeeeey"
-          }}}
-          </div>
-          <div class="chat-area__footer">
-            {{{ TextArea className="input__message-input left-rounding" pholderText="Message" focus="autofocus" }}}
-            {{{ Button idName="sendButton" className="button__send-message right-rounding" label="^" }}}
-          </div>
-        </div>
+        {{/if}}
       </div>
     </main>
   `;
