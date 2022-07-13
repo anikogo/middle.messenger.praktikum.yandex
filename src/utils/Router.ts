@@ -72,6 +72,7 @@ export default class Router {
   };
 
   private _onRoute(pathname: string) {
+    debugger;
     let route = this.getRoute(pathname);
     if (!route) return;
 

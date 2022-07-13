@@ -25,6 +25,7 @@ export default class Block<P = any> {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
+    FLOW_CWU: 'flow:component-will-unmount',
     FLOW_RENDER: "flow:render"
   } as const;
 
@@ -51,7 +52,6 @@ export default class Block<P = any> {
     this._meta = { props };
 
     this.eventBus = () => eventBus;
-    this.initChildren();
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
   };
@@ -60,28 +60,20 @@ export default class Block<P = any> {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CWU, this._componentWillUnmount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
   };
 
   init() {
-    this.dispatchComponentDidMount()
-  };
-
-  initChildren() {
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   };
 
   private _componentDidMount() {
     this.componentDidMount();
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
-  }
-
-    // Может переопределять пользователь, необязательно трогать
-  componentDidMount() {
-
+    this._checkInDom();
   };
 
-  dispatchComponentDidMount() {
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  componentDidMount() {
   };
 
   private _componentDidUpdate(oldProps: P, newProps: P) {
@@ -132,8 +124,18 @@ export default class Block<P = any> {
   };
 
   getContent(): HTMLElement {
+    if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      setTimeout(() => {
+        if (
+          this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE
+        ) {
+          this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+        }
+      }, 100);
+    }
+
     return this.element!;
-  };
+  }
 
   private _makePropsProxy(props: P) {
     // Можно и так передать this
@@ -163,6 +165,7 @@ export default class Block<P = any> {
 
   show() {
       this.getContent().style.display = "block";
+      this.dispatchComponentDidMount();
   };
 
   hide() {
@@ -233,7 +236,27 @@ export default class Block<P = any> {
     return {};
   };
 
+  _componentWillUnmount() {
+    this.eventBus().destroy();
+    this.componentWillUnmount();
+  }
+
   componentWillUnmount(): void {
+  }
+
+  _checkInDom() {
+    const elementInDOM = document.body.contains(this._element);
+
+    if (elementInDOM) {
+      setTimeout(() => this._checkInDom(), 1000);
+      return;
+    }
+
+    this.eventBus().emit(Block.EVENTS.FLOW_CWU, this.props);
+  }
+
+  dispatchComponentDidMount() {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
 };

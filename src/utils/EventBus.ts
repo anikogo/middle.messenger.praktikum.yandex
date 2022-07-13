@@ -14,12 +14,12 @@ export default class EventBus<E extends string = string, M extends { [K in E]: u
   off(event: E, callback: Listener<M[E]>) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
-    };
+    }
 
     this.listeners[event] = this.listeners[event]!.filter(
-      listener => listener !== callback,
+      (listener) => listener !== callback,
     );
-  };
+  }
 
   emit(event: E, ...args: M[E]) {
     if (!this.listeners[event]) {
@@ -32,5 +32,9 @@ export default class EventBus<E extends string = string, M extends { [K in E]: u
         listener(...args);
       }
     });
+  };
+
+  destroy() {
+    this.listeners = {};
   };
 };

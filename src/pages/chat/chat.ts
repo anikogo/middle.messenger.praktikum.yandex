@@ -20,6 +20,7 @@ export class ChatsPage extends Block {
   };
 
   componentDidMount(): void {
+    console.log("imma mounted")
     const httptransport = new HTTPTransport();
     httptransport.get("https://ya-praktikum.tech/api/v2/auth/user")
       .then(result => {

@@ -87,7 +87,7 @@ export class ChatModal extends Block {
   addUsersToChat(chatId: any) {
     const httptransport = new HTTPTransport();
     const data = {
-      users: window.store.state.searchUserSelected,
+      users: this.props.searchUserSelected,
       chatId: chatId,
     }
     httptransport.put("https://ya-praktikum.tech/api/v2/chats/users", {data})
