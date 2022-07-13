@@ -46,6 +46,7 @@ export class ChatModal extends Block {
 
     httptransport.post("https://ya-praktikum.tech/api/v2/chats", {data})
     .then((result: any) => {
+      console.log(result)
       const chat = JSON.parse(result.response);
       this.addUsersToChat(chat.id)
       this.getChats();

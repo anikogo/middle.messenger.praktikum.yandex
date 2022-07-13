@@ -10,36 +10,26 @@ export function withStore<P extends WithStateProps>(WrappedBlock: BlockMeta<P>) 
 
     constructor(props: P) {
       const stateProps = WrappedBlock.mapStateToProps(window.store.state);
-      // console.log(stateProps);
-
 
       super({ ...props, ...stateProps });
-    }
+    };
 
     __onChangeStoreCallback = () => {
-      /**
-       * TODO: проверить что стор реально обновлен
-       * и прокидывать не целый стор, а необходимые поля
-       * с помощью метода mapStateToProps
-       */
-
       const stateProps = WrappedBlock.mapStateToProps(window.store.state);
-      // console.log(stateProps);
       // @ts-expect-error this is not typed
       this.setProps({ ...this.props, ...stateProps });
-    }
+    };
 
     componentDidMount() {
       super.componentDidMount();
       window.store.on('changed', this.__onChangeStoreCallback);
-    }
+    };
 
     componentWillUnmount() {
       // debugger;
-      console.log('unload')
       super.componentWillUnmount();
       window.store.off('changed', this.__onChangeStoreCallback);
-    }
+    };
 
     mapStateToProps(state: State) {
       if (typeof super.mapStateToProps === 'function') {
@@ -50,12 +40,8 @@ export function withStore<P extends WithStateProps>(WrappedBlock: BlockMeta<P>) 
     };
 
     dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any): void {
-      window.store.dispatch(nextStateOrAction, payload)
-    }
-
-    // set(nextState: Partial<State>) {
-    //   window.store.set(nextState);
-    // };
+      window.store.dispatch(nextStateOrAction, payload);
+    };
 
   } as BlockMeta<Omit<P, 'store'>>;
 }

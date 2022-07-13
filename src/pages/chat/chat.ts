@@ -5,6 +5,7 @@ import { withStore } from "../../utils/withStore";
 import { State } from "../../utils/Store";
 import { chatTemplate } from "./Chat.tmpl";
 import goToPage from "../../utils/goToPage";
+import newWebSocket from "../../utils/newWebSocket";
 
 export class ChatsPage extends Block {
   constructor(props?: any) {
@@ -13,14 +14,13 @@ export class ChatsPage extends Block {
       handleButtonSettings: (): void => this.routeToSettings(),
       handleButtonAddChat: (): any => this.dispatch({isAddChatShown: true}),
       handleButtonDropChat: () => this.dropChat(),
-      handleChatSelection: (e: Event): void => this.chatSelection(e),
+      handleChatSelection: (chat: any): void => this.chatSelection(chat),
       handleButtonSendMessage: (): void => this.sendMessage(),
       handleButtonExit: (): void => this.logOut(),
     });
   };
 
   componentDidMount(): void {
-    console.log("imma mounted")
     const httptransport = new HTTPTransport();
     httptransport.get("https://ya-praktikum.tech/api/v2/auth/user")
       .then(result => {
@@ -43,44 +43,50 @@ export class ChatsPage extends Block {
 
   async getChats() {
     const httptransport = new HTTPTransport();
-    const result: XMLHttpRequest = await httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30")
+    const result: XMLHttpRequest = await httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30");
     const chats = JSON.parse(result.response);
+
     if (result.status === 200) {
-
       for (let chat of chats) {
-        chat.token = await this.getToken(chat.id);
+        newWebSocket(chat, this.props.userId, () => {
+          this.dispatch({ userChats: [...this.props.userChats]})
+        });
       };
-
-      this.dispatch({userChats: chats });
+      this.dispatch({userChats: chats});
     };
-
-  };
-
-  async getToken(chatId: number) {
-    const httptransport = new HTTPTransport();
-    const result = await httptransport.post(`https://ya-praktikum.tech/api/v2/chats/token/${chatId}`, {});
-    const token = JSON.parse(result.response).token;
-    return token;
   };
 
   sendMessage() {
-    const message = document.getElementById("sendMessageArea")?.value;
-    console.log(message);
+    const textbox: HTMLTextAreaElement = document.getElementById("sendMessageArea");
+
+    const currentChat = this.props.userChats.find((chat: any) => chat.id === this.props.currentChat);
+
+    currentChat.socket.send(
+      JSON.stringify({
+        content: textbox.value,
+        type: "message"
+      })
+    );
+
+    textbox.value = "";
   };
 
   chatSelection(chatInfo: Record<string, any>): void {
-    this.dispatch({currentChat: chatInfo});
+    this.dispatch({currentChat: chatInfo.id});
   };
 
-  dropChat(): void {
+  async dropChat() {
     const data = {
-      chatId: this.props.currentChat.id,
+      chatId: this.props.currentChat,
     }
     const httptransport = new HTTPTransport();
-    httptransport.delete("https://ya-praktikum.tech/api/v2/chats", {data});
+    const result: XMLHttpRequest = await httptransport.delete("https://ya-praktikum.tech/api/v2/chats", {data})
 
-    this.dispatch({currentChat: {}});
-    this.getChats();
+    if (result.status === 200) {
+      this.dispatch({currentChat: null});
+      this.getChats();
+    };
+
   };
 
   routeToSettings(): void {
@@ -93,9 +99,11 @@ export class ChatsPage extends Block {
       first_name: ():string => state.user.first_name,
       second_name: (): string => state.user.second_name,
       isAddChatShown: (): boolean => state.isAddChatShown,
-      userChats: (): any => state.userChats,
+      userChats: state.userChats,
+      userId: state.user.id,
       currentChat: state.currentChat,
-      message: state.message,
+      messageCount: state.userChats.find((chat: any) => chat.id === state.currentChat) ? state.userChats.find((chat: any) => chat.id === state.currentChat).messages?.length : 0,
+      CC: state.userChats.find((chat: any) => chat.id === state.currentChat)
     };
   };
 

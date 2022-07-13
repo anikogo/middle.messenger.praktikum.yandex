@@ -1,9 +1,7 @@
 import Block, {BlockProps} from "../utils/Block";
-import getMessageDate from "../utils/getDate";
 
 interface MessageProps extends BlockProps {
-  className?: string;
-  textContent: string;
+  message: any;
   date: string;
 };
 
@@ -19,8 +17,13 @@ export default class ChatMessage extends Block {
 
   render() {
     return /*template*/`
-      <div class="{{ className }} rounding"> {{ textContent }}
-        <div class="message__footer"> {{ date }}</div>
+      <div class="message">
+        <div class="{{#if message.isOwn}} message__outgoing-message {{else}} message__incoming-message {{/if}} rounding">
+          <div class="message__text">
+            {{ message.content }}
+          </div>
+          <div class="message__footer"> {{ message.time }}</div>
+        </div>
       </div>`;
   };
 };

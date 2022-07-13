@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchUserSelected: [],
     users: [],
     userChats: [],
-    currentChat: {},
+    currentChat: null,
   };
 
   const store = new Store(defaultState);

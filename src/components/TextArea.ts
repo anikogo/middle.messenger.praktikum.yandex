@@ -3,7 +3,6 @@ import Block from "../utils/Block";
 interface InputProps {
   pholderText?: string;
   className?: string;
-  autofocus?: string;
   idName?: string;
   value?: string;
   onInput?: () => void;
@@ -23,9 +22,7 @@ export default class TextArea extends Block {
 
   render() {
     return /*template*/`
-			<textarea id="{{ idName }}" class="{{ className }}" placeholder="{{ pholderText }}" {{ focus }}>
-        {{ value }}
-      </textarea>
+			<textarea id="{{ idName }}" class="{{ className }}" placeholder="{{ pholderText }}" autofocus>{{ value }}</textarea>
 		`;
   };
 };

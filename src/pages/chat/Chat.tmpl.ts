@@ -43,11 +43,11 @@ export function chatTemplate(): string {
             {{/each}}
           </div>
         </div>
-        {{#if currentChat.title }}
+        {{#if currentChat }}
           <div class="chat-area">
             <div class="chat-area__header">
               <div class="chat-area__header_status">
-                <div class="medium-font-18">{{ currentChat.title }}</div>
+                <div class="medium-font-18">{{ CC.title }}</div>
               </div>
               <div>
                 {{{ IconButton
@@ -59,13 +59,15 @@ export function chatTemplate(): string {
               </div>
             </div>
             <div class="chat-area__content">
+                {{#each CC.messages}}
+                  {{{ChatMessage message=this}}}
+                {{/each}}
             </div>
             <div class="chat-area__footer">
               {{{ TextArea
                 idName="sendMessageArea"
                 className="input__message-input left-rounding"
                 pholderText="Message"
-                focus="autofocus"
               }}}
               {{{ Button
                 idName="sendButton"
