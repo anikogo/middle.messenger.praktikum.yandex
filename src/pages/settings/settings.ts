@@ -27,7 +27,7 @@ export default class SettingsPage extends Block {
       handleDisplayNameInput: (e: InputEvent): void => { this.displayNameInput = e.target?.value },
       handleEmailInput: (e: InputEvent): void => { this.emailInput = e.target?.value },
       handleButtonSubmit: (): void => this.changeSettings(),
-      handleButtonChangePassword: (): void => goToPage("/changepwd"),
+      handleButtonChangePassword: (): void => goToPage("/setpassword"),
     });
   };
 

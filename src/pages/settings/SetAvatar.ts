@@ -1,6 +1,6 @@
 import Block from "../../utils/Block";
 
-export default class ChangepicPage extends Block {
+export default class SetAvatar extends Block {
   constructor() {
     super();
   };

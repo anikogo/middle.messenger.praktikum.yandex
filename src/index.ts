@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .use("/sign-up", pages.RegisterPage)
     .use("/settings", pages.SettingsPage)
     .use("/messenger", pages.ChatsPage)
-    .use("/changepwd", pages.ChangepwdPage)
-    .use("/changepic", pages.ChangepicPage)
+    .use("/setpassword", pages.SetPassword)
+    .use("/setavatar", pages.SetAvatar)
     .use("/login", pages.LoginPage)
     .start();
 

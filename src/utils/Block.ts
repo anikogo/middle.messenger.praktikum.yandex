@@ -229,7 +229,11 @@ export default class Block<P = any> {
     return { props, children };
   }
 
-  handlers() {
+  handlers(): {} {
     return {};
   };
+
+  componentWillUnmount(): void {
+  }
+
 };

@@ -40,14 +40,26 @@ export class ChatsPage extends Block {
       })
   }
 
-  getChats() {
+  async getChats() {
     const httptransport = new HTTPTransport();
-    httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30")
-      .then(result => {
-        if ((<XMLHttpRequest>result).status === 200) {
-          this.dispatch({userChats: JSON.parse((<XMLHttpRequest>result).response) });
-        };
-      });
+    const result: XMLHttpRequest = await httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30")
+    const chats = JSON.parse(result.response);
+    if (result.status === 200) {
+
+      for (let chat of chats) {
+        chat.token = await this.getToken(chat.id);
+      };
+
+      this.dispatch({userChats: chats });
+    };
+
+  };
+
+  async getToken(chatId: number) {
+    const httptransport = new HTTPTransport();
+    const result = await httptransport.post(`https://ya-praktikum.tech/api/v2/chats/token/${chatId}`, {});
+    const token = JSON.parse(result.response).token;
+    return token;
   };
 
   sendMessage() {
@@ -61,15 +73,14 @@ export class ChatsPage extends Block {
 
   dropChat(): void {
     const data = {
-      chatId: this.props.currentChat.id
+      chatId: this.props.currentChat.id,
     }
     const httptransport = new HTTPTransport();
     httptransport.delete("https://ya-praktikum.tech/api/v2/chats", {data});
 
     this.dispatch({currentChat: {}});
     this.getChats();
-
-  }
+  };
 
   routeToSettings(): void {
     const router: Router = new Router();

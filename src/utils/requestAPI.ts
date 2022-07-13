@@ -8,23 +8,23 @@ const METHODS: Record<string, string> = {
 };
 
 export class HTTPTransport  {
-  get = (url: string, options: any = {}) => {
+  get = (url: string, options: any = {}): Promise<XMLHttpRequest> => {
     return this.request(url, {...options, method: METHODS.GET}, options.timeout);
   };
 
-  post = (url: string, options: any = {}) => {
+  post = (url: string, options: any = {}): Promise<XMLHttpRequest> => {
     return this.request(url, {...options, method: METHODS.POST}, options.timeout);
   };
 
-  put = (url: string, options: any = {}) => {
+  put = (url: string, options: any = {}): Promise<XMLHttpRequest> => {
     return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
   };
 
-  delete = (url: string, options: any = {}) => {
+  delete = (url: string, options: any = {}): Promise<XMLHttpRequest> => {
     return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
   };
 
-  request = (url:string = 'localhost', options: any = { method: METHODS.GET }, timeout: number = 5000) => {
+  request = (url:string = 'localhost', options: any = { method: METHODS.GET }, timeout: number = 5000): Promise<XMLHttpRequest>  => {
   const {method, data} = options;
 
     return new Promise((resolve, rejects) => {

@@ -30,17 +30,14 @@ export function withStore<P extends WithStateProps>(WrappedBlock: BlockMeta<P>) 
     }
 
     componentDidMount() {
-      // if (props) {
-        super.componentDidMount();
-        // console.log(this, this.__onChangeStoreCallback)
-        window.store.on('changed', this.__onChangeStoreCallback);
-      // }
+      super.componentDidMount();
+      window.store.on('changed', this.__onChangeStoreCallback);
     }
 
-    // componentWillUnmount() {
-    //   super.componentWillUnmount();
-    //   window.store.off('changed', this.__onChangeStoreCallback);
-    // }
+    componentWillUnmount() {
+      super.componentWillUnmount();
+      window.store.off('changed', this.__onChangeStoreCallback);
+    }
 
     mapStateToProps(state: State) {
       if (typeof super.mapStateToProps === 'function') {
