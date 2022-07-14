@@ -2,6 +2,7 @@ import Block, { BlockProps } from "../utils/Block";
 import { withStore } from "../utils/withStore";
 import { HTTPTransport } from "../utils/requestAPI"
 import { State } from "../utils/Store";
+import newWebSocket from "../utils/newWebSocket";
 
 interface ModalProps extends BlockProps {
   className?: string;
@@ -46,22 +47,28 @@ export class ChatModal extends Block {
 
     httptransport.post("https://ya-praktikum.tech/api/v2/chats", {data})
     .then((result: any) => {
-      console.log(result)
       const chat = JSON.parse(result.response);
       this.addUsersToChat(chat.id)
-      this.getChats();
+      this.getChats(chat.id);
       this.closeModalWindow()
-    })
-  }
+    });
+  };
 
-  getChats() {
+  getChats(chatId: number) {
     const httptransport = new HTTPTransport();
     httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30")
       .then(result => {
         if ((<XMLHttpRequest>result).status === 200) {
-          this.dispatch({userChats: JSON.parse((<XMLHttpRequest>result).response) });
+           this.dispatch({userChats: JSON.parse((<XMLHttpRequest>result).response)});
+
+          // const currentChat = this.props.userChats.find((chat: any) => chat.id === this.props.currentChatId);
+
+          // newWebSocket(currentChat, this.props.userId,  () => {
+          //   this.dispatch({ userChats: [...this.props.userChats]})
+          // });
         };
       });
+
   };
 
   searchUsers() {
@@ -77,9 +84,10 @@ export class ChatModal extends Block {
 
     if (data.login) {
       httptransport.post("https://ya-praktikum.tech/api/v2/user/search", {data})
-      .then(result => {
-        this.dispatch({searchUserList: JSON.parse(result.response)});
-      })
+        .then(result => {
+          console.log(result)
+          this.dispatch({searchUserList: JSON.parse(result.response)});
+        })
     } else {
       this.dispatch({searchUserList: ""});
     }

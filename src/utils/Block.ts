@@ -103,6 +103,7 @@ export default class Block<P = any> {
   };
 
   private _render() {
+    console.log("render", this.id, this.prototype)
     const templateString = this.render();
 
     const block = this.compile(templateString, {...this.props, handlers: this.handlers()})

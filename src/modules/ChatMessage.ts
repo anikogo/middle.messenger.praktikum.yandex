@@ -2,7 +2,6 @@ import Block, {BlockProps} from "../utils/Block";
 
 interface MessageProps extends BlockProps {
   message: any;
-  date: string;
 };
 
 export default class ChatMessage extends Block {
@@ -10,9 +9,8 @@ export default class ChatMessage extends Block {
   static get getCompName(){return "ChatMessage"};
 
   constructor(props: MessageProps) {
-    let {date, ...rest} = props;
-    date = getMessageDate();
-    super({...rest, date});
+    // date = getMessageDate();
+    super({...props});
   };
 
   render() {

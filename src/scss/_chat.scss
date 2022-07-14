@@ -173,6 +173,7 @@
     }
 
     &__content {
+        flex-direction: column-reverse;
         flex-grow: 1;
         flex-shrink: 0;
         box-sizing: border-box;
@@ -194,17 +195,18 @@
 
 .message {
     width: 100%;
-    box-sizing: border-box;
+    // border: 1px solid;
     font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     word-wrap: break-word;
 
     &__incoming-message {
         background-color: $ultralight-color;
         color: $dark-color;
-        float: left;
         margin-left: 20px;
-        margin-top: 20px;
-        width: 51%;
+        margin-right: auto;
+        width: 50%;
         padding: 5px 10px;
         box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
@@ -212,10 +214,9 @@
     &__outgoing-message {
         background-color: $dark-color;
         color: white;
-        float: right;
+        margin-left: auto;
         margin-right: 20px;
-        margin-top: 20px;
-        width: 51%;
+        width: 50%;
         padding: 5px 10px;
         box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }

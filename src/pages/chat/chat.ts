@@ -6,6 +6,7 @@ import { State } from "../../utils/Store";
 import { chatTemplate } from "./Chat.tmpl";
 import goToPage from "../../utils/goToPage";
 import newWebSocket from "../../utils/newWebSocket";
+import chatBottomScroll from "../../utils/chatBottomScroll";
 
 export class ChatsPage extends Block {
   constructor(props?: any) {
@@ -54,13 +55,15 @@ export class ChatsPage extends Block {
       };
       this.dispatch({userChats: chats});
     };
+
   };
 
   sendMessage() {
     const textbox: HTMLTextAreaElement = document.getElementById("sendMessageArea");
 
-    const currentChat = this.props.userChats.find((chat: any) => chat.id === this.props.currentChat);
+    if (!textbox.value) return;
 
+    const currentChat = this.props.userChats.find((chat: any) => chat.id === this.props.currentChatId);
     currentChat.socket.send(
       JSON.stringify({
         content: textbox.value,
@@ -72,18 +75,20 @@ export class ChatsPage extends Block {
   };
 
   chatSelection(chatInfo: Record<string, any>): void {
-    this.dispatch({currentChat: chatInfo.id});
+    this.dispatch({currentChatId: chatInfo.id});
+    this.dispatch({currentChat: this.props.userChats.find((chat: any) => chat.id === chatInfo.id) });
+    chatBottomScroll();
   };
 
   async dropChat() {
     const data = {
-      chatId: this.props.currentChat,
+      chatId: this.props.currentChatId,
     }
     const httptransport = new HTTPTransport();
     const result: XMLHttpRequest = await httptransport.delete("https://ya-praktikum.tech/api/v2/chats", {data})
 
     if (result.status === 200) {
-      this.dispatch({currentChat: null});
+      this.dispatch({currentChatId: null});
       this.getChats();
     };
 
@@ -101,9 +106,8 @@ export class ChatsPage extends Block {
       isAddChatShown: (): boolean => state.isAddChatShown,
       userChats: state.userChats,
       userId: state.user.id,
-      currentChat: state.currentChat,
-      messageCount: state.userChats.find((chat: any) => chat.id === state.currentChat) ? state.userChats.find((chat: any) => chat.id === state.currentChat).messages?.length : 0,
-      CC: state.userChats.find((chat: any) => chat.id === state.currentChat)
+      currentChatId: state.currentChatId,
+      // messageCount: state.userChats.find((chat: any) => chat.id === state.currentChatId) ? state.userChats.find((chat: any) => chat.id === state.currentChatId).messages?.length : 0,
     };
   };
 
