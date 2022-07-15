@@ -103,7 +103,6 @@ export default class Block<P = any> {
   };
 
   private _render() {
-    console.log("render", this.id, this.prototype)
     const templateString = this.render();
 
     const block = this.compile(templateString, {...this.props, handlers: this.handlers()})
@@ -258,6 +257,11 @@ export default class Block<P = any> {
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  }
+
+  dispatchRerender() {
+    console.log('rerendering on demand')
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
 };

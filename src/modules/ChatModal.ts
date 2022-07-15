@@ -8,6 +8,7 @@ interface ModalProps extends BlockProps {
   className?: string;
   onBlur?: () => void;
   onCloseClick?: () => void;
+  onRerender?: () => void;
 };
 
 export class ChatModal extends Block {
@@ -48,28 +49,31 @@ export class ChatModal extends Block {
     httptransport.post("https://ya-praktikum.tech/api/v2/chats", {data})
     .then((result: any) => {
       const chat = JSON.parse(result.response);
+
       this.addUsersToChat(chat.id)
-      this.getChats(chat.id);
+      this.getChats(chat.id)
       this.closeModalWindow()
     });
   };
 
-  getChats(chatId: number) {
+  async getChats(chatId: number) {
     const httptransport = new HTTPTransport();
-    httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30")
-      .then(result => {
-        if ((<XMLHttpRequest>result).status === 200) {
-           this.dispatch({userChats: JSON.parse((<XMLHttpRequest>result).response)});
+    const result = await httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30");
 
-          // const currentChat = this.props.userChats.find((chat: any) => chat.id === this.props.currentChatId);
 
-          // newWebSocket(currentChat, this.props.userId,  () => {
-          //   this.dispatch({ userChats: [...this.props.userChats]})
-          // });
-        };
+    if ((<XMLHttpRequest>result).status === 200) {
+      const chats = JSON.parse(result.response);
+      const chat = chats.find(c => c.id === chatId);
+
+      await newWebSocket(chat, this.props.userId,  () => {
+        console.log('pretend to rerender');
+        this.props.onRerender();
       });
 
+      this.dispatch({ userChats: [chat, ...this.props.userChats] })
+    };
   };
+
 
   searchUsers() {
     const httptransport = new HTTPTransport();
@@ -109,6 +113,7 @@ export class ChatModal extends Block {
       searchUserList: state.searchUserList,
       searchUserSelected: state.searchUserSelected,
       userChats: state.userChats,
+      userId: state.user.id,
       inputChatName: state.inputChatName,
     }
   }

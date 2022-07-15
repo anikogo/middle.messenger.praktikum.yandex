@@ -18,6 +18,7 @@ export class ChatsPage extends Block {
       handleChatSelection: (chat: any): void => this.chatSelection(chat),
       handleButtonSendMessage: (): void => this.sendMessage(),
       handleButtonExit: (): void => this.logOut(),
+      handleRerender: (): void => { this.dispatchRerender() }
     });
   };
 
@@ -50,7 +51,7 @@ export class ChatsPage extends Block {
     if (result.status === 200) {
       for (let chat of chats) {
         newWebSocket(chat, this.props.userId, () => {
-          this.dispatch({ userChats: [...this.props.userChats]})
+          this.dispatchRerender();
         });
       };
       this.dispatch({userChats: chats});
@@ -75,9 +76,20 @@ export class ChatsPage extends Block {
   };
 
   chatSelection(chatInfo: Record<string, any>): void {
+    // debugger;
+
     this.dispatch({currentChatId: chatInfo.id});
-    this.dispatch({currentChat: this.props.userChats.find((chat: any) => chat.id === chatInfo.id) });
+    this.dispatch({currentChat: chatInfo });
     chatBottomScroll();
+
+    // const currentChat = this.props.userChats.find((chat: any) => chat.id === this.props.currentChatId);
+
+    chatInfo.socket.send(
+      JSON.stringify({
+        content: "0",
+        type: "get old"
+      })
+    );
   };
 
   async dropChat() {
@@ -107,7 +119,7 @@ export class ChatsPage extends Block {
       userChats: state.userChats,
       userId: state.user.id,
       currentChatId: state.currentChatId,
-      // messageCount: state.userChats.find((chat: any) => chat.id === state.currentChatId) ? state.userChats.find((chat: any) => chat.id === state.currentChatId).messages?.length : 0,
+      currentChat: state.userChats.find(chat => chat.id === state.currentChatId),
     };
   };
 

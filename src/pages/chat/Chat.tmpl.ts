@@ -28,7 +28,7 @@ export function chatTemplate(): string {
               Icon="plus"
               className="chat-menu__add-chat"
             }}}
-            {{{ ChatModal }}}
+            {{{ ChatModal onRerender=handleRerender }}}
           </div>
           <div class="chat-menu__search-box">
             {{{ Input

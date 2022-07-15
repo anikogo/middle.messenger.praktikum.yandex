@@ -7,12 +7,6 @@ export default async function newWebSocket(chat: Record<string, any>, userId: nu
   chat.messages = [];
 
   chat.socket.addEventListener('open', () => {
-    chat.socket.send(
-      JSON.stringify({
-        content: "0",
-        type: "get old"
-      })
-    );
 
     setInterval(() => {
       chat.socket.send(
@@ -25,6 +19,7 @@ export default async function newWebSocket(chat: Record<string, any>, userId: nu
   });
 
   chat.socket.addEventListener("message", (event) => {
+
     const data = JSON.parse(event.data);
     if (Array.isArray(data)) {
       for (let message of data) {
@@ -37,6 +32,7 @@ export default async function newWebSocket(chat: Record<string, any>, userId: nu
     if (data.type === "message") {
       data.isOwn = data.user_id === userId;
       chat.messages.push(data);
+      chat.last_message = data;
       dispatch();
     };
 
