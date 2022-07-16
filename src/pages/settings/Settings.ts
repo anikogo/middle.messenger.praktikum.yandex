@@ -2,7 +2,8 @@ import Block from "../../utils/Block";
 import { validate, submitAllFields } from "../../utils/validate";
 import { settingsTemplate } from "./Settings.tmpl";
 import goToPage from "../../utils/goToPage";
-import { HTTPTransport } from "../../utils/requestAPI";
+import { HTTPTransport } from "../../api/requestAPI";
+import { getUrlChangeUserData } from "../../api/requestUrlAPI";
 
 export default class SettingsPage extends Block {
   private loginInput: string = "";
@@ -53,7 +54,7 @@ export default class SettingsPage extends Block {
       phone: this.phoneInput,
     };
 
-    httptransport.put("https://ya-praktikum.tech/api/v2/user/profile", {data})
+    httptransport.put(getUrlChangeUserData, {data})
       .then(result => {
         if ((<XMLHttpRequest>result).status === 200) {
           goToPage("/messenger")

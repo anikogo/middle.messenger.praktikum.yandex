@@ -1,13 +1,13 @@
 import Block, { BlockProps } from "../utils/Block";
 import { withStore } from "../utils/withStore";
-import { HTTPTransport } from "../utils/requestAPI"
+import { HTTPTransport } from "../api/requestAPI"
 import { State } from "../utils/Store";
 import newWebSocket from "../utils/newWebSocket";
+import { addUsersToChat } from "../api/chatAPI";
+import { getUrlManageChats, getUrlUsersSearch } from "../api/requestUrlAPI";
 
 interface ModalProps extends BlockProps {
   className?: string;
-  onBlur?: () => void;
-  onCloseClick?: () => void;
   onRerender?: () => void;
 };
 
@@ -16,10 +16,8 @@ export class ChatModal extends Block {
   static get getCompName(){return "ChatModal"};
 
   constructor(props: ModalProps) {
-    const {onBlur, ...rest} = props;
     super({
-      ...rest,
-      events: {blur: onBlur},
+      ...props,
       handleButtonCloseModal: () => this.closeModalWindow(),
       handleButtonSearchUsers: () => this.searchUsers(),
       handleButtonNewChat: () => this.createNewChat()
@@ -29,7 +27,7 @@ export class ChatModal extends Block {
   closeModalWindow() {
     this.dispatch(
       {
-        isAddChatShown: () => {return false},
+        isAddChatShown: false,
         inputChatName: "",
         searchUserList: [],
         searchUserName: "",
@@ -46,11 +44,16 @@ export class ChatModal extends Block {
     this.dispatch({ inputChatName: () => {return inputElvalue}})
     const data: Record<string, any> = {title: inputElvalue};
 
-    httptransport.post("https://ya-praktikum.tech/api/v2/chats", {data})
+    httptransport.post(getUrlManageChats, {data})
     .then((result: any) => {
-      const chat = JSON.parse(result.response);
+      let chat: any = {};
+      try {
+        chat = JSON.parse(result.response);
+      } catch (error) {
+        throw new Error("Ошибка создания чата")
+      }
 
-      this.addUsersToChat(chat.id)
+      addUsersToChat(chat.id, this.props.searchUserSelected)
       this.getChats(chat.id)
       this.closeModalWindow()
     });
@@ -58,15 +61,19 @@ export class ChatModal extends Block {
 
   async getChats(chatId: number) {
     const httptransport = new HTTPTransport();
-    const result = await httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30");
+    const result: XMLHttpRequest = await httptransport.get(getUrlManageChats);
 
 
-    if ((<XMLHttpRequest>result).status === 200) {
-      const chats = JSON.parse(result.response);
+    if (result.status === 200) {
+      let chats: any = {};
+      try {
+        chats = JSON.parse(result.response);
+      } catch (error) {
+        throw new Error("Проблема доступа к чатам")
+      }
       const chat = chats.find(c => c.id === chatId);
 
       await newWebSocket(chat, this.props.userId,  () => {
-        console.log('pretend to rerender');
         this.props.onRerender();
       });
 
@@ -87,23 +94,19 @@ export class ChatModal extends Block {
     const data: Record<string, any> = {login: inputNamevalue};
 
     if (data.login) {
-      httptransport.post("https://ya-praktikum.tech/api/v2/user/search", {data})
+      httptransport.post(getUrlUsersSearch, {data})
         .then(result => {
-          console.log(result)
-          this.dispatch({searchUserList: JSON.parse(result.response)});
+          let searchUserList: any = {};
+          try {
+            searchUserList = JSON.parse(result.response)
+          } catch (error) {
+            throw new Error("невозможно получить список пользователей")
+          }
+          this.dispatch({searchUserList: searchUserList});
         })
     } else {
       this.dispatch({searchUserList: ""});
     }
-  }
-
-  addUsersToChat(chatId: any) {
-    const httptransport = new HTTPTransport();
-    const data = {
-      users: this.props.searchUserSelected,
-      chatId: chatId,
-    }
-    httptransport.put("https://ya-praktikum.tech/api/v2/chats/users", {data})
   }
 
   public static mapStateToProps(state: State): Record<string, unknown> {
@@ -120,7 +123,7 @@ export class ChatModal extends Block {
 
   render() {
     return /*template*/`
-      <div class="add-chat-modal rounding {{#unless isAddChatShown}} hidden {{/unless}}" id="add-chat-modal">
+      <div class="add-chat-modal rounding" id="add-chat-modal">
         <div class="add-chat-modal__header flex">
           <div >Add new chat</div>
           {{{ IconButton

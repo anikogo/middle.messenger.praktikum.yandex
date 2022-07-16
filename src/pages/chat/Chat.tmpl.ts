@@ -28,7 +28,9 @@ export function chatTemplate(): string {
               Icon="plus"
               className="chat-menu__button-add-chat"
             }}}
-            {{{ ChatModal onRerender=handleRerender }}}
+            {{#if isAddChatShown}}
+              {{{ ChatModal onRerender=handleRerender }}}
+            {{/if}}
           </div>
           <div class="chat-menu__search-container">
             {{{ Input
@@ -47,7 +49,13 @@ export function chatTemplate(): string {
           <div class="message-area flex-column">
             <div class="message-area__header flex">
               <div class="medium-font-18">{{ currentChat.title }}</div>
-              <div>
+              <div class="flex">
+                {{{ IconButton
+                  onClick=handleButtonManageUsers
+                  Title="Manage users"
+                  Icon="people"
+                  className="chat-menu__button-add-chat"
+                }}}
                 {{{ IconButton
                   onClick=handleButtonDropChat
                   Title="Delete chat"
@@ -67,6 +75,9 @@ export function chatTemplate(): string {
                 className="message-area__input-message left-rounding"
                 pholderText="Message"
               }}}
+              {{#if isManageUsersShown}}
+                {{{ ManageUsersModal }}}
+              {{/if}}
               {{{ Button
                 idName="sendButton"
                 className="message_area__send-message right-rounding"

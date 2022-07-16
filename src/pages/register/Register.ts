@@ -1,8 +1,9 @@
 import Block from "../../utils/Block";
 import { validate, submitAllFields } from "../../utils/validate";
-import { HTTPTransport } from "../../utils/requestAPI";
+import { HTTPTransport } from "../../api/requestAPI";
 import { registerTemplate } from "./Register.tmpl";
 import goToPage from "../../utils/goToPage";
+import { getUrlRegisterUser } from "../../api/requestUrlAPI";
 
 export default class RegisterPage extends Block {
   private loginInput: string = "";
@@ -57,7 +58,7 @@ export default class RegisterPage extends Block {
       phone: this.phoneInput,
     };
 
-    httptransport.post("https://ya-praktikum.tech/api/v2/auth/signup", {data})
+    httptransport.post(getUrlRegisterUser, {data})
       .then(() => {
         goToPage("/messenger")
       });

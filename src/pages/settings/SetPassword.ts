@@ -1,6 +1,7 @@
+import { getUrlChangeUserPassword } from "../../api/requestUrlAPI";
 import Block from "../../utils/Block";
 import goToPage from "../../utils/goToPage";
-import { HTTPTransport } from "../../utils/requestAPI";
+import { HTTPTransport } from "../../api/requestAPI";
 import { validate, submitAllFields } from "../../utils/validate";
 import setPasswordTemplate from "./SetPassword.tmpl";
 
@@ -39,7 +40,7 @@ export default class SetPassword extends Block {
       newPassword: this.passwordInput,
     };
 
-    httptransport.put("https://ya-praktikum.tech/api/v2/user/password", {data})
+    httptransport.put(getUrlChangeUserPassword, {data})
       .then((result) => {
         if ((<XMLHttpRequest>result).status === 200) {
           goToPage("/settings")

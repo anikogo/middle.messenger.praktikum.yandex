@@ -44,8 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
     .use("/settings", pages.SettingsPage)
     .use("/messenger", pages.ChatsPage)
     .use("/setpassword", pages.SetPassword)
-    .use("/setavatar", pages.SetAvatar)
     .use("/login", pages.LoginPage)
+    .use("*", pages.ErrorPage404)
     .start();
+  console.log("ff")
 
 });

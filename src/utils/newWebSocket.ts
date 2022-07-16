@@ -20,8 +20,16 @@ export default async function newWebSocket(chat: Record<string, any>, userId: nu
 
   chat.socket.addEventListener("message", (event) => {
 
-    const data = JSON.parse(event.data);
+    let data: any = {} || [];
+
+    try {
+      data = JSON.parse(event.data);
+    } catch (error) {
+      throw new Error("Невозможно получить сообщения")
+    }
+
     if (Array.isArray(data)) {
+      chat.messages = [];
       for (let message of data) {
         message.isOwn = message.user_id === userId;
         chat.messages.unshift(message);

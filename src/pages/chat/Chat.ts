@@ -1,20 +1,22 @@
 import Block from "../../utils/Block";
 import Router from "../../utils/Router";
-import { HTTPTransport } from "../../utils/requestAPI";
+import { HTTPTransport } from "../../api/requestAPI";
 import { withStore } from "../../utils/withStore";
 import { State } from "../../utils/Store";
 import { chatTemplate } from "./Chat.tmpl";
 import goToPage from "../../utils/goToPage";
 import newWebSocket from "../../utils/newWebSocket";
 import chatBottomScroll from "../../utils/chatBottomScroll";
+import { getUrlAuthUser, getUrlLogoutUser, getUrlManageChats } from "../../api/requestUrlAPI";
 
 export class ChatsPage extends Block {
   constructor(props?: any) {
     super({
       ...props,
       handleButtonSettings: (): void => this.routeToSettings(),
-      handleButtonAddChat: (): any => this.dispatch({isAddChatShown: true}),
+      handleButtonAddChat: (): any => this.openAddChatModal(),
       handleButtonDropChat: () => this.dropChat(),
+      handleButtonManageUsers: () => this.openUserManageModal(),
       handleChatSelection: (chat: any): void => this.chatSelection(chat),
       handleButtonSendMessage: (): void => this.sendMessage(),
       handleButtonExit: (): void => this.logOut(),
@@ -22,14 +24,41 @@ export class ChatsPage extends Block {
     });
   };
 
+  openAddChatModal() {
+    this.dispatch({
+      isManageUsersShown: false,
+      isAddChatShown: true,
+      inputChatName: "",
+      searchUserList: [],
+      searchUserName: "",
+      searchUserSelected: [],
+    });
+  };
+
+  openUserManageModal() {
+    this.dispatch({
+      isManageUsersShown: true,
+      isAddChatShown: false,
+      searchUserList: [],
+      searchUserName: "",
+      searchUserSelected: [],
+    });
+  }
+
   componentDidMount(): void {
     const httptransport = new HTTPTransport();
-    httptransport.get("https://ya-praktikum.tech/api/v2/auth/user")
+    httptransport.get(getUrlAuthUser)
       .then(result => {
         if ((<XMLHttpRequest>result).status !== 200) {
           goToPage("/login");
         } else {
-          this.dispatch({user: JSON.parse((<XMLHttpRequest>result).response)});
+          let user: any = {}
+          try {
+            user = JSON.parse((<XMLHttpRequest>result).response)
+          } catch (error) {
+            throw new Error("Невозможно получить информацию о пользователе")
+          }
+          this.dispatch({user: user});
           this.getChats();
         };
       });
@@ -37,7 +66,7 @@ export class ChatsPage extends Block {
 
   logOut(){
     const httptransport = new HTTPTransport();
-    httptransport.post("https://ya-praktikum.tech/api/v2/auth/logout")
+    httptransport.post(getUrlLogoutUser)
       .then(() => {
         goToPage("/login");
       })
@@ -45,8 +74,14 @@ export class ChatsPage extends Block {
 
   async getChats() {
     const httptransport = new HTTPTransport();
-    const result: XMLHttpRequest = await httptransport.get("https://ya-praktikum.tech/api/v2/chats?limit=30");
-    const chats = JSON.parse(result.response);
+    const result: XMLHttpRequest = await httptransport.get(getUrlManageChats);
+    let chats: any = {};
+
+    try {
+      chats = JSON.parse(result.response);
+    } catch (error) {
+      throw new Error("Невозможно получить список чатов")
+    }
 
     if (result.status === 200) {
       for (let chat of chats) {
@@ -76,13 +111,8 @@ export class ChatsPage extends Block {
   };
 
   chatSelection(chatInfo: Record<string, any>): void {
-    // debugger;
-
     this.dispatch({currentChatId: chatInfo.id});
-    this.dispatch({currentChat: chatInfo });
     chatBottomScroll();
-
-    // const currentChat = this.props.userChats.find((chat: any) => chat.id === this.props.currentChatId);
 
     chatInfo.socket.send(
       JSON.stringify({
@@ -93,15 +123,22 @@ export class ChatsPage extends Block {
   };
 
   async dropChat() {
+    const isConfirmed = confirm("Удалить чат?");
+    if (!isConfirmed) return;
+
     const data = {
       chatId: this.props.currentChatId,
     }
     const httptransport = new HTTPTransport();
-    const result: XMLHttpRequest = await httptransport.delete("https://ya-praktikum.tech/api/v2/chats", {data})
+    const result: XMLHttpRequest = await httptransport.delete(getUrlManageChats, {data})
 
     if (result.status === 200) {
       this.dispatch({currentChatId: null});
       this.getChats();
+    };
+
+    if (result.status === 403) {
+      alert("Удалить чат может только его создатель")
     };
 
   };
@@ -116,6 +153,7 @@ export class ChatsPage extends Block {
       first_name: ():string => state.user.first_name,
       second_name: (): string => state.user.second_name,
       isAddChatShown: (): boolean => state.isAddChatShown,
+      isManageUsersShown: (): boolean => state.isManageUsersShown,
       userChats: state.userChats,
       userId: state.user.id,
       currentChatId: state.currentChatId,

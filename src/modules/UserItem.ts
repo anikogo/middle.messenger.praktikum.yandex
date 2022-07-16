@@ -47,12 +47,12 @@ export class UserItem extends Block {
           {{#if isUserAdded}}
             {{{ Button
               onClick=handleButtonRemoveUser
-              label="remove"
+              label="unselect"
               className="add-chat-modal__bottom rounding" }}}
           {{else}}
             {{{ Button
               onClick=handleButtonAddUser
-              label="add"
+              label="select"
               className="add-chat-modal__bottom rounding" }}}
           {{/if}}
         </div>

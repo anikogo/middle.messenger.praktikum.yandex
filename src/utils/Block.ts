@@ -4,10 +4,6 @@ import Handlebars from "handlebars";
 import { Store, State } from "./Store";
 import isEqual from "./isEqual";
 
-// export interface BlockMeta<P = any> {
-//   props: P;
-// };
-
 export interface BlockMeta<P> extends Function {
   new (props: P): Block<P>;
   componentName?: string;
@@ -85,7 +81,6 @@ export default class Block<P = any> {
     this._render();
   };
 
-    // Может переопределять пользователь, необязательно трогать
   componentDidUpdate(oldProps: P, newProps: P) {
     return !isEqual(oldProps, newProps);
   };
@@ -118,7 +113,6 @@ export default class Block<P = any> {
     this._addEvents();
   };
 
-    // Может переопределять пользователь, необязательно трогать
   protected render(): string {
     return "";
   };
@@ -138,8 +132,6 @@ export default class Block<P = any> {
   }
 
   private _makePropsProxy(props: P) {
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
     const self = this;
 
     return new Proxy(props as unknown as object, {
@@ -159,7 +151,6 @@ export default class Block<P = any> {
   };
 
   private _createDocumentElement(tagName: string) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   };
 
@@ -260,7 +251,6 @@ export default class Block<P = any> {
   }
 
   dispatchRerender() {
-    console.log('rerendering on demand')
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 

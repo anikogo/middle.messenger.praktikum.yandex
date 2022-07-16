@@ -26,7 +26,7 @@ class Route<P = any> {
   };
 
   match(pathname: string) {
-    return isEqual(pathname, this.#pathname);
+    return isEqual(pathname, this.#pathname) || this.#pathname === "*";
   };
 
   render() {
@@ -72,7 +72,7 @@ export default class Router {
   };
 
   private _onRoute(pathname: string) {
-    // debugger;
+
     let route = this.getRoute(pathname);
     if (!route) return;
 
@@ -84,12 +84,12 @@ export default class Router {
     route.render();
   }
 
-  go(pathname: string) {
+  go(pathname: string): void {
     this.#history.pushState({}, "", pathname);
     this._onRoute(pathname);
   };
 
-  back() {
+  back(): void {
     this.#history.back();
   };
 

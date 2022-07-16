@@ -1,4 +1,4 @@
-import queryStringify from "./queryStringify";
+import queryStringify from "../utils/queryStringify";
 
 const METHODS: Record<string, string> = {
   GET: "GET",
@@ -57,21 +57,3 @@ export class HTTPTransport  {
     });
   };
 };
-
-// async function fetchWithRetry(url: string, options: any) {
-//   let retries = options.retries;
-//   let response;
-
-//   while(retries > 0) {
-//     try {
-//       response = await (new HTTPTransport()).get(url);
-//       return response;
-//     } catch(e) {
-//       console.error(`retry number ${options.retries - retries + 1} failed`);
-//     };
-//     retries--;
-//     if (retries <= 0) {
-//       throw new Error("error");
-//     };
-//   };
-// };

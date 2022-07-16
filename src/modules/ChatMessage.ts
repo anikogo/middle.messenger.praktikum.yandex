@@ -9,8 +9,7 @@ export default class ChatMessage extends Block {
   static get getCompName(){return "ChatMessage"};
 
   constructor(props: MessageProps) {
-    // date = getMessageDate();
-    super({...props});
+    super(props);
   };
 
   render() {

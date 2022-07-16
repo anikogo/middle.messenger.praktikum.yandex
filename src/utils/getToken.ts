@@ -1,8 +1,17 @@
-import { HTTPTransport } from "./requestAPI";
+import { getUrlTokenRequest } from "../api/requestUrlAPI";
+import { HTTPTransport } from "../api/requestAPI";
 
 export default async function getToken(chatId: number) {
   const httptransport = new HTTPTransport();
-  const result: XMLHttpRequest = await httptransport.post(`https://ya-praktikum.tech/api/v2/chats/token/${chatId}`, {});
-  const token = JSON.parse(result.response).token;
+  const requestURL = getUrlTokenRequest(chatId);
+  const result: XMLHttpRequest = await httptransport.post(requestURL, {});
+  let token: string = "";
+
+  try {
+    token = JSON.parse(result.response).token;
+  } catch (error) {
+    throw new Error("Не получен токен")
+  }
+
   return token;
 };

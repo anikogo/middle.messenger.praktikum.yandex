@@ -16,6 +16,6 @@ export default class DivButton extends Block {
   };
 
   render() {
-    return /*template*/`<div class="{{ className }}">{{ divContent }}</div>`;
+    return /*template*/`<div role="button" class="{{ className }}">{{ divContent }}</div>`;
   };
 };

@@ -1,8 +1,9 @@
 import Block from "../../utils/Block";
 import { submitAllFields, validate }  from "../../utils/validate";
-import { HTTPTransport } from "../../utils/requestAPI";
+import { HTTPTransport } from "../../api/requestAPI";
 import { loginTemplate } from "./Login.tmpl";
 import goToPage from "../../utils/goToPage";
+import { getUrlAuthUser, getUrlLoginUser } from "../../api/requestUrlAPI";
 
 export default class LoginPage extends Block {
 
@@ -24,7 +25,7 @@ export default class LoginPage extends Block {
 
   componentDidMount(): void {
     const httptransport = new HTTPTransport();
-    httptransport.get("https://ya-praktikum.tech/api/v2/auth/user")
+    httptransport.get(getUrlAuthUser)
       .then(result => {
         if (result.status === 200) {
           goToPage("/messenger");
@@ -50,7 +51,7 @@ export default class LoginPage extends Block {
       password: this.passwordInput,
     };
 
-    httptransport.post("https://ya-praktikum.tech/api/v2/auth/signin", {data})
+    httptransport.post(getUrlLoginUser, {data})
       .then(result => this.loginRequest(<XMLHttpRequest>result));
   };
 
@@ -61,15 +62,15 @@ export default class LoginPage extends Block {
         response.response === "{\"reason\":\"User already in system\"}"
       ) {
       const httptransport = new HTTPTransport();
-      httptransport.get("https://ya-praktikum.tech/api/v2/auth/user")
+      httptransport.get(getUrlAuthUser)
         .then(result => {
-          this.userIsConnected(<XMLHttpRequest>result);
+          this.userIsConnected();
         });
     };
 
   };
 
-  userIsConnected(response: XMLHttpRequest): void {
+  userIsConnected(): void {
     goToPage("/messenger");
   };
 

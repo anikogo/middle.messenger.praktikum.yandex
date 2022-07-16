@@ -6,7 +6,6 @@ export function settingsTemplate(): string {
         <div class="flex">
           {{{ DivButton
             className="data-entry-form__user-pic rounding"
-            onClick=goToPwdChange
           }}}
           <div class="flex-grow-1">
             {{{ Input
