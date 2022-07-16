@@ -33,13 +33,6 @@ h1, h2 {
     font-family: 'Nunito', sans-serif;
 }
 
-.error-number-font {
-    color: $light-color;
-    font-size: 400;
-    font-weight: bold;
-    text-align: center;
-}
-
 @import "./data-entry";
 @import "./service";
 @import "./animations";
