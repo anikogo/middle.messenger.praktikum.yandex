@@ -121,11 +121,10 @@ export class ChatModal extends Block {
   render() {
     return /*template*/`
       <div class="add-chat-modal rounding {{#unless isAddChatShown}} hidden {{/unless}}" id="add-chat-modal">
-        <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
+        <div class="add-chat-modal__header flex">
           <div >Add new chat</div>
           {{{ IconButton
             onClick = handleButtonCloseModal
-            className="close-button"
             Icon="x"
             Title="Close"
           }}}
@@ -133,22 +132,22 @@ export class ChatModal extends Block {
         <div>
           {{{ Input
             idName="inputChatName"
-            className="input__search-input rounding"
+            className="add-chat-modal__input-search  rounding"
             pholderText="Enter chat name"
             value=inputChatName
           }}}
         </div>
-        <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
+        <div class="add-chat-modal__search-container flex">
           {{{ Input
             idName="searchUserName"
-            className="input__search-input left-rounding"
+            className="add-chat-modal__input-search  left-rounding"
             value=searchUserName
             pholderText="Search users by login"
           }}}
           {{{ Button
             label="search"
             onClick=handleButtonSearchUsers
-            className="button__search-users right-rounding"
+            className="add-chat-modal__bottom right-rounding"
           }}}
         </div>
         {{#each searchUserSelected }}
@@ -158,7 +157,7 @@ export class ChatModal extends Block {
         {{{ Button
           label="Create chat"
           onClick=handleButtonNewChat
-          className="button__create-chat rounding"
+          className="add-chat-modal__bottom width-max rounding"
         }}}
       </div>
     `;

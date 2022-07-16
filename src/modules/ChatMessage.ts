@@ -15,12 +15,12 @@ export default class ChatMessage extends Block {
 
   render() {
     return /*template*/`
-      <div class="message">
-        <div class="{{#if message.isOwn}} message__outgoing-message {{else}} message__incoming-message {{/if}} rounding">
-          <div class="message__text">
+      <div class="message-box">
+        <div class="message-box__message {{#if message.isOwn}} message-box__message_outgoing {{else}} message-box__message_incoming {{/if}} rounding">
+          <div>
             {{ message.content }}
           </div>
-          <div class="message__footer"> {{ message.time }}</div>
+          <div class="message-box__message_footer"> {{ message.time }}</div>
         </div>
       </div>`;
   };

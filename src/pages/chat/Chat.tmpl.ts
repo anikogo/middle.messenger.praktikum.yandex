@@ -1,77 +1,75 @@
 export function chatTemplate(): string {
   return /*template*/`
     <main>
-      <div class="chat-form">
-        <div class="chat-menu">
-          <div class="chat-menu__owner">
+      <div class="flex full-size">
+        <div class="chat-menu height-max">
+          <div class="chat-menu__owner-container flex">
             <div>
               {{{ IconButton
                 onClick=handleButtonSettings
                 Title="Settings"
                 Icon="gear"
-                className="chat-menu__owner-settings"
+                className="chat-menu__button-settings"
               }}}
               {{{ IconButton
                 onClick=handleButtonExit
                 Title="Exit"
                 Icon="arrow-left"
-                className="chat-menu__logout"
+                className="chat-menu__button-logout"
               }}}
             </div>
             <div>
-              <div class="medium-font-18">{{ first_name }} {{ second_name }}</div>
+              <div class="medium-font-18 width-max">{{ first_name }} {{ second_name }}</div>
               <div class="thin-font"> Status </div>
             </div>
             {{{ IconButton
               onClick=handleButtonAddChat
               Title="Add new chat"
               Icon="plus"
-              className="chat-menu__add-chat"
+              className="chat-menu__button-add-chat"
             }}}
             {{{ ChatModal onRerender=handleRerender }}}
           </div>
-          <div class="chat-menu__search-box">
+          <div class="chat-menu__search-container">
             {{{ Input
               idName="searchChat"
-              className="input__search-input rounding"
+              className="chat-menu__input-search  rounding"
               pholderText="search chat..."
             }}}
           </div>
-          <div class="chat-menu__list">
+          <div class="chat-menu__list-container">
             {{#each userChats}}
               {{{ ChatItem chatInfo=this onClick=../handleChatSelection }}}
             {{/each}}
           </div>
         </div>
         {{#if currentChatId }}
-          <div class="chat-area">
-            <div class="chat-area__header">
-              <div class="chat-area__header_status">
-                <div class="medium-font-18">{{ currentChat.title }}</div>
-              </div>
+          <div class="message-area flex-column">
+            <div class="message-area__header flex">
+              <div class="medium-font-18">{{ currentChat.title }}</div>
               <div>
                 {{{ IconButton
                   onClick=handleButtonDropChat
                   Title="Delete chat"
                   Icon="trash"
-                  className="chat-menu__add-chat"
+                  className="chat-menu__button-add-chat"
                 }}}
               </div>
             </div>
-            <div class="chat-area__content" id="messages-area">
+            <div class="message-area__content flex-grow-1" id="messages-area">
                 {{#each currentChat.messages}}
                   {{{ChatMessage message=this}}}
                 {{/each}}
             </div>
-            <div class="chat-area__footer">
+            <div class="message-area__footer flex">
               {{{ TextArea
                 idName="sendMessageArea"
-                className="input__message-input left-rounding"
+                className="message-area__input-message left-rounding"
                 pholderText="Message"
               }}}
               {{{ Button
                 idName="sendButton"
-                className="button__send-message right-rounding"
+                className="message_area__send-message right-rounding"
                 label="^"
                 onClick=handleButtonSendMessage
               }}}

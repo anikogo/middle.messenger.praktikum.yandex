@@ -21,14 +21,14 @@ export default class ChatItem extends Block {
 
   render() {
     return /*template*/`
-			<div class="chat-item rounding">
-				<div class="chat-item__picture rounding"></div>
-				<div class="chat-item__text">
-					<div class="chat-item__text_ellipsis medium-font">{{ chatInfo.title }}</div>
-					<div class="chat-item__text_ellipsis thin-font">{{ chatInfo.last_message.content }}</div>
+			<div class="chat-menu__chat-item flex rounding">
+				<div class="chat-menu__chat-item-avatar rounding"></div>
+				<div class="chat-menu__chat-item-text-container">
+					<div class="text_ellipsis medium-font">{{ chatInfo.title }}</div>
+					<div class="text_ellipsis thin-font">{{ chatInfo.last_message.content }}</div>
 				</div>
         {{#if chatInfo.unread_count}}
-				  <div class="chat-item__msgcounter rounding">{{ chatInfo.unread_count }}</div>
+				  <div class="chat-menu__chat-item-message-counter rounding">{{ chatInfo.unread_count }}</div>
         {{/if}}
 			</div>
     `;

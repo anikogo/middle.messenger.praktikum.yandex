@@ -26,7 +26,7 @@ export class UserList extends Block {
 
   render() {
     return /*template*/`
-      <ul class="user-list">
+      <ul class="add-chat-modal__users-list">
         {{#each users}}
           {{{ UserItem user=this }}}
         {{/each}}

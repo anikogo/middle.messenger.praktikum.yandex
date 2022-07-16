@@ -38,16 +38,22 @@ export class UserItem extends Block {
 
   render() {
     return /*template*/`
-      <li class="user-item rounding">
-        <div class="user-item__name">
+      <li class="add-chat-modal__user-item flex rounding">
+        <div>
           <div>{{ user.first_name }} {{ user.first_name }}</div>
           <div>Login: {{user.login}}</div>
         </div>
         <div>
           {{#if isUserAdded}}
-            {{{ Button onClick=handleButtonRemoveUser label="remove" className="button__add-remove-button rounding" }}}
+            {{{ Button
+              onClick=handleButtonRemoveUser
+              label="remove"
+              className="add-chat-modal__bottom rounding" }}}
           {{else}}
-            {{{ Button onClick=handleButtonAddUser label="add" className="button__add-remove-button rounding" }}}
+            {{{ Button
+              onClick=handleButtonAddUser
+              label="add"
+              className="add-chat-modal__bottom rounding" }}}
           {{/if}}
         </div>
       </li>

@@ -9,10 +9,10 @@ const regExps: Record<string, RegExp> = {
 function _checkField (value: string, validationType: string, errorElement: HTMLElement) {
   const isMatch = regExps[validationType].test(value);
   if (!isMatch) {
-    errorElement.className = "error_visible";
+    errorElement.className = "data-entry-form__input-error visible";
     errorElement.textContent = `Wrong ${validationType} format`;
   } else {
-    errorElement.className = "error_hidden";
+    errorElement.className = "data-entry-form__input-error hidden";
     errorElement.textContent = ``;
   }
 
