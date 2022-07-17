@@ -1,6 +1,6 @@
-export {default as LinkButton} from "./button/linkbutton";
-export {default as Button} from "./button/button";
-export {default as ChatItem} from "./chatitem/chatitem";
-export {default as Error} from "./error/error";
-export {default as Input} from "./input/input";
-export {default as TextArea} from "./input/textarea";
+export {default as Button} from "./Button";
+export {default as DivButton} from "./DivButton";
+export {default as Error} from "./Error";
+export {default as Input} from "./Input";
+export {default as TextArea} from "./TextArea";
+export {default as IconButton} from "./IconButton";

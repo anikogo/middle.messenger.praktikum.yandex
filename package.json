@@ -13,9 +13,11 @@
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "@anikin/parcel-transformer-handlebars-precompile": "^1.0.1",
     "@parcel/transformer-sass": "^2.6.0",
+    "@primer/octicons": "^17.3.0",
     "eslint": "^8.16.0",
     "express": "^4.18.1",
     "handlebars": "^4.7.7",
+    "jest": "^28.1.1",
     "nanoid": "^4.0.0",
     "parcel": "^2.6.0",
     "postcss-scss": "^4.0.4",
@@ -29,6 +31,9 @@
     "npm": "^8"
   },
   "alias": {
-    "nanoid": "./node_modules/nanoid/index.browser"
+    "nanoid": "./node_modules/nanoid/index.browser",
+    "handlebars": "./node_modules/handlebars/dist/handlebars",
+    "@primer/octicons": "./node_modules/@primer/octicons",
+    "object-assign": "./node_modules/object-assign"
   }
 }
