@@ -1,55 +1,52 @@
-import { renderDOM } from "./utils/renderDOM";
-import { LoginPage, RegisterPage, ChatsPage, SettingsPage, ChangepwdPage, ChangepicPage, ErrorPage404, ErrorPage500 } from "./pages";
-import { LinkButton, Button, Input, TextArea, Error, ChatItem } from "./components";
+import * as pages from "./pages";
+import * as components from "./components";
+import * as modules from "./modules";
 import { registerComponent } from "./utils/registerComponent";
+import Router from "./utils/Router";
+import { Store } from "./utils/Store";
 
-function router() {
-  const loginPage = new LoginPage();
-  const registerPage = new RegisterPage();
-  const chatsPage = new ChatsPage();
-  const settingsPage = new SettingsPage();
-  const changepwdPage = new ChangepwdPage();
-  const changepicPage = new ChangepicPage();
-  const errorPage404 = new ErrorPage404();
-  const errorPage500 = new ErrorPage500();
-
-  switch (window.location.hash) {
-    case '#register':
-      renderDOM("#app", registerPage);
-      break;
-    case '#chat':
-      renderDOM("#app", chatsPage);
-      break;
-    case '#settings':
-      renderDOM("#app", settingsPage);
-      break;
-    case '#changepwd':
-      renderDOM("#app", changepwdPage);
-      break;
-    case '#changepic':
-      renderDOM("#app", changepicPage);
-      break;
-    case '#404':
-      renderDOM("#app", errorPage404);
-      break;
-    case '#500':
-      renderDOM("#app", errorPage500);
-      break;
-    default:
-      renderDOM("#app", loginPage);
-      break;
+declare global {
+  interface Window {
+    store: any;
   }
-}
+};
 
-document.addEventListener("DOMContentLoaded", () => {
-  registerComponent(LinkButton);
-  registerComponent(Button);
-  registerComponent(Input);
-  registerComponent(Error);
-  registerComponent(ChatItem);
-  registerComponent(TextArea);
-
-  router();
+Object.values(components).forEach((Component: any) => {
+  registerComponent(Component);
 });
 
-window.addEventListener("hashchange", router);
+Object.values(modules).forEach((Module: any) => {
+  registerComponent(Module);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const router = new Router();
+
+  const defaultState = {
+    screen: null,
+    loginFormError: null,
+    user: {},
+    isAddChatShown: false,
+    searchUserList: [],
+    searchUserSelected: [],
+    users: [],
+    userChats: [],
+    currentChatId: null,
+  };
+
+  const store = new Store(defaultState);
+  window.store = store;
+
+  router
+    .use("/", pages.LoginPage)
+    .use("/sign-up", pages.RegisterPage)
+    .use("/settings", pages.SettingsPage)
+    .use("/messenger", pages.ChatsPage)
+    .use("/setpassword", pages.SetPassword)
+    .use("/login", pages.LoginPage)
+    .use("*", pages.ErrorPage404)
+    .start();
+  console.log("ff")
+
+});

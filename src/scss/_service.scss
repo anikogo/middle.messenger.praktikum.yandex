@@ -1,0 +1,95 @@
+::placeholder {
+    color: $light-color;
+}
+
+.rounding {
+    border-radius: 5px;
+}
+
+.right-rounding {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.left-rounding {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.thin-font {
+    color: $light-color;
+    font-size: 15;
+    font-weight: 300;
+}
+
+.medium-font-15 {
+    color: $dark-color;
+    font-size: 15;
+    font-weight: 500;
+}
+
+.medium-font-18 {
+    color: $dark-color;
+    font-size: 18;
+    font-weight: 500;
+}
+
+.display-none {
+    display: none;
+}
+
+.display-block {
+    display: block;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.center-horizontal {
+    display: block;
+    margin: 0 auto;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-size {
+    height: 100%;
+    width: 100%;
+}
+
+.height-max {
+    height: 100%;
+}
+
+.width-max {
+    width: 100%;
+}
+
+.text_ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.error-number-font {
+    color: $light-color;
+    font-size: 400;
+    font-weight: bold;
+    text-align: center;
+}

@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "rules": {
+    "color-hex-case": "lower"
+  },
+  "overrides": [
+    {
+      "files": "src/scss/*.scss",
+      "customSyntax": "postcss-scss"
+    }
+  ]
+} 
