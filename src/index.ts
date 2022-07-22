@@ -1,3 +1,4 @@
+import "./scss/index.scss";
 import * as pages from "./pages";
 import * as components from "./components";
 import * as modules from "./modules";
@@ -47,6 +48,5 @@ document.addEventListener("DOMContentLoaded", () => {
     .use("/login", pages.LoginPage)
     .use("*", pages.ErrorPage404)
     .start();
-  console.log("ff")
 
 });

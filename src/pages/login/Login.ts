@@ -14,10 +14,10 @@ export default class LoginPage extends Block {
   constructor(props?: any) {
 
     super({...props,
-      checkLoginEvent: (e: any) => this.checkFileld("login", this.loginInput, e.target.id),
-      checkPwdEvent: (e: any) => this.checkFileld("password", this.passwordInput, e.target.id),
-      handleLoginInput: (e: InputEvent) => { this.loginInput = e.target?.value },
-      handlePasswordInput: (e: InputEvent) => { this.passwordInput = e.target?.value },
+      checkLoginEvent: (e: Event) => this.checkFileld("login", this.loginInput, (<HTMLInputElement>(e.target)).id),
+      checkPwdEvent: (e: Event) => this.checkFileld("password", this.passwordInput, (<HTMLInputElement>(e.target)).id),
+      handleLoginInput: (e: InputEvent) => { this.loginInput = (<HTMLInputElement>(e.target)).value },
+      handlePasswordInput: (e: InputEvent) => { this.passwordInput = (<HTMLInputElement>(e.target)).value },
       handleButtonSubmit: () => this.submitLogin(),
       handleButtonRegister: () => goToPage("/sign-up")
     });
@@ -61,9 +61,9 @@ export default class LoginPage extends Block {
         response.status === 400 &&
         response.response === "{\"reason\":\"User already in system\"}"
       ) {
-      const httptransport = new HTTPTransport();
+      const httptransport: HTTPTransport = new HTTPTransport();
       httptransport.get(getUrlAuthUser)
-        .then(result => {
+        .then(() => {
           this.userIsConnected();
         });
     };

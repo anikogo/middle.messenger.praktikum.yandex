@@ -1,5 +1,5 @@
 import Block, {BlockProps} from "../utils/Block";
-import octicons from "@primer/octicons";
+import octicons, { IconName } from "@primer/octicons";
 
 interface ButtonProps extends BlockProps {
   onClick: () => void;
@@ -23,7 +23,7 @@ export default class IconButton extends Block {
   render() {
     return /*template*/`
       <div class="{{ className }}" title="{{ Title }}">
-        ${octicons[this.props.Icon].toSVG()}
+        ${octicons[<IconName>(this.props.Icon)].toSVG()}
       </div>`;
   };
 };

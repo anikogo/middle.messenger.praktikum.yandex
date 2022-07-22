@@ -1,4 +1,4 @@
-import Block, {BlockMeta} from "./Block";
+import Block, { BlockInterface } from "./Block";
 import isEqual from "./isEqual";
 import { renderDOM } from "./renderDOM";
 
@@ -6,11 +6,11 @@ type props = Record<string, any>;
 
 class Route<P = any> {
   #pathname: string;
-  #blockClass: BlockMeta<P>;
+  #blockClass: BlockInterface<P>;
   #block: Block | null = null;
-  #props: props;
+  #props: any;
 
-  constructor(pathname: string, view: BlockMeta<P>, props: props) {
+  constructor(pathname: string, view: BlockInterface<P>, props: props) {
     this.#pathname = pathname;
     this.#blockClass = view;
     this.#block = null;
@@ -55,7 +55,7 @@ export default class Router {
     Router.__instance = this;
   }
 
-  use<P>(pathname: string, block: BlockMeta<P>, props: props = {}) {
+  use<P>(pathname: string, block: BlockInterface<P>, props: props = {}) {
     const route = new Route(pathname, block, props);
 
     this.#routers.push(route);
@@ -65,7 +65,7 @@ export default class Router {
 
   start() {
     window.addEventListener('popstate', (event: PopStateEvent) => {
-      this._onRoute(event.currentTarget?.location.pathname);
+      this._onRoute((<Window>(event.currentTarget))?.location.pathname);
     });
 
     this._onRoute(window.location.pathname);

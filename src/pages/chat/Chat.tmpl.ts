@@ -80,7 +80,7 @@ export function chatTemplate(): string {
               {{/if}}
               {{{ Button
                 idName="sendButton"
-                className="message_area__send-message right-rounding"
+                className="message_area__button-send-message right-rounding"
                 label="^"
                 onClick=handleButtonSendMessage
               }}}

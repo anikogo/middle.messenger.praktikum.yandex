@@ -18,7 +18,7 @@ export default async function newWebSocket(chat: Record<string, any>, userId: nu
 
   });
 
-  chat.socket.addEventListener("message", (event) => {
+  chat.socket.addEventListener("message", (event: any) => {
 
     let data: any = {} || [];
 

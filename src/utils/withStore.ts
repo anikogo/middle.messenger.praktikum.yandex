@@ -1,9 +1,13 @@
-import {BlockMeta} from "../utils/Block";
+import {BlockInterface} from "../utils/Block";
 import {Action, State, Store} from "../utils/Store";
 
 type WithStateProps = { store: Store<State> };
 
-export function withStore<P extends WithStateProps>(WrappedBlock: BlockMeta<P>) {
+interface SmartBlock<P> extends BlockInterface<P> {
+  mapStateToProps(state: Record<string, unknown>): Record<string, unknown>;
+}
+
+export function withStore<P extends WithStateProps>(WrappedBlock: SmartBlock<P>) {
   // @ts-expect-error No base constructor has the specified
   return class extends WrappedBlock<P> {
     public static componentName = WrappedBlock.componentName || WrappedBlock.name;
@@ -30,17 +34,17 @@ export function withStore<P extends WithStateProps>(WrappedBlock: BlockMeta<P>) 
       window.store.off('changed', this.__onChangeStoreCallback);
     };
 
-    mapStateToProps(state: State) {
-      if (typeof super.mapStateToProps === 'function') {
-        return super.mapStateToProps(state);
-      } else {
-        return {};
-      };
-    };
+    // mapStateToProps(state: State): Record<string, unknown> {
+    //   if (typeof super.mapStateToProps === 'function') {
+    //     return super.mapStateToProps(state);
+    //   } else {
+    //     return {};
+    //   };
+    // };
 
     dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any): void {
       window.store.dispatch(nextStateOrAction, payload);
     };
 
-  } as BlockMeta<Omit<P, 'store'>>;
+  } as BlockInterface<Omit<P, 'store'>>;
 }

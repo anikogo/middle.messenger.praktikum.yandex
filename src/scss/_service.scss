@@ -18,19 +18,19 @@
 
 .thin-font {
     color: $light-color;
-    font-size: 15;
+    font-size: 15px;
     font-weight: 300;
 }
 
 .medium-font-15 {
     color: $dark-color;
-    font-size: 15;
+    font-size: 15px;
     font-weight: 500;
 }
 
 .medium-font-18 {
     color: $dark-color;
-    font-size: 18;
+    font-size: 18px;
     font-weight: 500;
 }
 
@@ -89,7 +89,7 @@
 
 .error-number-font {
     color: $light-color;
-    font-size: 400;
+    font-size: 400px;
     font-weight: bold;
     text-align: center;
 }

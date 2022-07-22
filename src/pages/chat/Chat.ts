@@ -95,7 +95,7 @@ export class ChatsPage extends Block {
   };
 
   sendMessage() {
-    const textbox: HTMLTextAreaElement = document.getElementById("sendMessageArea");
+    const textbox: HTMLTextAreaElement = <HTMLTextAreaElement>document.getElementById("sendMessageArea");
 
     if (!textbox.value) return;
 
@@ -157,7 +157,7 @@ export class ChatsPage extends Block {
       userChats: state.userChats,
       userId: state.user.id,
       currentChatId: state.currentChatId,
-      currentChat: state.userChats.find(chat => chat.id === state.currentChatId),
+      currentChat: state.userChats.find((chat: Record<string, any>) => chat.id === state.currentChatId),
     };
   };
 

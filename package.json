@@ -3,28 +3,33 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "rm -rf dist .parcel-cache && parcel ./src/index.html --no-cache",
-    "start": "rm -rf dist .parcel-cache && parcel build ./src/index.html --no-cache && node ./src/server/server.js"
+    "start": "npm run build && node ./src/server/server.js",
+    "build": "npm run clean && node ./node_modules/.bin/webpack",
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
-    "@anikin/parcel-transformer-handlebars-precompile": "^1.0.1",
-    "@parcel/transformer-sass": "^2.6.0",
     "@primer/octicons": "^17.3.0",
+    "@types/primer__octicons": "^17.0.0",
     "eslint": "^8.16.0",
     "express": "^4.18.1",
     "handlebars": "^4.7.7",
-    "jest": "^28.1.1",
+    "html-webpack-plugin": "^5.5.0",
     "nanoid": "^4.0.0",
-    "parcel": "^2.6.0",
     "postcss-scss": "^4.0.4",
     "sass": "^1.52.1",
     "stylelint": "^14.8.5",
     "stylelint-scss": "^4.2.0",
-    "typescript": "^4.7.2"
+    "typescript": "^4.7.2",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "css-loader": "^6.7.1",
+    "mini-css-extract-plugin": "^2.6.1",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.3.1"
   },
   "engines": {
     "node": "^18",
@@ -35,5 +40,9 @@
     "handlebars": "./node_modules/handlebars/dist/handlebars",
     "@primer/octicons": "./node_modules/@primer/octicons",
     "object-assign": "./node_modules/object-assign"
+  },
+  "browser": {
+    "./lib/index.js": "./dist/cjs/handlebars.js",
+    "./runtime": "./dist/cjs/handlebars.runtime.js"
   }
 }

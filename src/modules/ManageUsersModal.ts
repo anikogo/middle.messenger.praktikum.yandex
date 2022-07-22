@@ -25,7 +25,7 @@ export class ManageUsersModal extends Block {
   };
 
   searchUsers() {
-    const inputNamevalue = document.getElementById("manageSearchUserName")?.value;
+    const inputNamevalue = (<HTMLInputElement>document.getElementById("manageSearchUserName")).value;
     const data: Record<string, any> = {login: inputNamevalue};
 
 
@@ -122,4 +122,4 @@ export class ManageUsersModal extends Block {
   };
 };
 
-export default withStore (ManageUsersModal);
+export default withStore(ManageUsersModal);

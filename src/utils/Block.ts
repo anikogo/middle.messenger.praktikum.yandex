@@ -1,17 +1,19 @@
 import EventBus from "./EventBus";
 import { customAlphabet } from "nanoid";
 import Handlebars from "handlebars";
-import { Store, State } from "./Store";
+import { Action, State } from "./Store";
 import isEqual from "./isEqual";
 
-export interface BlockMeta<P> extends Function {
+export interface BlockInterface<P = any> extends Function {
   new (props: P): Block<P>;
   componentName?: string;
+  getCompName: string;
+  // mapStateToProps(state: Record<string, unknown>): Record<string, unknown>;
 };
 
 export interface BlockProps {
   events?: Record<string, (() => void) | undefined>;
-  store: Store<State>;
+  // store?: Store<State>;
 };
 
 type Events = Values<typeof Block.EVENTS>;
@@ -25,6 +27,8 @@ export default class Block<P = any> {
     FLOW_RENDER: "flow:render"
   } as const;
 
+  name?: string;
+  componentName?: string;
   static get getCompName(){return ""};
 
   public nanoid = customAlphabet('qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM', 10);
@@ -33,7 +37,6 @@ export default class Block<P = any> {
   private _element: Nullable<HTMLElement> | null = null;
   protected props: P;
   protected children: Record<string, any>;
-  private _meta: BlockMeta;
   private eventBus: () => EventBus<Events>;
 
   constructor(propsAndChildren: any = {}) {
@@ -44,8 +47,6 @@ export default class Block<P = any> {
     this.children = children;
 
     this.props = this._makePropsProxy(props);
-
-    this._meta = { props };
 
     this.eventBus = () => eventBus;
     this._registerEvents(eventBus);
@@ -144,7 +145,7 @@ export default class Block<P = any> {
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target, [propName]: currentValue}, target);
         return true;
       },
-      deleteProperty(target: any, propName: string) {
+      deleteProperty() {
         throw new Error("Нет прав");
       },
     }) as any;
@@ -195,7 +196,7 @@ export default class Block<P = any> {
 
     fragment.innerHTML = htmlString;
 
-    Object.entries(this.children).forEach(([key, child]) => {
+    Object.entries(this.children).forEach(([_, child]) => {
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
 
       if (!stub) {
@@ -252,6 +253,15 @@ export default class Block<P = any> {
 
   dispatchRerender() {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+  }
+
+  dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any) {
+    // declared in smart components
+  };
+
+  static mapStateToProps(state: Record<string, unknown>): Record<string, unknown> {
+    // declared in smart components
+    return {};
   }
 
 };

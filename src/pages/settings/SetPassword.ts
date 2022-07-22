@@ -13,10 +13,10 @@ export default class SetPassword extends Block {
 
   constructor(props?: any) {
     super({props,
-      checkPwdEvent: (e: Event): void => this.checkFileld("password", this.passwordInput, e.target?.id),
-      checkOldPwdEvent: (e: Event): void => this.checkFileld("password", this.oldPasswordInput, e.target?.id),
-      handlePasswordInput: (e: InputEvent): void => { this.passwordInput = e.target?.value },
-      handleOldPasswordInput: (e: InputEvent): void => { this.oldPasswordInput = e.target?.value },
+      checkPwdEvent: (e: Event): void => this.checkFileld("password", this.passwordInput, (<HTMLInputElement>(e.target)).id),
+      checkOldPwdEvent: (e: Event): void => this.checkFileld("password", this.oldPasswordInput, (<HTMLInputElement>(e.target)).id),
+      handlePasswordInput: (e: InputEvent): void => { this.passwordInput = (<HTMLInputElement>(e.target)).value },
+      handleOldPasswordInput: (e: InputEvent): void => { this.oldPasswordInput = (<HTMLInputElement>(e.target)).value },
       handleButtonSubmit: () => this.changePassword(),
       handleButtonBack: () => goToPage("/settings")
     });

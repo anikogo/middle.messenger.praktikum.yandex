@@ -26,7 +26,7 @@ export class UserItem extends Block {
   };
 
   removeUser() {
-    const newArray = this.props.searchUserSelected.filter(userId => userId !== this.props.user.id);
+    const newArray = this.props.searchUserSelected.filter((userId: number) => userId !== this.props.user.id);
     this.dispatch({ searchUserSelected: newArray});
   }
 
