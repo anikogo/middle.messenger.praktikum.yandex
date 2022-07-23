@@ -7,7 +7,7 @@ export function addUsersToChat(chatId: any, usersList: []) {
     const data: Record<string, any> = {
       users: usersList,
       chatId: chatId,
-    }
+    };
     console.log(data);
     httptransport.put(getUrlManageUserToChat, { data });
 }
