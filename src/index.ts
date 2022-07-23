@@ -10,7 +10,7 @@ declare global {
   interface Window {
     store: any;
   }
-};
+}
 
 Object.values(components).forEach((Component: any) => {
   registerComponent(Component);

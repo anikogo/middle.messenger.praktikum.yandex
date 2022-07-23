@@ -1,5 +1,5 @@
 .data-entry-form {
-    animation: ani_opacity 500ms;
+    animation: ani-opacity 500ms;
 }
 
 .data-entry-form__container {
@@ -35,7 +35,7 @@
 }
 
 .data-entry-form__input-error {
-    animation: ani_opacity 700ms;
+    animation: ani-opacity 700ms;
     color: red;
     font-size: 10px;
     height: 13px;

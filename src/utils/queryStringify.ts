@@ -8,7 +8,7 @@ function keyToString(path: any): string {
       output += v;
     } else {
       output += `[${v}]`;
-    };
+    }
   });
 
   return output;
@@ -26,14 +26,14 @@ function queryStringify(data: StringIndexed): string | never {
     else {
       const accumulator: any[] = [];
       for (let key in obj) {
-        accumulator.push(_stringify(path.concat([key]), obj[key]));
-      };
+        accumulator.push(_stringify(path.concat([ key ]), obj[key]));
+      }
       return accumulator.join("&");
-    };
+    }
 
-  };
+  }
 
   return _stringify([], data);
-};
+}
 
 export default queryStringify;

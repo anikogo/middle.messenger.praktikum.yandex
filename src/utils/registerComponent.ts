@@ -6,7 +6,7 @@ export function registerComponent(Component: typeof Block | BlockInterface<any>)
 
     if (!data.root.children) {
       data.root.children = {};
-    };
+    }
 
     const children = data.root.children;
     const component = new Component(hash);
@@ -14,4 +14,4 @@ export function registerComponent(Component: typeof Block | BlockInterface<any>)
     return `<div data-id="${component.id}"></div>`;
   });
 
-};
+}

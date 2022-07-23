@@ -9,5 +9,5 @@ export const getUrlLoginUser: string = "https://ya-praktikum.tech/api/v2/auth/si
 export const getUrlRegisterUser: string = "https://ya-praktikum.tech/api/v2/auth/signup";
 
 export function getUrlTokenRequest(chatId: number) {
-  return `https://ya-praktikum.tech/api/v2/chats/token/${chatId}`
+  return `https://ya-praktikum.tech/api/v2/chats/token/${chatId}`;
 }

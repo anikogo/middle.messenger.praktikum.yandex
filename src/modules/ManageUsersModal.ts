@@ -8,11 +8,11 @@ import { withStore } from "../utils/withStore";
 interface ModalProps extends BlockProps {
   className?: string;
   onRerender?: () => void;
-};
+}
 
 export class ManageUsersModal extends Block {
 
-  static get getCompName(){return "ManageUsersModal"};
+  static get getCompName(){return "ManageUsersModal"}
 
   constructor(props: ModalProps) {
     super({
@@ -22,41 +22,41 @@ export class ManageUsersModal extends Block {
       handleButtonAdd: () => this.addUser(),
       handleButtonRemove: () => this.removeUser(),
     });
-  };
+  }
 
   searchUsers() {
     const inputNamevalue = (<HTMLInputElement>document.getElementById("manageSearchUserName")).value;
-    const data: Record<string, any> = {login: inputNamevalue};
+    const data: Record<string, any> = { login: inputNamevalue };
 
 
-    this.dispatch({ searchUserName: () => {return inputNamevalue}});
+    this.dispatch({ searchUserName: () => {return inputNamevalue} });
 
     const httptransport = new HTTPTransport();
     if (data.login) {
-      httptransport.post(getUrlUsersSearch, {data})
+      httptransport.post(getUrlUsersSearch, { data })
         .then(result => {
           let searchUserList: any = {};
           try {
-            searchUserList = JSON.parse(result.response)
+            searchUserList = JSON.parse(result.response);
           } catch (error) {
-            throw new Error("невозможно получить список пользователей")
+            throw new Error("невозможно получить список пользователей");
           }
-          this.dispatch({searchUserList: searchUserList});
-        })
+          this.dispatch({ searchUserList: searchUserList });
+        });
     } else {
-      this.dispatch({searchUserList: ""});
+      this.dispatch({ searchUserList: "" });
     }
   }
 
   addUser() {
     addUsersToChat(this.props.currentChatId, this.props.searchUserSelected);
     this.closeModalWindow();
-  };
+  }
 
   removeUser() {
     removeUsersFromChat(this.props.currentChatId, this.props.searchUserSelected);
     this.closeModalWindow();
-  };
+  }
 
   closeModalWindow() {
     this.dispatch(
@@ -66,7 +66,7 @@ export class ManageUsersModal extends Block {
         searchUserName: "",
         searchUserSelected: [],
       }
-    )
+    );
   }
 
   public static mapStateToProps(state: State): Record<string, unknown> {
@@ -77,7 +77,7 @@ export class ManageUsersModal extends Block {
       searchUserSelected: state.searchUserSelected,
       inputChatName: state.inputChatName,
       currentChatId: state.currentChatId,
-    }
+    };
   }
 
   render() {
@@ -119,7 +119,7 @@ export class ManageUsersModal extends Block {
         </div>
       </div>
     `;
-  };
-};
+  }
+}
 
 export default withStore(ManageUsersModal);

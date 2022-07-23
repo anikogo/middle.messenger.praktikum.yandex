@@ -1,6 +1,6 @@
 import Block, { BlockProps } from "../utils/Block";
 import { withStore } from "../utils/withStore";
-import { HTTPTransport } from "../api/requestAPI"
+import { HTTPTransport } from "../api/requestAPI";
 import { State } from "../utils/Store";
 import newWebSocket from "../utils/newWebSocket";
 import { addUsersToChat } from "../api/chatAPI";
@@ -9,11 +9,11 @@ import { getUrlManageChats, getUrlUsersSearch } from "../api/requestUrlAPI";
 interface ModalProps extends BlockProps {
   className?: string;
   onRerender?: () => void;
-};
+}
 
 export class ChatModal extends Block {
 
-  static get getCompName(){return "ChatModal"};
+  static get getCompName(){return "ChatModal"}
 
   constructor(props: ModalProps) {
     super({
@@ -22,7 +22,7 @@ export class ChatModal extends Block {
       handleButtonSearchUsers: () => this.searchUsers(),
       handleButtonNewChat: () => this.createNewChat()
     });
-  };
+  }
 
   closeModalWindow() {
     this.dispatch(
@@ -33,7 +33,7 @@ export class ChatModal extends Block {
         searchUserName: "",
         searchUserSelected: [],
       }
-    )
+    );
   }
 
   createNewChat() {
@@ -41,23 +41,23 @@ export class ChatModal extends Block {
     if (!inputElvalue) return;
 
     const httptransport = new HTTPTransport();
-    this.dispatch({ inputChatName: () => {return inputElvalue}})
-    const data: Record<string, any> = {title: inputElvalue};
+    this.dispatch({ inputChatName: () => {return inputElvalue} });
+    const data: Record<string, any> = { title: inputElvalue };
 
-    httptransport.post(getUrlManageChats, {data})
+    httptransport.post(getUrlManageChats, { data })
     .then((result: any) => {
       let chat: any = {};
       try {
         chat = JSON.parse(result.response);
       } catch (error) {
-        throw new Error("Ошибка создания чата")
+        throw new Error("Ошибка создания чата");
       }
 
-      addUsersToChat(chat.id, this.props.searchUserSelected)
-      this.getChats(chat.id)
-      this.closeModalWindow()
+      addUsersToChat(chat.id, this.props.searchUserSelected);
+      this.getChats(chat.id);
+      this.closeModalWindow();
     });
-  };
+  }
 
   async getChats(chatId: number) {
     const httptransport = new HTTPTransport();
@@ -69,7 +69,7 @@ export class ChatModal extends Block {
       try {
         chats = JSON.parse(result.response);
       } catch (error) {
-        throw new Error("Проблема доступа к чатам")
+        throw new Error("Проблема доступа к чатам");
       }
       const chat = chats.find((c: Record<string, unknown>) => c.id === chatId);
 
@@ -77,9 +77,9 @@ export class ChatModal extends Block {
         this.props.onRerender();
       });
 
-      this.dispatch({ userChats: [chat, ...this.props.userChats] })
-    };
-  };
+      this.dispatch({ userChats: [ chat, ...this.props.userChats ] });
+    }
+  }
 
 
   searchUsers() {
@@ -90,22 +90,22 @@ export class ChatModal extends Block {
       { searchUserName: () => {return inputNamevalue},
         inputChatName: () => {return inputChatvalue},
       }
-    )
-    const data: Record<string, any> = {login: inputNamevalue};
+    );
+    const data: Record<string, any> = { login: inputNamevalue };
 
     if (data.login) {
-      httptransport.post(getUrlUsersSearch, {data})
+      httptransport.post(getUrlUsersSearch, { data })
         .then(result => {
           let searchUserList: any = {};
           try {
-            searchUserList = JSON.parse(result.response)
+            searchUserList = JSON.parse(result.response);
           } catch (error) {
-            throw new Error("невозможно получить список пользователей")
+            throw new Error("невозможно получить список пользователей");
           }
-          this.dispatch({searchUserList: searchUserList});
-        })
+          this.dispatch({ searchUserList: searchUserList });
+        });
     } else {
-      this.dispatch({searchUserList: ""});
+      this.dispatch({ searchUserList: "" });
     }
   }
 
@@ -118,7 +118,7 @@ export class ChatModal extends Block {
       userChats: state.userChats,
       userId: state.user.id,
       inputChatName: state.inputChatName,
-    }
+    };
   }
 
   render() {
@@ -164,7 +164,7 @@ export class ChatModal extends Block {
         }}}
       </div>
     `;
-  };
-};
+  }
+}
 
 export default withStore(ChatModal);

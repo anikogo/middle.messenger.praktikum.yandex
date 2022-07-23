@@ -6,7 +6,7 @@ export default async function newWebSocket(chat: Record<string, any>, userId: nu
   chat.socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chat.id}/${chat.token}`);
   chat.messages = [];
 
-  chat.socket.addEventListener('open', () => {
+  chat.socket.addEventListener("open", () => {
 
     setInterval(() => {
       chat.socket.send(
@@ -25,7 +25,7 @@ export default async function newWebSocket(chat: Record<string, any>, userId: nu
     try {
       data = JSON.parse(event.data);
     } catch (error) {
-      throw new Error("Невозможно получить сообщения")
+      throw new Error("Невозможно получить сообщения");
     }
 
     if (Array.isArray(data)) {
@@ -42,9 +42,9 @@ export default async function newWebSocket(chat: Record<string, any>, userId: nu
       chat.messages.push(data);
       chat.last_message = data;
       dispatch();
-    };
+    }
 
     chatBottomScroll();
   });
 
-};
+}

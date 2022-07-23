@@ -24,10 +24,10 @@
     width: 25px;
 
     & svg:hover {
-        animation: ani_rotation 20s;
-        background-color: rgba(0,0,0,0.1);
+        animation: ani-rotation 20s;
+        background-color: rgb(0 0 0 / 0.1);
         border-radius: 50%;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        box-shadow: 0 0 10px rgb(0 0 0 / 0.5);
     }
 }
 
@@ -38,9 +38,9 @@
     width: 25px;
 
     & svg:hover {
-        background-color: rgba(0,0,0,0.1);
+        background-color: rgb(0 0 0 / 0.1);
         border-radius: 50px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        box-shadow: 0 0 10px rgb(0 0 0 / 0.5);
     }
 }
 
@@ -52,9 +52,9 @@
     width: 25px;
 
     & svg:hover {
-        background-color: rgba(0,0,0,0.1);
+        background-color: rgb(0 0 0 / 0.1);
         border-radius: 50px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        box-shadow: 0 0 10px rgb(0 0 0 / 0.5);
     }
 }
 
@@ -92,7 +92,7 @@
 .add-chat-modal {
     background-color: white;
     border: 1px solid $ultralight-color;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.5);
     margin: 40px auto auto 100px;
     padding: 10px;
     position: absolute;
@@ -129,7 +129,7 @@
 }
 
 .add-chat-modal__users-list {
-    padding: 0px;
+    padding: 0;
     height: 220px;
     overflow-y: scroll;
 
@@ -176,7 +176,7 @@
 .chat-menu__chat-item-avatar {
     border: 1px $ultralight-color solid;
     background-color: white;
-    box-shadow: 0 0 4px rgba(0,0,0,0.5);
+    box-shadow: 0 0 4px rgb(0 0 0 / 0.5);
     height: 40px;
     margin-right: 10px;
     min-height: 40px;
@@ -192,7 +192,7 @@
 
 .chat-menu__chat-item-message-counter {
     background-color: $dark-color;
-    box-shadow: 0 0 4px rgba(0,0,0,0.5);
+    box-shadow: 0 0 4px rgb(0 0 0 / 0.5);
     color: white;
     font-size: 15px;
     height: 18px;

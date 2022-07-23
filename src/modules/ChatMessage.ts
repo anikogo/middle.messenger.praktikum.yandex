@@ -1,16 +1,16 @@
-import Block, {BlockProps} from "../utils/Block";
+import Block, { BlockProps } from "../utils/Block";
 
 interface MessageProps extends BlockProps {
   message: any;
-};
+}
 
 export default class ChatMessage extends Block {
 
-  static get getCompName(){return "ChatMessage"};
+  static get getCompName(){return "ChatMessage"}
 
   constructor(props: MessageProps) {
     super(props);
-  };
+  }
 
   render() {
     return /*template*/`
@@ -22,5 +22,5 @@ export default class ChatMessage extends Block {
           <div class="message-box__message_footer"> {{ message.time }}</div>
         </div>
       </div>`;
-  };
-};
+  }
+}

@@ -1,11 +1,11 @@
 const path = require("path");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.ts",
-  devtool: 'inline-source-map',
-  mode: 'development',
+  devtool: "inline-source-map",
+  mode: "development",
   module: {
     rules: [
       {
@@ -22,8 +22,8 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             options: {},
           },
-          'css-loader',
-          'sass-loader',
+          "css-loader",
+          "sass-loader",
         ],
       }
     ],
@@ -31,8 +31,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      filename: 'index.html',
+      template: "src/index.html",
+      filename: "index.html",
       minify: {
         collapseWhitespace: true,
         removeComments: true,
@@ -41,11 +41,11 @@ module.exports = {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: 'style-[hash].css',
+      filename: "style-[hash].css",
     })
   ],
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [ ".tsx", ".ts", ".js" ],
     alias: {
       handlebars: "handlebars/dist/handlebars.min.js"
     }

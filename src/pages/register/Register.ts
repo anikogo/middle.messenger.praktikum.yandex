@@ -16,7 +16,7 @@ export default class RegisterPage extends Block {
   private isConfirmed: boolean = true;
 
   constructor(props?: any) {
-    super({...props,
+    super({ ...props,
       checkLoginEvent: (e: Event): void => this.checkFileld("login", this.loginInput, (<HTMLInputElement>(e.target)).id),
       checkPwdEvent: (e: Event): void => this.checkFileld("password", this.passwordInput, (<HTMLInputElement>(e.target)).id),
       checkFirstNameInput: (e: Event): void => this.checkFileld("name", this.firstNameInput, (<HTMLInputElement>(e.target)).id),
@@ -34,13 +34,13 @@ export default class RegisterPage extends Block {
       handleButtonSubmit: () => this.registerUser(),
       handleButtonLogin: () => goToPage("/login"),
     });
-  };
+  }
 
   checkFileld(type: string, value: string, id: string ): void {
     if (!validate(type, value, id)) {
       this.isConfirmed = false;
-    };
-  };
+    }
+  }
 
   registerUser(): void {
     this.isConfirmed = true;
@@ -58,13 +58,13 @@ export default class RegisterPage extends Block {
       phone: this.phoneInput,
     };
 
-    httptransport.post(getUrlRegisterUser, {data})
+    httptransport.post(getUrlRegisterUser, { data })
       .then(() => {
-        goToPage("/messenger")
+        goToPage("/messenger");
       });
   }
 
   render(): string {
     return registerTemplate();
-  };
-};
+  }
+}

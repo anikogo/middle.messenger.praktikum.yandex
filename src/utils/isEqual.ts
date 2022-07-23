@@ -4,7 +4,7 @@ export default function isEqual(a: any, b: any): boolean {
 
   if (typeof a === typeof b && typeof a !== "object") {
     return a === b ? true : false;
-  };
+  }
 
   if (Object.keys(a).length !== Object.keys(b).length) return false;
 
@@ -17,8 +17,8 @@ export default function isEqual(a: any, b: any): boolean {
     else {
       if (a[key] !== b[key]) {
         return false;
-      };
-    };
-  };
+      }
+    }
+  }
   return true;
-};
+}

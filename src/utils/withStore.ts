@@ -1,5 +1,5 @@
-import {BlockInterface} from "../utils/Block";
-import {Action, State, Store} from "../utils/Store";
+import { BlockInterface } from "../utils/Block";
+import { Action, State, Store } from "../utils/Store";
 
 type WithStateProps = { store: Store<State> };
 
@@ -16,7 +16,7 @@ export function withStore<P extends WithStateProps>(WrappedBlock: SmartBlock<P>)
       const stateProps = WrappedBlock.mapStateToProps(window.store.state);
 
       super({ ...props, ...stateProps });
-    };
+    }
 
     __onChangeStoreCallback = () => {
       const stateProps = WrappedBlock.mapStateToProps(window.store.state);
@@ -26,13 +26,13 @@ export function withStore<P extends WithStateProps>(WrappedBlock: SmartBlock<P>)
 
     componentDidMount() {
       super.componentDidMount();
-      window.store.on('changed', this.__onChangeStoreCallback);
-    };
+      window.store.on("changed", this.__onChangeStoreCallback);
+    }
 
     componentWillUnmount() {
       super.componentWillUnmount();
-      window.store.off('changed', this.__onChangeStoreCallback);
-    };
+      window.store.off("changed", this.__onChangeStoreCallback);
+    }
 
     // mapStateToProps(state: State): Record<string, unknown> {
     //   if (typeof super.mapStateToProps === 'function') {
@@ -44,7 +44,7 @@ export function withStore<P extends WithStateProps>(WrappedBlock: SmartBlock<P>)
 
     dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any): void {
       window.store.dispatch(nextStateOrAction, payload);
-    };
+    }
 
-  } as BlockInterface<Omit<P, 'store'>>;
+  } as BlockInterface<Omit<P, "store">>;
 }

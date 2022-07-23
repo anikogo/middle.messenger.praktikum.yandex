@@ -15,7 +15,7 @@ export default class SettingsPage extends Block {
   private isConfirmed: boolean = true;
 
   constructor(props?: any) {
-    super({...props,
+    super({ ...props,
       checkLoginEvent: (e: Event): void => this.checkFileld("login", this.loginInput, (<HTMLInputElement>(e.target)).id),
       checkFirstNameInput: (e: Event): void => this.checkFileld("name", this.firstNameInput, (<HTMLInputElement>(e.target)).id),
       checkSecondNameInput: (e: Event): void => this.checkFileld("name", this.secondNameInput, (<HTMLInputElement>(e.target)).id),
@@ -30,13 +30,13 @@ export default class SettingsPage extends Block {
       handleButtonSubmit: (): void => this.changeSettings(),
       handleButtonChangePassword: (): void => goToPage("/setpassword"),
     });
-  };
+  }
 
   checkFileld(type: string, value: string, id: string ): void {
     if (!validate(type, value, id)) {
       this.isConfirmed = false;
-    };
-  };
+    }
+  }
 
   changeSettings() {
     this.isConfirmed = true;
@@ -54,15 +54,15 @@ export default class SettingsPage extends Block {
       phone: this.phoneInput,
     };
 
-    httptransport.put(getUrlChangeUserData, {data})
+    httptransport.put(getUrlChangeUserData, { data })
       .then(result => {
         if ((<XMLHttpRequest>result).status === 200) {
-          goToPage("/messenger")
-        };
+          goToPage("/messenger");
+        }
       });
-  };
+  }
 
   render(): string {
     return settingsTemplate();
-  };
-};
+  }
+}

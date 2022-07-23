@@ -13,7 +13,7 @@ export default class LoginPage extends Block {
 
   constructor(props?: any) {
 
-    super({...props,
+    super({ ...props,
       checkLoginEvent: (e: Event) => this.checkFileld("login", this.loginInput, (<HTMLInputElement>(e.target)).id),
       checkPwdEvent: (e: Event) => this.checkFileld("password", this.passwordInput, (<HTMLInputElement>(e.target)).id),
       handleLoginInput: (e: InputEvent) => { this.loginInput = (<HTMLInputElement>(e.target)).value },
@@ -21,7 +21,7 @@ export default class LoginPage extends Block {
       handleButtonSubmit: () => this.submitLogin(),
       handleButtonRegister: () => goToPage("/sign-up")
     });
-  };
+  }
 
   componentDidMount(): void {
     const httptransport = new HTTPTransport();
@@ -29,15 +29,15 @@ export default class LoginPage extends Block {
       .then(result => {
         if (result.status === 200) {
           goToPage("/messenger");
-        };
+        }
       });
-  };
+  }
 
   checkFileld(type: string, value: string, id: string ): void {
     if (!validate(type, value, id)) {
       this.isConfirmed = false;
-    };
-  };
+    }
+  }
 
   submitLogin () {
     this.isConfirmed = true;
@@ -51,9 +51,9 @@ export default class LoginPage extends Block {
       password: this.passwordInput,
     };
 
-    httptransport.post(getUrlLoginUser, {data})
+    httptransport.post(getUrlLoginUser, { data })
       .then(result => this.loginRequest(<XMLHttpRequest>result));
-  };
+  }
 
   loginRequest(response: XMLHttpRequest):void {
 
@@ -66,15 +66,15 @@ export default class LoginPage extends Block {
         .then(() => {
           this.userIsConnected();
         });
-    };
+    }
 
-  };
+  }
 
   userIsConnected(): void {
     goToPage("/messenger");
-  };
+  }
 
   render() {
     return loginTemplate();
-  };
-};
+  }
+}

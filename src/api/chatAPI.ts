@@ -8,8 +8,8 @@ export function addUsersToChat(chatId: any, usersList: []) {
       users: usersList,
       chatId: chatId,
     }
-    console.log(data)
-    httptransport.put(getUrlManageUserToChat, {data})
+    console.log(data);
+    httptransport.put(getUrlManageUserToChat, { data });
 }
 
 export function removeUsersFromChat(chatId: any, usersList: []) {
@@ -19,6 +19,6 @@ export function removeUsersFromChat(chatId: any, usersList: []) {
   const data: Record<string, any> = {
     users: usersList,
     chatId: chatId,
-  }
-  httptransport.delete(getUrlManageUserToChat, {data})
+  };
+  httptransport.delete(getUrlManageUserToChat, { data });
 }

@@ -3,11 +3,18 @@
     "stylelint-scss"
   ],
   "rules": {
-    "color-hex-case": "lower"
+    "color-hex-case": "lower",
+    "indentation": 4,
+    "function-comma-space-after": "always",
+    "color-function-notation": "modern",
+    "alpha-value-notation": "number",
+    "import-notation": "string",
+    "string-quotes": "double",
+    "length-zero-no-unit": true
   },
   "overrides": [
     {
-      "files": "src/scss/*.scss",
+      "files": ["./src/scss/*.scss"],
       "customSyntax": "postcss-scss"
     }
   ]

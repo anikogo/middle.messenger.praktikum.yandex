@@ -90,4 +90,4 @@ export function chatTemplate(): string {
       </div>
     </main>
   `;
-};
+}

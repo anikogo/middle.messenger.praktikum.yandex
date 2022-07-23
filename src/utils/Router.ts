@@ -15,29 +15,29 @@ class Route<P = any> {
     this.#blockClass = view;
     this.#block = null;
     this.#props = props;
-  };
+  }
 
   navigate(pathname: string) {
     if (this.match(pathname)) this.render();
-  };
+  }
 
   leave() {
     if (this.#block) this.#block.hide();
-  };
+  }
 
   match(pathname: string) {
     return isEqual(pathname, this.#pathname) || this.#pathname === "*";
-  };
+  }
 
   render() {
     if (!this.#block) {
       this.#block = new this.#blockClass(this.#props);
       renderDOM(this.#block);
       return;
-    };
+    }
     this.#block.show();
     renderDOM(this.#block);
-  };
+  }
 
 }
 
@@ -50,7 +50,7 @@ export default class Router {
   constructor() {
     if (Router.__instance) {
       return Router.__instance;
-    };
+    }
 
     Router.__instance = this;
   }
@@ -61,15 +61,15 @@ export default class Router {
     this.#routers.push(route);
 
     return this;
-  };
+  }
 
   start() {
-    window.addEventListener('popstate', (event: PopStateEvent) => {
+    window.addEventListener("popstate", (event: PopStateEvent) => {
       this._onRoute((<Window>(event.currentTarget))?.location.pathname);
     });
 
     this._onRoute(window.location.pathname);
-  };
+  }
 
   private _onRoute(pathname: string) {
 
@@ -87,18 +87,18 @@ export default class Router {
   go(pathname: string): void {
     this.#history.pushState({}, "", pathname);
     this._onRoute(pathname);
-  };
+  }
 
   back(): void {
     this.#history.back();
-  };
+  }
 
   forward() {
     this.#history.forward();
-  };
+  }
 
   getRoute(pathname: string) {
     return this.#routers.find(route => route.match(pathname));
-  };
+  }
 
-};
+}
