@@ -34,14 +34,6 @@ export function withStore<P extends WithStateProps>(WrappedBlock: SmartBlock<P>)
       window.store.off("changed", this.__onChangeStoreCallback);
     }
 
-    // mapStateToProps(state: State): Record<string, unknown> {
-    //   if (typeof super.mapStateToProps === 'function') {
-    //     return super.mapStateToProps(state);
-    //   } else {
-    //     return {};
-    //   };
-    // };
-
     dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any): void {
       window.store.dispatch(nextStateOrAction, payload);
     }

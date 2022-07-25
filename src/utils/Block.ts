@@ -8,12 +8,10 @@ export interface BlockInterface<P = any> extends Function {
   new (props: P): Block<P>;
   componentName?: string;
   getCompName: string;
-  // mapStateToProps(state: Record<string, unknown>): Record<string, unknown>;
 }
 
 export interface BlockProps {
   events?: Record<string, (() => void) | undefined>;
-  // store?: Store<State>;
 }
 
 type Events = Values<typeof Block.EVENTS>;

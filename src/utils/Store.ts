@@ -13,6 +13,18 @@ export type Action<State> = (
   payload: any,
 ) => void;
 
+export const defaultState = {
+  screen: null,
+  loginFormError: null,
+  user: {},
+  isAddChatShown: false,
+  searchUserList: [],
+  searchUserSelected: [],
+  users: [],
+  userChats: [],
+  currentChatId: null,
+};
+
 export class Store<State> extends EventBus {
   private state: State = {} as State;
 
