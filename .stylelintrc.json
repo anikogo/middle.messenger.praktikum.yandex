@@ -17,6 +17,5 @@
       "files": ["./src/scss/*.scss"],
       "customSyntax": "postcss-scss"
     }
-  ],
-  "ignoreFiles": ["./src/dist/*.css"]
+  ]
 } 

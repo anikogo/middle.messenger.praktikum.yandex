@@ -9,7 +9,8 @@
     "prepare": "husky install",
     "eslint": "npx eslint \"./src/**\"",
     "eslint-fix": "npx eslint \"./src/**\" --fix",
-    "stylelint": "npx stylelint \"./src/scss/\" --fix",
+    "stylelint": "npx stylelint \"./src/scss/\"",
+    "stylelint-fix": "npx stylelint \"./src/scss/\" --fix",
     "test": "npx jest",
     "precommit": "npm-run-all eslint stylelint test"
   },
