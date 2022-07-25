@@ -90,4 +90,4 @@ export function registerTemplate(): string {
       </div>
     </main>
   `;
-};
+}

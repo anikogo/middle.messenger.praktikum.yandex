@@ -1,5 +1,5 @@
 .data-entry-form {
-    animation: ani_opacity 500ms;
+    animation: ani-opacity 500ms;
 }
 
 .data-entry-form__container {
@@ -22,7 +22,7 @@
     border-top: 0;
     box-sizing: border-box;
     color: $dark-color;
-    font-size: 20;
+    font-size: 20px;
     height: 35px;
     margin: 0;
     outline: 0;
@@ -35,7 +35,7 @@
 }
 
 .data-entry-form__input-error {
-    animation: ani_opacity 700ms;
+    animation: ani-opacity 700ms;
     color: red;
     font-size: 10px;
     height: 13px;
@@ -53,7 +53,7 @@
 .data-entry-form__button_primary {
     background-color: $dark-color;
     color: white;
-    font-size: 28;
+    font-size: 28px;
     height: 68px;
     line-height: 68px;
     width: 50%;
@@ -67,7 +67,7 @@
 .data-entry-form__button_secondary {
     background-color: $ultralight-color;
     color: $light-color;
-    font-size: 22;
+    font-size: 22px;
     height: 45px;
     line-height: 45px;
     width: 35%;
@@ -81,7 +81,7 @@
 .data-entry-form__button_setting_secondary {
     background-color: $ultralight-color;
     color: $light-color;
-    font-size: 22;
+    font-size: 22px;
     height: 68px;
     line-height: 34px;
     width: 35%;

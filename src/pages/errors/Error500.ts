@@ -13,5 +13,5 @@ export default class ErrorPage500 extends Block {
         <div class="error-number-font">500</div>
       </main>
     `;
-  };
-};
+  }
+}

@@ -15,28 +15,28 @@ export default class SettingsPage extends Block {
   private isConfirmed: boolean = true;
 
   constructor(props?: any) {
-    super({...props,
-      checkLoginEvent: (e: Event): void => this.checkFileld("login", this.loginInput, e.target?.id),
-      checkFirstNameInput: (e: Event): void => this.checkFileld("name", this.firstNameInput, e.target?.id),
-      checkSecondNameInput: (e: Event): void => this.checkFileld("name", this.secondNameInput, e.target?.id),
-      checkPhoneEvent: (e: Event): void => this.checkFileld("phone", this.phoneInput, e.target?.id),
-      checkEmailEvent: (e: Event): void => this.checkFileld("email", this.emailInput, e.target?.id),
-      handleLoginInput: (e: InputEvent): void => { this.loginInput = e.target?.value },
-      handleFirstNameInput: (e: InputEvent): void => { this.firstNameInput = e.target?.value },
-      handlePhoneInput: (e: InputEvent): void => { this.phoneInput = e.target?.value },
-      handleSecondNameInput: (e: InputEvent): void => { this.secondNameInput = e.target?.value },
-      handleDisplayNameInput: (e: InputEvent): void => { this.displayNameInput = e.target?.value },
-      handleEmailInput: (e: InputEvent): void => { this.emailInput = e.target?.value },
+    super({ ...props,
+      checkLoginEvent: (e: Event): void => this.checkFileld("login", this.loginInput, (<HTMLInputElement>(e.target)).id),
+      checkFirstNameInput: (e: Event): void => this.checkFileld("name", this.firstNameInput, (<HTMLInputElement>(e.target)).id),
+      checkSecondNameInput: (e: Event): void => this.checkFileld("name", this.secondNameInput, (<HTMLInputElement>(e.target)).id),
+      checkPhoneEvent: (e: Event): void => this.checkFileld("phone", this.phoneInput, (<HTMLInputElement>(e.target)).id),
+      checkEmailEvent: (e: Event): void => this.checkFileld("email", this.emailInput, (<HTMLInputElement>(e.target)).id),
+      handleLoginInput: (e: InputEvent): void => { this.loginInput = (<HTMLInputElement>(e.target)).value },
+      handleFirstNameInput: (e: InputEvent): void => { this.firstNameInput = (<HTMLInputElement>(e.target)).value },
+      handlePhoneInput: (e: InputEvent): void => { this.phoneInput = (<HTMLInputElement>(e.target)).value },
+      handleSecondNameInput: (e: InputEvent): void => { this.secondNameInput = (<HTMLInputElement>(e.target)).value },
+      handleDisplayNameInput: (e: InputEvent): void => { this.displayNameInput = (<HTMLInputElement>(e.target)).value },
+      handleEmailInput: (e: InputEvent): void => { this.emailInput = (<HTMLInputElement>(e.target)).value },
       handleButtonSubmit: (): void => this.changeSettings(),
       handleButtonChangePassword: (): void => goToPage("/setpassword"),
     });
-  };
+  }
 
   checkFileld(type: string, value: string, id: string ): void {
     if (!validate(type, value, id)) {
       this.isConfirmed = false;
-    };
-  };
+    }
+  }
 
   changeSettings() {
     this.isConfirmed = true;
@@ -54,15 +54,15 @@ export default class SettingsPage extends Block {
       phone: this.phoneInput,
     };
 
-    httptransport.put(getUrlChangeUserData, {data})
+    httptransport.put(getUrlChangeUserData, { data })
       .then(result => {
         if ((<XMLHttpRequest>result).status === 200) {
-          goToPage("/messenger")
-        };
+          goToPage("/messenger");
+        }
       });
-  };
+  }
 
   render(): string {
     return settingsTemplate();
-  };
-};
+  }
+}

@@ -12,21 +12,21 @@ export default class SetPassword extends Block {
   private isConfirmed: boolean = true;
 
   constructor(props?: any) {
-    super({props,
-      checkPwdEvent: (e: Event): void => this.checkFileld("password", this.passwordInput, e.target?.id),
-      checkOldPwdEvent: (e: Event): void => this.checkFileld("password", this.oldPasswordInput, e.target?.id),
-      handlePasswordInput: (e: InputEvent): void => { this.passwordInput = e.target?.value },
-      handleOldPasswordInput: (e: InputEvent): void => { this.oldPasswordInput = e.target?.value },
+    super({ props,
+      checkPwdEvent: (e: Event): void => this.checkFileld("password", this.passwordInput, (<HTMLInputElement>(e.target)).id),
+      checkOldPwdEvent: (e: Event): void => this.checkFileld("password", this.oldPasswordInput, (<HTMLInputElement>(e.target)).id),
+      handlePasswordInput: (e: InputEvent): void => { this.passwordInput = (<HTMLInputElement>(e.target)).value },
+      handleOldPasswordInput: (e: InputEvent): void => { this.oldPasswordInput = (<HTMLInputElement>(e.target)).value },
       handleButtonSubmit: () => this.changePassword(),
       handleButtonBack: () => goToPage("/settings")
     });
-  };
+  }
 
   checkFileld(type: string, value: string, id: string ): void {
     if (!validate(type, value, id)) {
       this.isConfirmed = false;
-    };
-  };
+    }
+  }
 
   changePassword(): void {
     this.isConfirmed = true;
@@ -40,17 +40,17 @@ export default class SetPassword extends Block {
       newPassword: this.passwordInput,
     };
 
-    httptransport.put(getUrlChangeUserPassword, {data})
+    httptransport.put(getUrlChangeUserPassword, { data })
       .then((result) => {
         if ((<XMLHttpRequest>result).status === 200) {
-          goToPage("/settings")
+          goToPage("/settings");
         } else {
-            throw new Error(result.response)
+            throw new Error(result.response);
         }
       });
   }
 
   render(): string {
     return setPasswordTemplate();
-  };
-};
+  }
+}

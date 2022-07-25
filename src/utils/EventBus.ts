@@ -6,10 +6,10 @@ export default class EventBus<E extends string = string, M extends { [K in E]: u
   on(event: E, callback: Listener<M[E]>) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
-    };
+    }
 
     this.listeners[event]!.push(callback);
-  };
+  }
 
   off(event: E, callback: Listener<M[E]>) {
     if (!this.listeners[event]) {
@@ -24,16 +24,16 @@ export default class EventBus<E extends string = string, M extends { [K in E]: u
   emit(event: E, ...args: M[E]) {
     if (!this.listeners[event]) {
       return;
-    };
+    }
 
     this.listeners[event]!.forEach(listener => {
       if (listener) {
         listener(...args);
       }
     });
-  };
+  }
 
   destroy() {
     this.listeners = {};
-  };
-};
+  }
+}

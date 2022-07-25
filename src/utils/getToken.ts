@@ -10,8 +10,8 @@ export default async function getToken(chatId: number) {
   try {
     token = JSON.parse(result.response).token;
   } catch (error) {
-    throw new Error("Не получен токен")
+    throw new Error("Не получен токен");
   }
 
   return token;
-};
+}

@@ -60,7 +60,7 @@
 .message-area__input-message {
     border: 1px $ultralight-color solid;
     box-sizing: border-box;
-    font-size: 15;
+    font-size: 15px;
     height: 60px;
     margin: 19px 0 19px auto;
     padding: 5px 10px;
@@ -78,18 +78,15 @@
     }
 }
 
-.message_area__send-message {
+.message_area__button-send-message {
     background-color: $dark-color;
     border: none;
     color: white;
-    display: block;
-    font-size: 40;
+    font-size: 40px;
     height: 60px;
-    margin-left: 0px;
+    margin-left: 0;
     margin-right: auto;
     margin-top: 19px;
-    text-align: center;
-    text-decoration: none;
     width: 60px;
 }
 
@@ -104,7 +101,7 @@
 .message-box__message {
     width: 50%;
     padding: 5px 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.5);
 }
 
 .message-box__message_incoming {
@@ -132,7 +129,7 @@
 .manage-users-modal {
     background-color: white;
     border: 1px solid $ultralight-color;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.5);
     left: 0;
     right: 0;
     top: 0;

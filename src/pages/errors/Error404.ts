@@ -13,5 +13,5 @@ export default class ErrorPage404 extends Block {
         <div class="error-number-font">404</div>
       </main>
     `;
-  };
-};
+  }
+}

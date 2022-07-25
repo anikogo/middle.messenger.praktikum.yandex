@@ -16,31 +16,31 @@ export default class RegisterPage extends Block {
   private isConfirmed: boolean = true;
 
   constructor(props?: any) {
-    super({...props,
-      checkLoginEvent: (e: Event): void => this.checkFileld("login", this.loginInput, e.target?.id),
-      checkPwdEvent: (e: Event): void => this.checkFileld("password", this.passwordInput, e.target?.id),
-      checkFirstNameInput: (e: Event): void => this.checkFileld("name", this.firstNameInput, e.target?.id),
-      checkSecondNameInput: (e: Event): void => this.checkFileld("name", this.secondNameInput, e.target?.id),
-      checkRetypePwdEvent: (e: Event): void => this.checkFileld("password", this.passwordRetypeInput, e.target?.id),
-      checkPhoneEvent: (e: Event): void => this.checkFileld("phone", this.phoneInput, e.target?.id),
-      checkEmailEvent: (e: Event): void => this.checkFileld("email", this.emailInput, e.target?.id),
-      handleLoginInput: (e: InputEvent): void => { this.loginInput = e.target?.value },
-      handlePasswordInput: (e: InputEvent): void => { this.passwordInput = e.target?.value },
-      handleRetypePasswordInput: (e: InputEvent): void => { this.passwordRetypeInput = e.target?.value },
-      handleFirstNameInput: (e: InputEvent): void => { this.firstNameInput = e.target?.value },
-      handlePhoneInput: (e: InputEvent): void => { this.phoneInput = e.target?.value },
-      handleSecondNameInput: (e: InputEvent): void => { this.secondNameInput = e.target?.value },
-      handleEmailInput: (e: InputEvent): void => { this.emailInput = e.target?.value },
+    super({ ...props,
+      checkLoginEvent: (e: Event): void => this.checkFileld("login", this.loginInput, (<HTMLInputElement>(e.target)).id),
+      checkPwdEvent: (e: Event): void => this.checkFileld("password", this.passwordInput, (<HTMLInputElement>(e.target)).id),
+      checkFirstNameInput: (e: Event): void => this.checkFileld("name", this.firstNameInput, (<HTMLInputElement>(e.target)).id),
+      checkSecondNameInput: (e: Event): void => this.checkFileld("name", this.secondNameInput, (<HTMLInputElement>(e.target)).id),
+      checkRetypePwdEvent: (e: Event): void => this.checkFileld("password", this.passwordRetypeInput, (<HTMLInputElement>(e.target)).id),
+      checkPhoneEvent: (e: Event): void => this.checkFileld("phone", this.phoneInput, (<HTMLInputElement>(e.target)).id),
+      checkEmailEvent: (e: Event): void => this.checkFileld("email", this.emailInput, (<HTMLInputElement>(e.target)).id),
+      handleLoginInput: (e: InputEvent): void => { this.loginInput = (<HTMLInputElement>(e.target)).value },
+      handlePasswordInput: (e: InputEvent): void => { this.passwordInput = (<HTMLInputElement>(e.target)).value },
+      handleRetypePasswordInput: (e: InputEvent): void => { this.passwordRetypeInput = (<HTMLInputElement>(e.target)).value },
+      handleFirstNameInput: (e: InputEvent): void => { this.firstNameInput = (<HTMLInputElement>(e.target)).value },
+      handlePhoneInput: (e: InputEvent): void => { this.phoneInput = (<HTMLInputElement>(e.target)).value },
+      handleSecondNameInput: (e: InputEvent): void => { this.secondNameInput = (<HTMLInputElement>(e.target)).value },
+      handleEmailInput: (e: InputEvent): void => { this.emailInput = (<HTMLInputElement>(e.target)).value },
       handleButtonSubmit: () => this.registerUser(),
       handleButtonLogin: () => goToPage("/login"),
     });
-  };
+  }
 
   checkFileld(type: string, value: string, id: string ): void {
     if (!validate(type, value, id)) {
       this.isConfirmed = false;
-    };
-  };
+    }
+  }
 
   registerUser(): void {
     this.isConfirmed = true;
@@ -58,13 +58,13 @@ export default class RegisterPage extends Block {
       phone: this.phoneInput,
     };
 
-    httptransport.post(getUrlRegisterUser, {data})
+    httptransport.post(getUrlRegisterUser, { data })
       .then(() => {
-        goToPage("/messenger")
+        goToPage("/messenger");
       });
   }
 
   render(): string {
     return registerTemplate();
-  };
-};
+  }
+}

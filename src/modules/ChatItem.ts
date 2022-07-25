@@ -3,21 +3,21 @@ import Block, { BlockProps } from "../utils/Block";
 interface ChatItemProps extends BlockProps {
   chatInfo?: any;
   onClick: (chatInfo: Record<string, any>) => void;
-};
+}
 
 export default class ChatItem extends Block {
 
-  static get getCompName(){return "ChatItem"};
+  static get getCompName(){return "ChatItem"}
 
   constructor(props: ChatItemProps) {
-    const {onClick, ...rest} = props;
+    const { onClick, ...rest } = props;
     super({
       ...rest,
       events: {
         click: () => { onClick(props.chatInfo) }
       },
     });
-  };
+  }
 
   render() {
     return /*template*/`
@@ -32,5 +32,5 @@ export default class ChatItem extends Block {
         {{/if}}
 			</div>
     `;
-  };
-};
+  }
+}

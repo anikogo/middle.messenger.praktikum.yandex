@@ -10,4 +10,4 @@ export function renderDOM(component: Block) {
   root.innerHTML = "";
   root.append(component.getContent()!);
 
-};
+}

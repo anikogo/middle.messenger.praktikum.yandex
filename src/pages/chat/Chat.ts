@@ -22,7 +22,7 @@ export class ChatsPage extends Block {
       handleButtonExit: (): void => this.logOut(),
       handleRerender: (): void => { this.dispatchRerender() }
     });
-  };
+  }
 
   openAddChatModal() {
     this.dispatch({
@@ -33,7 +33,7 @@ export class ChatsPage extends Block {
       searchUserName: "",
       searchUserSelected: [],
     });
-  };
+  }
 
   openUserManageModal() {
     this.dispatch({
@@ -52,24 +52,24 @@ export class ChatsPage extends Block {
         if ((<XMLHttpRequest>result).status !== 200) {
           goToPage("/login");
         } else {
-          let user: any = {}
+          let user: any = {};
           try {
-            user = JSON.parse((<XMLHttpRequest>result).response)
+            user = JSON.parse((<XMLHttpRequest>result).response);
           } catch (error) {
-            throw new Error("Невозможно получить информацию о пользователе")
+            throw new Error("Невозможно получить информацию о пользователе");
           }
-          this.dispatch({user: user});
+          this.dispatch({ user: user });
           this.getChats();
-        };
+        }
       });
-  };
+  }
 
   logOut(){
     const httptransport = new HTTPTransport();
     httptransport.post(getUrlLogoutUser)
       .then(() => {
         goToPage("/login");
-      })
+      });
   }
 
   async getChats() {
@@ -80,7 +80,7 @@ export class ChatsPage extends Block {
     try {
       chats = JSON.parse(result.response);
     } catch (error) {
-      throw new Error("Невозможно получить список чатов")
+      throw new Error("Невозможно получить список чатов");
     }
 
     if (result.status === 200) {
@@ -88,14 +88,14 @@ export class ChatsPage extends Block {
         newWebSocket(chat, this.props.userId, () => {
           this.dispatchRerender();
         });
-      };
-      this.dispatch({userChats: chats});
-    };
+      }
+      this.dispatch({ userChats: chats });
+    }
 
-  };
+  }
 
   sendMessage() {
-    const textbox: HTMLTextAreaElement = document.getElementById("sendMessageArea");
+    const textbox: HTMLTextAreaElement = <HTMLTextAreaElement>document.getElementById("sendMessageArea");
 
     if (!textbox.value) return;
 
@@ -108,10 +108,10 @@ export class ChatsPage extends Block {
     );
 
     textbox.value = "";
-  };
+  }
 
   chatSelection(chatInfo: Record<string, any>): void {
-    this.dispatch({currentChatId: chatInfo.id});
+    this.dispatch({ currentChatId: chatInfo.id });
     chatBottomScroll();
 
     chatInfo.socket.send(
@@ -120,7 +120,7 @@ export class ChatsPage extends Block {
         type: "get old"
       })
     );
-  };
+  }
 
   async dropChat() {
     const isConfirmed = confirm("Удалить чат?");
@@ -128,25 +128,25 @@ export class ChatsPage extends Block {
 
     const data = {
       chatId: this.props.currentChatId,
-    }
+    };
     const httptransport = new HTTPTransport();
-    const result: XMLHttpRequest = await httptransport.delete(getUrlManageChats, {data})
+    const result: XMLHttpRequest = await httptransport.delete(getUrlManageChats, { data });
 
     if (result.status === 200) {
-      this.dispatch({currentChatId: null});
+      this.dispatch({ currentChatId: null });
       this.getChats();
-    };
+    }
 
     if (result.status === 403) {
-      alert("Удалить чат может только его создатель")
-    };
+      alert("Удалить чат может только его создатель");
+    }
 
-  };
+  }
 
   routeToSettings(): void {
     const router: Router = new Router();
     router.go("/settings");
-  };
+  }
 
   public static mapStateToProps(state: State): Record<string, any> {
     return {
@@ -157,13 +157,13 @@ export class ChatsPage extends Block {
       userChats: state.userChats,
       userId: state.user.id,
       currentChatId: state.currentChatId,
-      currentChat: state.userChats.find(chat => chat.id === state.currentChatId),
+      currentChat: state.userChats.find((chat: Record<string, any>) => chat.id === state.currentChatId),
     };
-  };
+  }
 
   render(): string {
     return chatTemplate();
-  };
-};
+  }
+}
 
 export default withStore(ChatsPage);

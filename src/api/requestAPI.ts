@@ -9,23 +9,23 @@ const METHODS: Record<string, string> = {
 
 export class HTTPTransport  {
   get = (url: string, options: any = {}): Promise<XMLHttpRequest> => {
-    return this.request(url, {...options, method: METHODS.GET}, options.timeout);
+    return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
   };
 
   post = (url: string, options: any = {}): Promise<XMLHttpRequest> => {
-    return this.request(url, {...options, method: METHODS.POST}, options.timeout);
+    return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
   };
 
   put = (url: string, options: any = {}): Promise<XMLHttpRequest> => {
-    return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
+    return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
   };
 
   delete = (url: string, options: any = {}): Promise<XMLHttpRequest> => {
-    return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
+    return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
   };
 
-  request = (url:string = 'localhost', options: any = { method: METHODS.GET }, timeout: number = 5000): Promise<XMLHttpRequest>  => {
-  const {method, data} = options;
+  request = (url: string = "localhost", options: any = { method: METHODS.GET }, timeout: number = 5000): Promise<XMLHttpRequest>  => {
+  const { method, data } = options;
 
     return new Promise((resolve, rejects) => {
       const xhr: XMLHttpRequest = new XMLHttpRequest();
@@ -34,7 +34,7 @@ export class HTTPTransport  {
           xhr.open(method, url + queryStringify(data));
       } else {
           xhr.open(method, url);
-      };
+      }
 
       xhr.timeout = timeout;
 
@@ -53,7 +53,7 @@ export class HTTPTransport  {
         xhr.send();
       } else {
         xhr.send(JSON.stringify(data));
-      };
+      }
     });
   };
-};
+}
